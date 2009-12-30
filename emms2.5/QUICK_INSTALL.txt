@@ -1,0 +1,136 @@
+Quick installation guide
+
+1. Requirements
+
+Apache 2+, MySQL 5+, PHP5+, PEAR, Mozilla Firefox
+In a windows development workstation you should consider installing xampp (http://www.apachefriends.org/en/xampp.html).
+In a production environment we recommend a LAMP server.
+PEAR libraries: DB, Auth, Date, HTML_QuickForm, HTML_Template_IT, Pager, XML_Tree, Spreadsheet_Excel_Writer
+Recommended PHP settings: Safe Mode = off, max_execution_time >= 180, memory_limit >= 128M
+
+Note: Most PEAR libraries required to run EMMS are not installed by default with xampp, to install
+any PEAR library let's say 'Auth', from the command line type something like C:\PathToXammp\php\pear install Auth
+
+2. Installation in a Windows development workstation
+
+   a. Download the compressed .gz file with all the sources from http://code.google.com/p/emms/downloads/list
+      The downloaded file should be named emms-v2.5x.tar.gz (ie.: 2.5x is the package version)
+      Unpack the .gz and place it in your web root path, ie. C:\PathToXamppHtdocs\php
+
+   b. Create the emms database.
+      In order to populate the database run the sql scripts listed below:
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\tables.sql
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\views.sql
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\triggers.sql
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\data.sql
+      Note: Actual paths may be different depending on your setup
+
+   c. Edit the configuration file at c:\PathToXamppHtdocs\php\emms\acro\conf.ini
+      The configuration settings listed below are critical to update in order for the emms to run:
+
+      --- conf.ini excerpt begin ---
+
+        [db]
+            host = "localhost"
+            name = "db_name"
+            usr = "db_user"
+            pwd = "db_password"
+
+        [mod_sponsorship]
+            url =  "http://localhost/php/httpdocs/emms/acro/mod_sponsorship/"
+
+        [app]
+            url = "http://localhost/php/httpdocs/emms/acro/app/"
+
+      --- conf.ini excerpt end ---
+
+   d.  Remove all content inside C:\PathToXamppHtdocs\php\emms\acro\tmp (Must be erased whenever you change/update the conf.ini or menu.xml files)
+
+   e. Open Mozilla Firefox and go to "http://localhost/php/httpdocs/emms/acro/app/" - same url as the one in the "app" section of your conf.ini file
+
+	Login information
+           username: admin
+           password: 123456
+
+3. Installation in a LAMP server - shared host
+
+   a. Download the compressed .gz file with all the sources from http://code.google.com/p/emms/downloads/list
+      The downloaded file should be named emms-v2.5x.tar.gz (ie.: 2.5x is the package version)
+   b. Upload the "php/httpdocs/emms" folder inside the compressed .gz to your shared host,
+      directly under your web root folder.
+   c. Upload the "php/emms" folder inside the compressed .gz to your shared host at the same
+      level as your web root folder - out of the web scope.
+      The directory structure in your shared host should be something like this:
+
+   /var/www/vhosts/mydomain.com/
+      |
+      +-- emms
+      |     +-- acro
+      |           +-- backup
+      |           +-- custom
+      |           +-- sh
+      |           +-- tmp
+      |           |-- conf.ini
+      |           |-- menu.xml
+      |
+      +-- httpdocs < your web root
+             +-- emms
+                   +-- acro
+                         +-- app
+                         +-- db
+                         +-- l10n
+                         +-- mod_sponsorship
+                         |-- favicon.ico
+                         |-- index.php
+                         |-- version
+
+   If we stick to the folder structure above... make sure to allow apache write permissions to /var/www/vhosts/mydomain.com/emms/acro/tmp
+
+   d. Complete steps 2.b, 2.c and 2.d above, you should adjust the paths examples accordingly.
+
+4. Setup your task scheduler - cron
+
+This is a critical step, especially in a real world scenario. Every day at midnight when your server clock
+reaches 12.00am, EMMS will terminate any open session and will block any atempt to login until you run the
+included /var/www/vhosts/mydomain.com/emms/sh/mysqldump-cronjob.php script from the command line
+or using your system cron, the whole process usually takes less than a couple of minutes to complete,
+exact time depends on your loan porfolio size and delinquency.
+
+VERY IMPORTANT: There is a "$path" definition inside the mysqldump-cronjob.php script, make sure to set
+the $path that corresponds to your setup.
+
+The script creates a full database backup (prebk.gz), updates several tables, then creates another full db backup (postbk.gz).
+Backups will be saved to /var/www/vhosts/mydomain.com/emms/acro/backup/ (or whatever your real path is) so make sure to allow
+your system write permissions to this folder.
+
+You should consider downloading these backups everyday as EMMS will overwrite them everytime the script is run.
+Though unlikely to happen, if anything fails during a scheduled script run (ie., server shutdown, max_execution_time
+exceded, etc.) you will not be able to login, should you restore your db using your more recent prebk.gz db backup
+so you can check and run the script again in a controlled scenario.
+
+In a development environment it could be handy to set force_run_mode = "normal" in the conf.ini file, this bypasses
+the need for the scheduled script process, but note that some reports will be outdated. Whenever you change/update
+the conf.ini or menu.xml files you must remove all the content inside /var/www/vhosts/mydomain.com/emms/tmp.
+
+5. Installing db schema with sample content in a windows development workstation
+
+   a. Download the database schema with sample content from http://code.google.com/p/emms/downloads/list
+      The file name should be something like emms.db.sample-v2.5x.tar.gz
+      Make sure to download the right version for your EMMS installation, version in the example above is v2.5x.
+
+   b. Drop all tables, views and triggers from your database, then restore it using the file from step above.
+
+   c. Run the scripts listed below:
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\views.sql
+        c:\PathToXamppHtdocs\php\httpdocs\emms\acro\db\triggers.sql
+      Note: Actual paths may be different depending on your setup
+
+   d. Set force_run_mode = "normal" in your conf.ini and delete all content inside your tmp folder.
+      For additional info on this step, read the "Setup your task scheduler - cron"
+
+   e. In order to login EMMS you need username/password. Run query below then you can use: admin/123456
+      Query: UPDATE tblUsers SET password = 'e1y.tuEXKZRRE' WHERE username = 'admin';
+
+
+
+
