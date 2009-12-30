@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    <h1><a id="5">5. Operaciones con Grupos</a></h1>
+    <p>
+    El e-MMS incluye soporte para registrar diferentes tipos de asociaciones entre los clientes. Los tipos de asociaciones posibles 
+    son:
+    <dl>
+    	<dt>Grupos</dt>
+	<dd>Los préstamos a los miembros de un Grupo tendrán responsabilidad y seguimiento individual, o sea, el sistema lleva registro de 
+	los préstamos a nivel personal, aunque permite la gestión de diversas tareas a nivel de Grupo.</dd>
+
+	<dt>Centro o BDE, en lo adelante BDE.</dt>
+	<dd>Estas son asociaciones entre entre Grupos. Los clientes miembros de un Grupo, son indirectamente miembros del BDE al 
+	que pertenece el Grupo, y son elegibles para accesar a los fondos del BDE y demás facilidades y responsabilidades dentro 
+	de un BDE.</dd>
+    </dl>
+
+    <h2><a id="5.1">5.1 Buscar y ver datos de un Grupo o BDE</a></h2>
+    <p>
+    Para localizar un grupo o BDE y ver sus datos debe ir a: 
+    <h5>MENU: Operaciones grupos > Buscar grupo/centro</h5> 
+    <p>
+    Este formulario permite la búsqueda de Grupos o BDEs. Todos los campos o filtros son opcionales, la búsqueda producirá una lista 
+    de resultados que muestra la código y el nombre de los Grupos o BDEs encontrados. La lista 
+    incluye además un par de hipervínculos mostrados en color resaltado para ver o editar los datos del Grupo o BDE.
+    Para ver los datos del Grupo o BDE, hacer clic en el hipervínculo correspondiente de la lista de resultados. Para más 
+    información vea los epígrafes siguientes.
+    <br /><br />
+    Ficha de datos de BDE
+    <br /><br />
+    Desde la barra de herramientas de la ficha de datos del BDE, haciendo clic convenientemente en los diferentes iconos, se pueden 
+    ejecutar las siguientes acciones:
+    <ul>
+    	<li>Editar datos del BDE
+	<li>Agregar un nuevo Grupo como miembro del BDE
+	<li>Desactivar BDE. El BDE completo, incluyendo todos los grupos y asociados correspondientes, salen del programa
+    </ul>
+    <p>
+    Ficha de datos de Grupo
+    <br /><br />
+    Desde la barra de herramientas de la ficha de datos del Grupo, haciendo clic convenientemente en los diferentes iconos, se pueden 
+    ejecutar las siguientes acciones:
+    <ul>
+    	<li>Editar datos del Grupo
+	<li>Agregar un nuevo miembro - asociado
+	<li>Mover Grupo hacia otro BDE - hereda asesor y programa del nuevo BDE
+	<li>Desactivar grupo - Grupo completo, incluyendo todos los miembros, salen del programa
+    </ul>
+
+    <h2><a id="5.2">5.2 Agregar un nuevo Grupo o BDE</a></h2>
+    <p>
+    Para agregar un nuevo Grupo o BDE debe ir a: 
+    <h5>Operaciones grupos/BDEs > Agregar grupo/BDE</h5> 
+    <p>
+    Como paso preliminar el sistema le exige especificar el tipo de grupo a crear - Grupo o BDE. El sistema presentará entonces el 
+    formulario correspondiente según el tipo seleccionado.
+    <dl>
+    	<dt>Nota:</dt>
+	<dd>La manera más rápida para crear un nuevo BDE con sus correspondientes Grupos, es proceder con la creación del BDE 
+	primero, esto le permitirá crear automáticamente hasta 5 Grupos miembros del BDE en cuestión, sin necesidad de operaciones 
+	adicionales. En cualquier caso, los clientes miembros de cada Grupo deberán ser incluidos después. Para más información vea 
+	los epígrafes siguientes.</dd>
+    </dl>
+    <p>
+    Formulario para creación de BDE
+    <br /><br />
+    Este formulario permite la entrada de datos para agregar un BDE nuevo al sistema. Los campos marcados con * son obligatorios. 
+    El sistema no permite crear un BDE sin Grupos miembros, en el formulario de creación del BDE deberá especificar 
+    cuántos (hasta un máx. de 5) Grupos conformarán inicialmente al BDE. Estos Grupos serán nombrados automáticamente por el 
+    sistema siguiendo la secuencia Grupo 1, Grupo 2, Grupo 3, etc. El usuario podrá editar las fichas de los Grupos creados 
+    automáticamente para asignarles nombres descriptivos y agregar clientes miembros.
+    <br /><br />
+    Formulario para creación de Grupo
+    <br /><br />
+    Este formulario permite la entrada de datos para agregar un Grupo nuevo al sistema. Los campos marcados con * son obligatorios. 
+    El sistema no permite crear un Grupo independiente, en otras palabras, esté preparado para asociar el Grupo a un BDE
+    ya existente.
+
+    <h2><a id="5.3">5.3 Editar datos de Grupo o BDE existente</a></h2>
+    <p>
+    Para localizar un Grupo o BDE existente y editar sus datos debe ir a: 
+    <h5>Operaciones grupos: Buscar grupo/centro</h5>
+    <p>
+    Siga las mismas instrucciones descritas anteriormente en el capítulo <a href="#5.1">5.1 Buscar y ver datos de Grupo o BDE</a>, 
+    pero en el último paso, en la lista de resultados, hacer clic al hipervínculo Editar en lugar de Ver. Con esto se presentará 
+    el formulario correspondiente donde podrá realizar los cambios necesarios. Para más información vea los capítulos siguientes.
+    <br /><br />
+    Formulario para editar datos de BDE existente
+    <dl>
+    
+        <dt>Acerca de los campos Asesor y Programa</dt>
+	<dd>La modificación de estos campos afectará a todos los Grupos y clientes registrados bajo el BDE, los cuales heredarán como 
+	propios el nuevo Asesor y/o Programa seleccionado.</dd>
+    
+	<dt>Acerca de los campos Presidente, Tesorero y Secretario</dt>
+	<dd>Estos campos permiten especificar la Junta del BDE. Solo aparecen disponibles si hay clientes registrados bajo el BDE en 
+	cuestión.</dd>
+
+    </dl>
+    <p>
+    Formulario para editar Grupo existente
+    <dl>
+    
+        <dt>Acerca de los campos Asesor y Programa</dt>
+	<dd>La modificación directa de estos campos no está permitida para los Grupos, sin embargo puede mover o trasladar el Grupo 
+	hacia otro BDE registrado con el Asesor y Programa requerido. Para más información vea el epígrafe dedicado a los traslados 
+	de Grupos.</dd>
+    
+	<dt>Acerca de los campos Presidente, Tesorero y Secretario</dt>
+	<dd>Estos campos permiten especificar la Junta del Grupo. Solo aparecen disponibles si hay clientes registrados bajo el Grupo en cuestión.</dd>
+
+    </dl>
+
+    <h3><a id="5.4">5.4 Otras operaciones con Grupos y/o BDEs</a></h3>
+    <p>
+    Otras operaciones con Grupos y/o BDEs son:
+    <ul>
+    	<li>Mover Grupo hacia otro BDE. El Grupo y todos los clientes miembros heredan asesor y programa del nuevo BDE.
+	<li>Desactivar Grupo o BDE. Todos los miembros salen del programa, no se admite deshacer esta operación. Este preparado para 
+	especificar causa de la salida. Para re-ingresar los clientes al programa tendrá que seguir el procedimiento indicado en el
+	capítulo <a href="cap_04.html#4.6">4.6 Activar Cliente</a>.
+    </ul>
+    <p>
+    Estas operaciones se realizan desde la ficha de datos del Grupo o BDE
+    
+    </body>
+</html>

@@ -1,0 +1,25 @@
+body
+{
+  background-repeat : no-repeat;
+  background-attachment : fixed;
+  background-position: 0px -100px;
+  margin: 20px 10px 20px 10px;
+  color : #000000 ;
+  font-family: verdana;
+  text-decoration : none;
+  font-weight: normal;
+  padding: 0px;
+}
+
+p         { text-align: justify; font-size: 11px;}
+h2        { font-size: 14px; margin: 0;}
+
+div.version
+{
+  position: absolute;
+  bottom: 0px;
+  height: 30px;
+  font-family: verdana;
+  font-size: 10px;
+  text-align: center;
+}

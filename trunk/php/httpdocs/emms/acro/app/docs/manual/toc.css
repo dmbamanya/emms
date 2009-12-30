@@ -1,0 +1,20 @@
+a       { text-decoration: none; }
+a.L1    { }
+a.L2    {  }
+a.L3    { }
+.L1     { font-size: 14px; font-weight: normal;}
+.L2     { font-size: 12px; font-weight: normal;}
+.L3     { font-size: 11px; font-weight: normal;}
+div.toc {background-color: #FFFFFF;}
+div.L1  { background-color: #F8F8F8; padding: 2px 0 2px 0; margin-top: 1px; width: 100%; ;}
+div.L2  { background-color: #FFFFFF; margin-top: 4px; width: 100%;}
+div.L3  { background-color: #FFFFFF; margin-top: 3px; width: 100%;}
+span.L1 { margin-left:  0px; font-weight: bold; padding: 0px 5px 0px 5px;}
+span.L2 { margin-left: 30px; font-weight: bold;}
+span.L3 { margin-left: 50px; font-weight: bold; font-style: italic;}
+li.L1   { margin-bottom:5px; font-weight: bold; font-size: 10px; color: #000000;}
+li.L2   { margin-bottom:5px; font-weight: normal; font-size: 11px; color: #000000; }
+li.L3   { margin-bottom:5px; font-weight: normal; font-size: 10px; color: #666666;}
+
+
+

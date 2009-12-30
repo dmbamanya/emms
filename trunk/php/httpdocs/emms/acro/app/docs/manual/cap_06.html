@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    <h1><a id="6">6. Formalización de préstamos</a></h1>
+    <p>
+    En el e-MMS el proceso de formalización de un crédito es un ciclo que consta de fases.
+    Vea abajo en la Fig. 6-1 una representación gráfica del mismo.
+    <br /><br />
+    <img src="images/6-1.png">
+    <br />
+    Fig. 6-1 Ciclo de vida del crédito
+    <br /><br />
+    Se espera que cada fase sea ejecutada por usuarios con diferentes niveles de acceso y/o
+    funciones dentro de la IMF, aunque un mismo usuario al que se hayan otorgado todos los
+    niveles de acceso requeridos pudiera ejecutarlo todo. El proceso
+    es exactamente igual, lo mismo para un grupo que para un cliente individual. 
+    <br /><br />
+    La información de soporte de un crédito está organizada en una serie de vistas, que
+    se conectan entre sí mediante hipervínculos, iconos y botones. Esto facilita la
+    manipulación de la información y la ejecución de cualquier tipo de acción. A continuación se 
+    describen las dos vistas más relevantes:
+    <dl>
+        <dt>Información general del préstamo</dt>
+	<dd>Es una vista única para cada préstamo, contiene informaciones generales como 
+	tipo y nombres de los beneficiarios, estado y número de serie del cheque, producto de crédito, 
+	estado de la solicitud, y monto total del préstamo. También incluye una 
+	tabla resumen con informaciones relativas a cada componente del préstamo, nos referimos 
+	aquí, a que por cada cliente involucrado en la solicitud, existe un detalle que refleja 
+	datos específicos de la solicitud... continúe la lectura...</dd>
+	
+        <dt>Datos del préstamo</dt>
+	<dd>Independientemente del tipo de beneficiario - individual o grupo, cada cliente
+        involucrado responde de manera personal por la fracción que le corresponde del préstamo,
+        a tales fines el sistema genera una ficha o vista del préstamo con detalles a nivel
+	personal, con su plan de pagos individualizado, la posibilidad de ejecutar pagos 
+	adelantados, declararación de préstamo incobrable, entre otras acciones..</dd>
+	
+    </dl>
+    <p>
+    Algunas de las etapas o fases del ciclo se deben manejar indivualmente, cliente por cliente,
+    pero otras etapas se ejecutan desde vistas globales que afectan a la vez a todos los
+    componentes. Este mecanismo busca un manejo más eficiente del tiempo, que garantice
+    la mayor calidad posible de la información en las etapas iniciales de la solicitud 
+    y agilice las operaciones en los niveles de supervisión más altos. El sistema garantiza 
+    que el trato individualizado que se da a cada fracción o componente del 
+    préstamo, no afecta la integridad y sincronización que demanda el manejo de préstamos para grupos
+    <br /><br />
+    El sistema deja huellas de la fecha y autor de la
+    ejecución de cada fase, así como cualquier comentario que el autor entienda oportuno
+    apuntar como parte de la ejecución de la fase.
+    
+    <h2><a id="6.1">6.1 Inicio y revisión de una solicitud de crédito</a></h2>
+    <h4>Inicio de la solicitud</h4>
+    <p>
+    Generalmente un Oficial de Créditos inicia el ciclo - Fases Nuevo y Abierto. Para iniciar la 
+    solicitud debe ir a:
+    <h5>Menú: Operaciones cartera > Préstamos y cheques > Solicitar préstamo</h5>
+    <p>
+    Siga las instrucciones que se presentan para identificar al cliente o grupo
+    sujeto del crédito, así como al producto de préstamo. Al final tendrá una nueva solicitud 
+    de crédito en fase Nuevo. Esto incluye una ficha de Información general del préstamo y
+    también una ficha individualizada de Datos del préstamo para cada uno de los clientes
+    involucrados en la solicitud. En el caso de una solicitud para grupo, si 
+    algún miembro no desea aplicar, puede removerlo haciendo clic al hipervínculo "Eliminar" 
+    correspondiente. Vea la Fig. 6.1-1.    
+    <br /><br />
+    <img src="images/6.1-1.png">
+    <br />
+    Fig. 6.1-1 Ficha de Información general del préstamo
+    <br /><br />
+    Asegúrese de editar convenientemente los datos de cada ficha de detalle e intente mover el 
+    estado de la misma a "Abierto". El sistema no le permitirá completar este movimiento a menos 
+    que se hayan suministrado todos los datos necesarios. 
+    
+    <h4>Revisión de la solicitud</h4>
+    <p>
+    Generalmente un Supervisor o Gerente de Sucursal ejecuta la revisión de la solicitud. Para hacer
+    una revisión debe ir a:
+    <h5>Menú: Operaciones cartera > Buscar préstamos</h5>
+    <p>
+    <img src="images/6.1-2.png">
+    <br />
+    Fig. 6.1-2 Formulario de búsqueda para Revisar préstamos
+    <br /><br />
+    Asegúrese de completar convenientemente los campos que se presentarán en el
+    formulario de búsqueda. En particular, en el campo de Estado del préstamo debe 
+    especificar: "Abierto". Tenga en cuenta que en el formulario de búsqueda se espera 
+    que el campo Asesor indique el usuario que originó la solicitud, generalmente debe
+    coincidir con el Oficial de crédito a quien pertenece el cliente, pero no 
+    es un requisito obligatorio.
+    <br /><br />
+    La búsqueda arrojará una lista de resultados con todos los 
+    préstamos pendientes de revisión que cumplan los criterios especificados. La 
+    lista incluye hipervínculos que le permitirán entrar a la ficha individualizada de 
+    Datos del préstamo para corregir la solicitud, o avanzarla a alguna de las fases
+    siguientes del ciclo - Revisado, Rechazado, o Retractado.
+    
+    <h2><a id="6.2">6.2 Aprobación de una solicitud de crédito</a></h2>
+    <p>
+    Generalmente un Gerente de Programas en representación de un Créditos registra la aprobación 
+    de una solicitud. Para completar una aprobación debe ir a:
+    <h5>Menú: Operaciones cartera > Préstamos y cheques > Aprobaciones pendientes</h5>
+    <p>
+    Asegúrese de completar convenientemente los campos que se presenten en el
+    formulario de búsqueda. La búsqueda arrojará una lista de resultados con todas las 
+    solicitudes pendientes de aprobación que cumplan los criterios especificados. La 
+    lista incluye hipervínculos que le permitirán Aprobar la solicitud y también
+    obtener más información. Si selecciona la opción de Aprobar, todos los componentes
+    individuales de la solicitud serán aprobados automaticamente. Vea la Fig. 6.1.1-1.    
+
+    <h2><a id="6.3">6.3 Desembolso de una solicitud de crédito</a></h2>
+    <p>
+    Es importante apuntar que el e-MMS no es un sistema de contabilidad, de manera que no puede
+    hacer asientos contables, ni emitir cheques o ejecutar transferencia electronicas. En este 
+    sentido el e-MMS solo actúa como una vía para canalizar las 
+    solicitudes, cuyos desembolsos deben ser asentados en el Sistema de Contabilidad de
+    la IMF, incluyendo emisión del cheque, transferencia, etc. En cualquier caso, esta
+    operación contable tamnién debe ser registrada en el e-MMS en la fase Desembolso.
+    <br /><br />
+    Generalmente el Gerente de Contabilidad o un Asistente a cargo, recibe las solicitudes 
+    de crédito ya aprobadas en el e-MMS y procede a ejecutar el asiento contable y la correspondiente
+    emitición de cheque, transferecia electrónica, etc. Una vez se haya completado la operación
+    contable y se disponga de un número de serie de cheque, transferencia u otro código afín,
+    se procede a registrar el desembolso en el e-MMS.  Para ver un listado 
+    de las solicitudes pendientes de desembolso o para registrar un desembolso, debe ir a:
+    <h5>Menú: Operaciones cartera > Préstamos y cheques > Desembolsos pendientes</h5>
+    <p>
+    Asegúrese de completar convenientemente los campos que se presenten en el
+    formulario de búsqueda. La búsqueda arrojará una lista de resultados con todas las 
+    solicitudes pendientes de desembolso que cumplan los criterios especificados. La 
+    lista incluye hipervínculos que le permitirán registrar el desembolso y también
+    obtener más información. Si selecciona la opción de Desembolsar, deberá todavía
+    completar algunos datos adicionales incluyendo el fondo contable al que se está cargando
+    el desembolso, el número de serie del cheque u otro código disponible y de manera opcional 
+    un patrocinador. Todos los componentes individuales de la solicitud serán declarados automaticamente
+    como desembolsados.
+    
+    <h2><a id="6.4">6.4 Entrega de un crédito</a></h2>
+    <p>
+    Cada IMF tiene su propio mecanismo para hacer llegar el crédito a los beneficiarios,
+    puede ser un cheque, efectivo, transferencia electrónica, etc. En cualquier caso, esta
+    transferencia final que pone el efectivo a disposición del beneficiario, se registra
+    en el e-MMS en la fase Entrega. Esta operación es registrada generalmente por el
+    Gerente de la Sucursal a que pertenece el beneficiario. Para ver un listado 
+    de las solicitudes pendientes de entrega o para registrar una entrega, debe ir a:
+    <h5>Menú: Operaciones cartera > Préstamos y cheques > Entregas pendientes</h5>
+    <p>
+    Asegúrese de completar convenientemente los campos que se presenten en el
+    formulario de búsqueda. La búsqueda arrojará una lista de resultados con todas las 
+    solicitudes pendientes de entrega que cumplan los criterios especificados. La 
+    lista incluye hipervínculos que le permitirán registrar la entrega y también
+    obtener más información. Si selecciona la opción de Entregar, deberá todavía
+    completar algunos datos adicionales incluyendo la fecha en que deberá realizarse el 
+    primer pago. El sistema aplica algunas restricciones a estos campos para evitar errores 
+    en la entrada de datos. Todos los componentes individuales de la solicitud serán 
+    declarados automaticamente como entregados. A partir de este momento comienzan
+    a cargarse los intereses y penalidades. Para salir de esta fase, el préstamo tiene 
+    que ser saldado completamente o declarado como incobrable.
+        
+    <h2><a id="6.5">6.5 Préstamos retractados</a></h2>
+    <p>
+    El ciclo incluye la fase especial "retractado" que se puede invocar desde cualquier otra fase 
+    del ciclo excepto desde la fase "entregado". Generalmente la fase "retractado" se invoca si 
+    el cliente se arrepiente de la solicitud antes de recibir el efectivo, esta es una fase 
+    terminal y se debe ejecutar de manera individual al cliente que específicamente se ha retractado
+    de la solicitud, desde la vista de Datos del Préstamo correspondiente. 
+    
+    <h2><a id="6.6">6.6 Préstamos incobrables</a></h2>
+    <p>
+    
+    Una vez que el ciclo pasa a fase de entregado, empiezan a correr los intereses. La única manera de salir de la
+    fase entregado es mediante el pago de todos los balances pendientes o el envío del préstamo
+    a la cartera de incobrables (write off). El envío a incobrable se puede realizar manualmente
+    por un usuario con los niveles de acceso requeridos, de manera individual para cada cliente.
+    Adicionalemente, el sistema incluye opciones configurables para el envío automático a 
+    incobrables, en caso de activar esta opción podrá especificar la cantidad de
+    días en atraso que debe acumular un préstamo para ser enviado automaticamente a la cartera de
+    incobrables. 
+    <br /><br />
+    Una ventaja de mantener monitoreo y responsabilidad individualizada en préstamos para grupos,
+    es que no se necesita enviar a incobrables a todo el monto del grupo si surgen dificultades con
+    algunas de las fracciones que componen el préstamo.   
+
+    </body>
+</html>
