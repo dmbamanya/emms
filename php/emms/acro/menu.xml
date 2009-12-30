@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- VERY IMPORTANT - Do not change the order of menu sections below -->
+<root>
+
+  <treemenu>
+    <node code="1" name="clients.portfolio">
+      <node code="1" name="clients">
+        <node code="2" name="BS.SCR.addClient" qjump="1"/>
+        <node code="2" name="BS.SCR.editClient"/>
+        <node code="1" name="BS.SCR.browseClients" qjump="1">
+          <fn code="1" name="BS.SCR.viewClient">
+            <fn code="2" name="BS.SCR.moveClient"/>
+            <fn code="4" name="BS.SCR.deactivateClient"/>
+            <fn code="1" name="BS.SCR.viewBusiness"/>
+            <fn code="1" name="SV.SCR.viewGraph"/>
+          </fn>
+        </node>
+        <node code="1" name="BS.SCR.browseBusinesses"/>
+        <node code="2" name="SV.SCR.applySurveyStepA"/>
+      </node>
+      <node code="1" name="groups">
+        <node code="2" name="BS.SCR.addSociety" qjump="1">
+          <fn code="2" name="BS.SCR.pickSocietyCat"/>
+        </node>
+        <node code="2" name="BS.SCR.editSociety"/>
+        <node code="1" name="BS.SCR.browseSocieties" qjump="1">
+          <fn code="1" name="BS.SCR.viewSociety">
+            <fn code="2" name="BS.SCR.moveSociety"/>
+            <fn code="4" name="BS.SCR.deactivateBG"/>
+            <fn code="4" name="BS.SCR.deactivateBGMember"/>
+          </fn>
+        </node>
+      </node>
+    </node>
+    <node code="254" name="loans.portfolio">
+      <node code="254" name="loans.lookup">
+        <node code="1" name="LN.SCR.browseLoans" qjump="1">
+          <fn code="1" name="LN.SCR.viewILoan">
+            <fn code="1" name="LN.SCR.viewLoanMaster"/>
+            <fn code="62" name="LN.SCR.updateStatus"/>
+          </fn>
+        </node>
+        <node code="254" name="LN.SCR.browseDelinquentLoans" qjump="1"/>
+      </node>
+      <node code="254" name="formalization">
+        <node code="2" name="LN.SCR.requestLoan" qjump="1">
+            <fn code="2" name="LN.SCR.pickBorrower"/>
+            <fn code="2" name="LN.SCR.pickLoanType"/>
+            <fn code="2" name="LN.SCR.pickBusiness"/>
+        </node>
+        <node code="254" name="LN.SCR.checkRevisions" qjump="1">
+          <fn code="4" name="LN.SCR.doCheckRevision"/>
+        </node>
+        <node code="254" name="LN.SCR.checkApprovals" qjump="1">
+          <fn code="160" name="LN.SCR.doCheckApproval"/>
+        </node>
+        <node code="254" name="LN.SCR.checkDisbursement" qjump="1">
+          <fn code="144" name="LN.SCR.doCheckDisbursement"/>
+        </node>
+        <node code="254" name="LN.SCR.checkReleases" qjump="1">
+          <fn code="4" name="LN.SCR.doCheckRelease"/>
+        </node>
+        <node code="254" name="LN.SCR.checkNewRequests" qjump="1"/>
+        <node code="254" name="LN.SCR.checkRejections" qjump="1"/>
+        <node code="254" name="LN.SCR.checkRetractions" qjump="1"/>
+      </node>
+      <node code="254" name="payments">
+        <node code="14" name="LN.SCR.doCollectionSheet" qjump="1"/>
+        <node code="136" name="LN.SCR.doBulkEntry" qjump="1"/>
+        <node code="254" name="LN.SCR.browsePendingPayments" qjump="1"/>
+        <node code="254" name="LN.SCR.browseSubmittedPayments" qjump="1" popup="1" width="700" height="320"/>
+        <node code="254" name="LN.SCR.browseReceipts" qjump="1"/>
+      </node>
+      <node code="254" name="transactions">
+        <node code="254" name="RP.SCR.transactionsCredits" qjump="1" popup="1" width="700" height="320"/>
+        <node code="254" name="RP.SCR.transactionsDebits" qjump="1" popup="1" width="700" height="320"/>
+        <node code="254" name="LN.SCR.browseChecks" qjump="1"/>
+      </node>
+      <node code="1"   name="LN.SCR.finCalculatorX" qjump="1" popup="1" width="450" height="520">
+        <fn code="1"   name="LN.SCR.finCalculatorXPlan"/>
+        <fn code="1"   name="LN.SCR.finCalculatorXPLP"/>
+      </node>
+      <fn code="18" name="LN.SCR.addILoan"/>
+    </node>
+    <node code="1" name="reports">
+      <node code="1" name="RP.SCR.performance"/>
+      <node code="1" name="RP.SCR.performancePlotter" qjump="1"/>
+      <node code="1" name="RP.SCR.loan"/>
+      <node code="1" name="RP.SCR.activeLoanPortfolio"/>
+      <node code="1" name="RP.SCR.delinquency"/>
+      <node code="1" name="RP.SCR.cancelledLoanPortfolio"/>
+      <node code="1" name="RP.SCR.recovery"/>
+      <node code="1" name="RP.SCR.risk"/>
+      <node code="1" name="RP.SCR.loanWriteOff"/>
+      <node code="1" name="RP.SCR.client"/>
+      <node code="1" name="RP.SCR.clientIOM"/>
+      <node code="1" name="RP.SCR.operationalLoss"/>
+    </node>
+    <node code="254" name="administration">
+      <node code="254" name="users">
+        <node code="64" name="BS.SCR.addUser"/>
+        <node code="64" name="BS.SCR.editUsers"/>
+        <node code="254" name="BS.SCR.browseUsers">
+          <fn code="1" name="BS.SCR.viewUser"/>
+        </node>
+      </node>
+      <node code="254" name="sponsors">
+        <node code="64" name="SP.SCR.addSponsor"/>
+        <node code="64" name="SP.SCR.editSponsor"/>
+        <node code="128" name="SP.SCR.browseSponsors" qjump="1">
+          <fn code="128" name="SP.SCR.viewSponsor"/>
+          <fn code="128" name="SP.SCR.financialSummary"/>
+          <fn code="128" name="SP.SCR.clientSummary"/>
+        </node>
+        <node code="64" name="SP.SCR.addDonation"/>
+        <node code="128" name="SP.SCR.summaryBySponsor" qjump="1"/>
+      </node>
+      <node code="254" name="loan.products">
+        <node code="96" name="LN.SCR.addLoanType"/>
+        <node code="96" name="LN.SCR.editLoanType"/>
+        <node code="254" name="LN.SCR.browseLoanTypes">
+          <fn code="254" name="LN.SCR.viewLoanType"/>
+        </node>
+      </node>
+      <node code="1" name="surveys">
+        <fn code="2" name="SV.SCR.applySurveyStepB"/>
+        <node code="1" name="SV.SCR.browseSurveys">
+          <fn code="1" name="SV.SCR.viewSurvey"/>
+        </node>
+        <node code="64" name="SV.SCR.addSurvey"/>
+        <node code="64" name="SV.SCR.addQuestion"/>
+      </node>
+      <node code="1" name="business">
+        <node code="32" name="BS.SCR.addBusinessType"/>
+        <node code="32" name="BS.SCR.editBusinessType"/>
+        <node code="1" name="BS.SCR.browseBusinessTypes"/>      
+      </node>
+      <node code="1" name="funds">
+        <node code="64" name="AC.SCR.addFund"/>
+        <node code="64" name="AC.SCR.editFunds"/>
+        <node code="254" name="AC.SCR.browseFunds">
+          <fn code="254" name="AC.SCR.viewFund"/>
+        </node>
+      </node>
+      <node code="1" name="programs">
+        <node code="64" name="BS.SCR.addProgram"/>
+        <node code="64" name="BS.SCR.editProgram"/>
+        <node code="1" name="BS.SCR.browsePrograms">
+          <fn code="1" name="BS.SCR.viewProgram"/>
+        </node>
+      </node>
+      <node code="1" name="branches">
+        <node code="64" name="BS.SCR.addZone"/>
+        <node code="64" name="BS.SCR.editZone"/>
+        <node code="1" name="BS.SCR.browseZones">
+          <fn code="1" name="BS.SCR.viewZone"/>
+        </node>
+      </node>
+    </node>
+  </treemenu>
+
+  <tabmenu>
+    <fn code="1"   name="TB.SCR.home"/>
+    <fn code="1"   name="TB.SCR.qjumps"/>
+    <fn code="1"   name="TB.SCR.account"/>
+    <fn code="1"   name="TB.SCR.manual" popup="1" width="500" height="550"/>
+    <fn code="1"   name="TB.SCR.about" popup="1" width="450" height="500"/>
+    <fn code="255" name="TB.SCR.logout"/>
+  </tabmenu>
+
+  <popup>
+    <fn code="1"   name="BS.SCR.viewSocietyXpress"/>
+    <fn code="1"   name="BS.SCR.viewClientXpress"/>
+    <fn code="254" name="LN.SCR.viewLoanTypeXpress"/>
+    <fn code="2"   name="BS.SCR.addBusiness"/>
+    <fn code="2"   name="BS.SCR.editBusiness"/>
+    <fn code="2"   name="BS.SCR.pickSociety"/>
+    <fn code="2"   name="BS.SCR.pickBG"/>
+    <fn code="1"   name="BS.SCR.viewClientIOM"/>
+    <fn code="1"   name="LG.SCR.legalProfile"/>
+    <fn code="188" name="LG.SCR.addPayment"/>
+    <fn code="188" name="LG.SCR.addCharge"/>
+    <fn code="128" name="SP.SCR.donationHistoryBySponsor"/>
+    <fn code="8"   name="LN.SCR.addPaymentBulk"/>
+    <fn code="254" name="LN.SCR.viewCollectionSheet"/>
+    <fn code="136" name="LN.SCR.addPaymentFull"/>
+    <fn code="136" name="LN.SCR.addPaymentDue"/>
+    <fn code="136" name="LN.SCR.addPaymentEarly"/>
+    <fn code="136" name="LN.SCR.addPaymentXT"/>
+    <fn code="136" name="LN.SCR.addPayment"/>
+    <fn code="1"   name="LN.SCR.pmtPlan"/>
+    <fn code="254" name="LN.RPT.loanStatusHistory"/>
+    <fn code="64"  name="SV.SCR.pickQuestion"/>
+    <fn code="2"   name="BS.SCR.pickBG"/>
+    <fn code="254" name="BS.SCR.dateRangeSelector"/>
+    <fn code="1"   name="BS.SCR.dateSelector"/>
+    <fn code="254" name="LN.SCR.browseLoanMasterDuplicates"/>
+    <fn code="254" name="LN.SCR.viewLoanMasterPrintable"/>
+    <fn code="7"   name="LN.SCR.changeDate"/>
+    <fn code="136" name="LN.SCR.deletePayment"/>
+    <fn code="254" name="LN.SCR.groupContract"/>
+    <fn code="254" name="LN.SCR.individualContract"/>
+    <fn code="254" name="LN.SCR.originalPMT_plan"/>
+    <fn code="254" name="LN.SCR.promissoryNote"/>
+    <fn code="254" name="LN.SCR.viewReceipt"/>
+    <fn code="254" name="LN.SCR.viewTransactionDetails"/>
+    <fn code="254" name="LN.SCR.viewCancelLetter"/>
+    <fn code="164" name="LN.SCR.doRejectRequest"/>
+    <fn code="164" name="LN.SCR.doRetractRequest"/>
+  </popup>
+
+  <report>
+    <fn code="1"   name="RP.SCR.activeLoanPortfolioByLoan"/>
+    <fn code="1"   name="RP.SCR.businessTypes"/>
+    <fn code="1"   name="RP.SCR.cancelledLoanPortfolioByLoan"/>
+    <fn code="1"   name="RP.SCR.clientByAdvisor"/>
+    <fn code="1"   name="RP.SCR.clientByBranch"/>
+    <fn code="1"   name="RP.SCR.clientByProgram"/>
+    <fn code="1"   name="RP.SCR.clientData"/>
+    <fn code="1"   name="RP.SCR.clientIOMByAdvisor"/>
+    <fn code="1"   name="RP.SCR.clientIOMByBranch"/>
+    <fn code="1"   name="RP.SCR.clientIOMByProgram"/>
+    <fn code="1"   name="RP.SCR.delinquencyByAdvisor"/>
+    <fn code="1"   name="RP.SCR.delinquencyByBranch"/>
+    <fn code="1"   name="RP.SCR.delinquencyByClient"/>
+    <fn code="1"   name="RP.SCR.delinquencyByGroup"/>
+    <fn code="1"   name="RP.SCR.delinquencyByProgram"/>
+    <fn code="1"   name="RP.SCR.loanByAdvisor"/>
+    <fn code="1"   name="RP.SCR.loanByBranch"/>
+    <fn code="1"   name="RP.SCR.loanByClient"/>
+    <fn code="1"   name="RP.SCR.loanByProgram"/>
+    <fn code="1"   name="RP.SCR.loanWriteOffByAdvisor"/>
+    <fn code="1"   name="RP.SCR.loanWriteOffByBranch"/>
+    <fn code="1"   name="RP.SCR.loanWriteOffByProgram"/>
+    <fn code="1"   name="RP.SCR.writeOffPortfolio"/>
+    <fn code="1"   name="RP.SCR.writeOffHistory"/>
+    <fn code="1"   name="RP.SCR.operationalLossByAdvisor"/>
+    <fn code="1"   name="RP.SCR.operationalLossByBranch"/>
+    <fn code="1"   name="RP.SCR.operationalLossByProgram"/>
+    <fn code="1"   name="RP.SCR.recoveryByAdvisor"/>
+    <fn code="1"   name="RP.SCR.recoveryByBranch"/>
+    <fn code="1"   name="RP.SCR.recoveryByProgram"/>
+    <fn code="1"   name="RP.SCR.riskByAdvisor"/>
+    <fn code="1"   name="RP.SCR.riskByBranch"/>
+    <fn code="1"   name="RP.SCR.riskByProgram"/>
+    <fn code="1"   name="RP.SCR.writeOffHistory"/>
+    <fn code="1"   name="RP.SCR.writeOffPortfolio"/>
+    <fn code="1" name="RP.SCR.clientData"/>
+    <fn code="1" name="RP.SCR.businessTypes"/>
+  </report>
+
+  <graph>
+    <fn code="1"   name="RP.GRP.Performance.clientPortfolio"/>
+    <fn code="1"   name="RP.GRP.Performance.feesRecovery"/>
+    <fn code="1"   name="RP.GRP.Performance.insurancesRecovery"/>
+    <fn code="1"   name="RP.GRP.Performance.interestRecovery"/>
+    <fn code="1"   name="RP.GRP.Performance.kpDisbursment"/>
+    <fn code="1"   name="RP.GRP.Performance.kpRecovery"/>
+    <fn code="1"   name="RP.GRP.Performance.loansOnDelinquency"/>
+    <fn code="1"   name="RP.GRP.Performance.newLoans"/>
+    <fn code="1"   name="RP.GRP.Performance.operationalIncome"/>
+    <fn code="1"   name="RP.GRP.Performance.penaltiesRecovery"/>
+    <fn code="1"   name="RP.GRP.Performance.riskPortfolio"/>
+    <fn code="1"   name="RP.GRP.SV.graphDrawer"/>
+    <fn code="1"   name="RP.GRP.businessActivities"/>
+    <fn code="1"   name="RP.GRP.top5business"/>
+    <fn code="1"   name="RP.GRP.attrition"/>
+    <fn code="1"   name="RP.GRP.clientDistribution"/>
+    <fn code="1"   name="RP.GRP.genderRatio"/>
+    <fn code="1"   name="RP.GRP.programImpact"/>
+  </graph>
+
+  <tool>
+    <fn code="1" name="BS.SCR.pager"/>
+    <fn code="0"   name="buttonManager"/>
+    <fn code="1" name="RP.SCR.QueryCacheToXLS"/>
+    <fn code="1" name="RP.SCR.ChartCacheToXLS"/>
+    <fn code="62"  name="LN.SCR.deleteILoan"/>
+    <fn code="144" name="LN.SCR.loansMasterPrintCounter"/>
+  </tool>
+
+  <migration>
+    <fn code="0"   name="MG.SCR.addBusiness"/>
+    <fn code="0"   name="MG.SCR.addLoan"/>
+    <fn code="0"   name="MG.SCR.browseClients"/>
+    <fn code="0"   name="MG.SCR.clientLookUp"/>
+    <fn code="0"   name="MG.SCR.nameAutoUpdate"/>
+    <fn code="0"   name="MG.SCR.paymentRollback"/>
+    <fn code="0"   name="MG.SCR.pickAdvisor"/>
+    <fn code="0"   name="MG.SCR.pruneClient"/>
+    <fn code="0"   name="MG.SCR.removeILoan"/>
+    <fn code="0"   name="MG.SCR.removeLoanMaster"/>
+    <fn code="0"   name="MG.SCR.stats"/>
+    <fn code="0"   name="MG.SCR.tests"/>
+    <fn code="0"   name="MG.SCR.viewILoan"/>
+  </migration>
+
+  <todo>
+    <fn code="0"   name="RP.SCR.programImpact"/>
+    <fn code="0"   name="SA.SCR.addSavingsProduct"/>
+  </todo>
+
+  <custom>
+    <fn code="255" name="PB.SCR.performance"/>
+    <fn code="1"   name="RP.SCR.compactCS"/>
+    <fn code="1"   name="RP.SCR.receipt"/>
+    <fn code="1"   name="KV.SCR.updateKivaIDs"/>
+  </custom>
+
+</root>

@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    <h1><a id="4">4. Operaciones con Clientes</a></h1>
+
+    <h2><a id="4.1">4.1 Buscar y ver datos de cliente</a></h2>
+    <p>
+    Esta función presenta un formulario para la búsqueda de clientes activos o inactivos. Todos los campos o filtros son opcionales. 
+    Los filtros para nombre y apellido aceptan llenado parcial. Para localizar un cliente y ver sus datos debe ir a:
+    <h5>MENU: Operaciones clientes > Buscar clientes</h5> 
+    <p>
+    La búsqueda producirá una lista de resultados que muestra la cédula y el nombre completo de los clientes encontrados. La lista 
+    incluye además un par de hipervínculos mostrados en color resaltado para ver o editar los datos del cliente. Para ver los datos 
+    del cliente, hacer clic en el hipervínculo correspondiente de la lista de resultados. 
+    <br /><br />
+    Desde la barra de herramientas de la ficha de datos del cliente, haciendo clic convenientemente en los diferentes iconos, se 
+    pueden ejecutar las siguientes acciones:
+    <ul>
+        <li>Editar datos del cliente
+        <li>Solicitar un préstamo
+        <li>Ver listado de préstamos solicitados anteriormente
+        <li>Cambiar de grupo, programa o asesor
+        <li>Desactivar cliente - cliente sale del programa<sup>(1)</sup>
+        <li>Activar cliente - cliente regresa al programa<sup>(1)</sup>
+        <li>Registrar un negocio a nombre del cliente
+        <li>Aplicar encuesta al cliente
+        <li>Ver resultados de encuestas aplicadas
+        <li>Ver historial de movimientos del cliente - cambios de grupo, salidas, etc.
+    </ul>
+    <p>
+    <sup>(1)</sup> Solo aparecerá una de las opciones, en dependencia del estado del cliente en cuestión.
+
+    <h2><a id="4.2">4.2 Agregar cliente nuevo</a></h2>
+    <p>
+    Esta función presenta un formulario que permite agregar un cliente nuevo al sistema. Los campos marcados 
+    con * son obligatorios. El sistema no admite cédulas (documento identidad nacional) duplicadas, si por error se digita una cédula 
+    ya registrada, el sistema devolverá el mensaje de error correspondiente. Para agregar un cliente nuevo debe ir a: 
+    <h5>MENU: Operaciones clientes > Agregar cliente</h5>
+    <dl>
+        <dt>Acerca del campo Grupo</dt>
+	<dd>Si el cliente no es miembro de algún grupo o banco, el campo Grupo se deja sin llenar. Si el cliente es miembro de un grupo 
+	o BDE, hacer clic en el icono de selección próximo al campo Grupo. Esto presentará una ventana flotante con una lista de grupos 
+	o BDEs para seleccionar mediante otro clic. La lista de grupos o BDEs disponibles en la lista de selección se limita a aquellos 
+	que se correspondan con los valores especificados en los campos Asesor y Programa. En otras palabras, antes de intentar la 
+	selección del BDE o grupo, es necesario haber especificado antes los campos Asesor y Programa. Para más información en relación 
+	a los grupos y/o BDEs vea el capítulo <a href="cap_05.html">5. Operaciones con Grupos</a></dd>
+	
+	<dt>Tip</dt>
+	<dd>Una via alternativa para agregar un cliente nuevo a un Grupo, es a través de la ficha de datos del Grupo en cuestión. 
+	Comience por localizar la ficha correspondiente - vea el capítulo <a href="cap_05.html#5.1">5.1 Buscar y ver datos de un Grupo o BDE</a>, 
+	luego desde la ficha de datos del grupo, haga clic en el icono Agregar cliente nuevo.</dd>
+	
+    </dl>
+    <p>
+    El sistema guarda registro de la fecha de creación y de la última edición de los datos de cada cliente, así como de los usuarios 
+    autores de la creación y la edición.
+
+    <h2><a id="4.3">4.3 Editar datos de cliente</a></h2>
+    <p>
+    Siga las mismas instrucciones descritas en el capítulo <a href="#4.1">4.1 Buscar y ver datos de cliente</a>, pero 
+    en el último paso, en la lista de resultados, hacer clic al hipervínculo Editar en lugar de Ver.
+    <br /><br />
+    El formulario para editar los datos del cliente es el mismo que se usa para agregar clientes nuevos - vea 
+    capítulo <a href="#4.2">4.2 Agregar cliente nuevo</a>, con la diferencia de que los campos Programa, Asesor y Grupo están 
+    bloqueados.
+    <br /><br />
+    Para efectuar cambios en alguno de los campos bloqueados vea los dos próximos epígrages.
+
+    <h2><a id="4.4">4.4 Mover cliente de grupo, asesor o programa</a></h2>
+    <p>
+    Los cambios de grupo, asesor o programa deben realizarse desde la ficha de datos del cliente. Vea las instrucciones descritas en 
+    el epígrafe <a href="#4.1">4.1 Buscar y ver datos de cliente</a>. Una vez en la ficha del cliente buscar el icono Cambiar grupo de la barra de 
+    herramientas y seguir las instrucciones del formulario.
+
+    <h2><a id="4.5">4.5 Desactivar Cliente</a></h2>
+    <p>
+    La desactivación debe realizarse desde la ficha de datos del cliente. Vea las instrucciones descritas en el 
+    epígrafe <a href="#4.1">4.1 Buscar y ver datos de cliente</a>. Una vez en la ficha del cliente buscar el icono 
+    Desactivar de la barra de herramientas y seguir las instrucciones del formulario. Este preparado para especificar y 
+    describir el motivo de la desactivación.
+    <br /><br />
+    Además del procedimiento anterior, un cliente también puede quedar desactivado si se desactiva el grupo o BDE al que pertenece. 
+    Para más información vea el epígrafe correspondiente a la desactivación de grupos y/o BDEs.
+
+    <h2><a id="4.6">4.6 Activar Cliente</a></h2>
+    <p>
+    La Activación debe realizarse desde la ficha de datos del cliente. Vea las instrucciones descritas en el 
+    epígrafe <a href="#4.1">4.1 Buscar y ver datos de cliente</a>. Una vez en la ficha del cliente buscar el icono Activar 
+    de la barra de herramientas y seguir las instrucciones del formulario.
+
+    <h2><a id="4.7">4.7 Otras operaciones con clientes</a></h2>
+    <p>
+    Otras operaciones con clientes son:
+    <ul>
+    	<li>Solicitar un préstamo
+	<li>Ver listado de préstamos solicitados anteriormente
+	<li>Registrar un negocio a nombre del cliente
+	<li>Aplicar encuesta al cliente
+	<li>Ver resultados de encuestas aplicadas
+	<li>Ver historial de movimientos del cliente - cambios de grupo, salidas, etc.
+    </ul>
+    <p>
+    Todas estas operaciones pueden ser llamadas desde la ficha de datos del cliente.
+
+    </body>
+</html>
+

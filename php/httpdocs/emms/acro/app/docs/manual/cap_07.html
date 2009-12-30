@@ -1,0 +1,327 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    <h1><a id="7">7. Operaciones con préstamos</a></h1>
+
+    <h2><a id="7.1">7.1 Buscar y ver datos de un préstamo</a></h2>
+    
+    <h3><a id="7.1.1">7.1.1 Búsqueda del préstamo a nivel de cliente</a></h2>
+    <p>
+    Esta forma permite buscar una ficha de préstamo (a nivel de cliente) independientemente del estado del 
+    mismo - saldado o no, etc. La forma de búsqueda le permite encontrar rapidamente la ficha del préstamo 
+    con el uso de filtros opcionales. Para iniciar la búsqueda debe ir a:
+    <h5>MENU: Operaciones cartera > Buscar préstamos</h5>
+    <p>
+    Criterios de busqueda:    
+    <dl>
+    	<dt>Código del préstamo</dt>
+	<dd>Es una cadena alfanumérica de X caracteres que funciona como un identificador único para cada préstamo. Nótese que aún en 
+	los préstamos otorgados a grupos, cada miembro del grupo es tratado por el sistema como un beneficiario individual asignándole 
+	un código único de préstamo.</dd>
+    
+	<dt>1er Nombre & Apellidos</dt>
+	<dd>Estos campos permiten buscar al cliente asociado al préstamo entrando su nombre o apellido, nótese que se aceptan cadenas 
+	incompletas. Por ejemplo, para buscar los préstamos asociados a una persona de apellido Alcantara, basta con introducir las 
+	primeras letras ie (alc) en el campo de apellido.</dd>
+    
+	<dt>Estado</dt>
+	<dd>Presenta una lista para seleccionar entre todos los estados posibles en que puede estar un préstamo.</dd>
+    
+	<dt>Sucursal</dt>
+	<dd>Permite elegir entre cualquiera de las sucursales registradas en la base de datos, útil para limitar los resultados de la 
+	búsqueda, evitando generar una lista demasiado larga.</dd>
+    
+	<dt>Tipo</dt>
+	<dd>Permite especificar el tipo de asociado beneficiario del préstamo. Normalmente solo existen 2 categorías: Individual o Grupal.</dd>
+
+	<dt>Asesor</dt>
+	<dd>Permite elegir entre cualquiera de los asesores registrados en la base de datos, útil para limitar los resultados de 
+	la búsqueda, evitando generar una lista demasiado larga.</dd>
+
+    </dl>
+
+    <p>
+    Lista de Resultados
+    <br /><br />
+    Al enviar el formulario el sistema presenta una lista de resultados con los siguientes datos:
+    <ul>
+    	<li>Código del préstamo
+	<li>Estado del préstamo
+	<li>Nombre del cliente beneficiario
+    </ul>
+    <p>
+    La lista de resultados contiene también los siguientes hipervínculos:
+    <dl>
+    	<dt>Ver</dt>
+	<dd>Para entrar directamente en la ficha del préstamo.</dd>
+
+	<dt>Editar</dt>
+	<dd>Para entrar directamente en la forma de edición del préstamo, en caso de que el estado del mismo lo permita.</dd>
+    </dl>
+    <p>
+    Para ver los datos del préstamo haga clic convenientemente en el hipervínculo 'Ver'.
+
+    <h3><a id="7.1.2">7.1.2 Búsqueda del préstamo a nivel de grupo</a></h2>
+    <p>
+    Para localizar la vista de con la Información general del préstamo, la cual contiene la información
+    del préstamo a nivel de grupo, siga las instrucciones que aparecen en el capítulo <a href="#7.6">7.6 Buscar cheques</a>.
+    
+    
+    <h2><a id="7.2">7.2 Aplicar pagos a nivel de cliente</a></h2>
+    <p>
+    Esta opción permite aplicar pagos en las circunstancias más diversas, siempre que el préstamo se encuentre en estado 
+    'Entregado'. Lo mismo avances al principal, cancelación total de la deuda, que el pago de cuotas atrasadas.
+    <br /><br />
+    Sirve lo mismo para clientes individuales que para miembros de grupos, sin embargo recomendamos que para
+    miembros de grupos que esten al dia con sus pagos, se proceda con la opción de pago a nivel de grupo. Para más detalles vea
+    el capítulo <a href="#7.5">7.5 Aplicar pagos a nivel de grupo</a>. Para préstamos individuales, lo mismo con cuotas vencidas 
+    sin atraso o con atraso, recomendamos proceder como se indica en el capítulo <a href="#7.3">7.3 Aplicar pago de cuota vencida o 
+    en atraso</a>.
+    <br /><br />
+    La aplicación de los pagos tiene una restricción importante, no se aceptan pagos de fracción de una cuota atrasada, la cuota 
+    debe ser pagada en su totalidad. Sin embargo, a un préstamo con varias cuotas atrasadas, se le acepta el pago de las cuotas más 
+    antiguas, una a la vez; es decir, no tiene que pagar necesariamente el total de todas las cuotas atrasadas.
+    <br /><br />
+    Para poder realizar cualquier tipo de pago a nivel de cliente, debe ir a la ficha de datos del préstamo correspondiente. Para
+    ubicar la ficha siga las instrucciones del capítulo <a href="#7.1.1">7.1.1 Búsqueda del préstamo a nivel de cliente</a>. 
+    Para ahorrarse tiempo en la búsqueda asegúrese de filtrar solo para préstamos cuyo estado sea 'Entregado'. 
+    <br /><br />
+    Una vez en la ficha, si el préstamo esta en estado 'Entregado', podrá localizar en la barra de íconos ubicada al final de la
+    ficha de datos, las siguientes opciones:
+    <dl>
+        <dt>Aplicar pago</dt>
+	<dd>Seleccionar esta opción para aplicar el pago de la cuota correspondiente. 
+	<br /><br />
+	Si el préstamo tiene cuotas atrasadas, permitirá pagar el total de los atrasos o el monto correspondiente
+	a la cuota atrasada más antigua, incluyendo las penalidades asociadas a dicha cuota.
+	<br /><br />
+	Si el préstamo no tiene cuotas pendientes, permitirá escojer entre las siguientes opciones:
+	    <ul>
+	        <li>Pagar la próxima cuota por adelantado.
+		<li>Hacer un pago de avance al principal.
+		<li>Aplicar pago completo - Con esto se salda el préstamo.
+	    </ul>
+	<br />
+	En todos los casos, el sistema presenta los montos máximos y mínimos permitidos y no va a aceptar montos fuera de dicho 
+	rango. En caso necesario, por ejemplo un pago por adelantado, etc., el calendario se ajusta convenientemente de manera 
+	automática, respetando los términos originales del contrato del préstamo, pero haciendo los ajustes de lugar para no afectar 
+	al cliente con el cálculo de intereses, etc.
+	</dd>
+	<dt>Aplicar pago completo</dt>
+	<dd>Seleccionar esta opción para aplicar el pago total de todas las cuotas pendientes, incluyendo penalidades y balance de
+	princpial completo. Con esto se salda el préstamo.</dd>
+    </dl>
+    
+    <h2><a id="7.3">7.3 Aplicar pago de cuota vencida o en atraso</a></h2>
+    <p>
+    Esta función permite aplicar pagos a préstamos con cuotas vencidas, lo mismo al dia que atrasadas. Presenta una
+    forma de búsqueda con filtros opcionales para localizar los préstamos rapidamente. Solo se presentan resultados
+    a nivel de cliente, o sea, en caso de grupos, se presenta un registro para cada cliente del grupo con cuotas vencidas o en atraso.
+    Para aplicar el pago debe ir a:
+    <h5>MENU: Operaciones cartera > Ver pagos atrasados</h5>
+    <p>
+    Criterios de búsqueda
+    <dl>
+    	<dt>Sucursal</dt>
+	<dd>Seleccione de una lista de programas registrados para limitar los resultados de la búsqueda.</dd>
+
+	<dt>Asesor</dt>
+	<dd>Seleccione de una lista de oficiales de crédito registrados para limitar los resultados de la búsqueda.</dd>
+
+	<dt>Tipo de Préstamo</dt>
+	<dd>Seleccione entre Individuales o Grupos. Si se especifica "Grupos", se presentarán los resultados a nivel de cada
+	cliente miembro del grupo.</dd>
+
+    </dl>
+    <p>
+    Una vez el formulario de búsqueda es validado el sistema presentará una lista de resultados, con los datos siguientes:
+    <ul>
+    	<li>Código
+	<li>Cliente
+	<li>Cuotas- No. cuotas atrasadas.
+	<li>Mora - Total combinado de dias de atraso.
+    </ul>
+    <p>
+    Desde la lista de resultados podrá ejecutar las siguientes opciones:
+    <ul>
+    	<li>Ver ficha préstamo.
+	<li>Aplicar pago a préstamo.
+    </ul>
+    
+    <h2><a id="7.4">7.4 Creación de hoja para colectar pagos a nivel de grupo</a></h2>
+    <p>
+    El propósito de esta función es crear una hoja para colectar los pagos de un grupo. Nótese que no se trata de una función para 
+    aplicar pagos a nivel de grupo, sino que es una hoja de ayuda para que el asesor de créditos tenga los detalles de cada pago 
+    pendiente dentro del grupo. Generalmente el asesor debe imprimir esta hoja antes de ir a la reunión de colección de pagos con 
+    el grupo. Se puede imprimir la hoja con dias de antelación.
+    <br /><br />
+    Esta hoja solo muestra los detalles de la próxima cuota grupal pendiente de pago en el calendario, no importa si la cuota esta atrasada 
+    o no. Sin embargo, aunque la hoja muestra la cantidad de dias en atraso (si los hubiera) al momento de imprimir la hoja, no 
+    presenta el cálculo de la penalidad asociada, de manera que es más efectiva para grupos que están al dia. Para saber el valor 
+    exacto a pagar en el dia corriente en caso de grupos con atraso, es necesario llamar la función de aplicar 
+    pagos de manera individual para cada cliente dentro del grupo. Para más detalles vea capítulo <a href="#7.2">7.2 Aplicar pagos a nivel de cliente</a>.
+    Para crear una hoja de pago debe ir a:
+    <h5>MENU: Operaciones cartera > Crear hoja de pagos</h5>
+    <p>
+    La forma de búsqueda le permite encontrar rapidamente al grupo para el cual se va a generar la hoja.
+    <br /><br />
+    Criterios de búsqueda:
+    <dl>
+        <dt>Código del Grupo</dt>
+	<dd>El código de grupo es una cadena alfanumérica única (ej. 030.B.00015) que identifica el grupo que se busca.</dd>
+
+	<dt>Nombre del Grupo</dt>
+	<dd>Se permite introducir nombres parciales, es decir si se busca un grupo llamado 'Mujeres Victoriosas' basta con introducir 
+	'mujeres' para que salgan todos los grupos cuyos nombres incluyen la palabra 'mujeres', esto para el asesor o 
+	programa especificados en los restantes campos del formulario de búsqueda, que son campos obligatorios.</dd>
+
+	<dt>Asesor <sup>(*)</sup></dt>
+	<dd>Presenta una lista de todos los asesores registrados en el sistema. Debe seleccionar uno para limitar el número
+	de resultados</dd>
+
+        <dt>Programa <sup>(*)</sup></dt>
+	<dd>Presenta una lista de todos los programas registrados en el sistema. Debe seleccionar uno para limitar el número
+	de resultados</dd>
+
+    </dl>
+    <p>
+    <sup>(*)</sup> Campos obligatorios
+
+    <h2><a id="7.5">7.5 Aplicar pagos a nivel de grupo</a></h2>
+    <p>
+    Esta opción permite aplicar pagos a nivel de grupos, pero solo está disponible para grupos que están al dia con sus pagos. Para 
+    aplicar pagos a grupos con atraso, es necesario llamar la función de aplicar pagos de manera individual para cada cliente 
+    dentro del grupo. Para más detalles vea capítulo <a href="#7.2">7.2 Aplicar pagos a nivel de cliente</a>. Para aplicar un pago grupal
+    debe ir a:
+    <h5>MENU: Operaciones cartera > Aplicar pagos</h5>
+    <p>
+    Una forma de búsqueda permite encontrar rapidamente el grupo al cual se quiere aplicar pagos usando los siguientes filtros:
+    <br /><br />
+    Criterios de búsqueda
+    <dl>
+    	<dt>Código grupo</dt>
+	<dd>Esta es la cadena alfanumérica única que identifica a cada grupo dentro del sistema. Es un patrón del tipo '021.B.03747'.</dd>
+
+	<dt>Nombre grupo</dt>
+	<dd>Este campo permite introducir una cadena parcial de caracteres como nombre de grupo, en caso de que no se tenga a mano el 
+	nombre exacto.</dd>
+
+	<dt>Asesor <sup>(*)</sup></dt>
+	<dd>Presenta una lista de todos los asesores registrados en el sistema. Debe seleccionar uno para limitar el número
+	de resultados</dd>
+
+        <dt>Programa <sup>(*)</sup></dt>
+	<dd>Presenta una lista de todos los programas registrados en el sistema. Debe seleccionar uno para limitar el número
+	de resultados</dd>
+
+    </dl>
+    <p>
+    <sup>(*)</sup> Campos obligatorios
+    <br /><br />
+    Lista de Resultados
+    <br /><br />
+    Al enviar el formulario el sistema presenta una lista de resultados con los siguientes datos:
+    <ul>
+    	<li>Nombre completo grupo
+	<li>Código del Grupo (ej. 021.B.03747)
+	<li>Mora (dias de atraso)
+    </ul>
+    <p>
+    La lista de resultados contiene también los siguientes hipervínculos:
+    <dl>
+    	<dt>Ver</dt>
+	<dd>Para visualizar la ficha del grupo, con el listado de todos sus miembros.</dd>
+
+	<dt>Seleccionar</dt>
+	<dd>Selecciona el grupo específico al cual se le quiere aplicar el pago.</dd>
+
+    </dl>
+
+    <p>
+    Ventana de aplicación del pago
+    <br /><br />
+    Para aplicar el pago haga clic convenientemente en la opción 'Seleccionar' de la lista de resultados. Esto le presentará 
+    la ventana de aplicación del pago. Antes de confirmar el pago asegúrese de verificar que los montos son los 
+    correctos. Vea además que tiene la posibilidad, de incluir o no en el pago, a los clientes de manera selectiva. Si alguno
+    de los clientes no pagó, pues se elimina de la lista de pagos y se procede con el resto.
+    <br /><br />
+    IMPORTANTE: El sistema no acepta pago de cuotas parciales a nivel de cliente. Sin embargo, es factible aceptar que un grupo
+    aplique las cuotas de los miembros que completaron y deje pendientes las de aquellos que no completaron, tal como se indica 
+    al final del párrafo anterior.
+    <br /><br />
+    Si el monto pagado esta por encima de lo que indica la ventana de aplicación del pago, entonces el extra debe aplicarse individualmente a cada
+    cliente según corresponda, como un avance al principal. Para más detalles vea capítulo correspondiente al pago con opción
+    de avance al principal.
+    
+    <h2><a id="7.6">7.6 Buscar Cheques</a></h2>
+    <p>
+    Para iniciar la búsqueda de un cheque o solicitud de cheque, debe ir a:
+    <h5>MENU: Operaciones cartera > Préstamos y cheques > Buscar cheques</h5>
+    <p>
+    Criterios de búsqueda
+    <dl>
+        <dt>No de Serie</dt>
+        <dd>Cadena alfanumérica única. Debe coincidir con el número de serie del cheque emitido en la
+        fase de desembolso del préstamo. Es un campo opcional, asi permite realizar búsquedas de solicitudes de cheques aún
+	pendientes de emisión.</dd>
+
+        <dt>Estado del cheque</dt>
+        <dd>Permite especificar el estado del cheque, puede ser:
+            <ul>
+	        <li>Pendiente
+	        <li>Aprobado
+	        <li>Desembolsado
+	        <li>Entregado
+            </ul>
+        </dd>
+
+        <dt>Tipo de Beneficiario</dt>
+        <dd>Permite especificar el tipo de beneficiario(s) del cheque (grupos o individuales).</dd>
+
+        <dt>Sucursal</dt>
+        <dd>Presenta una lista de sucursales registradas en el sistema.</dd>
+
+        <dt>Solicitado por</dt>
+        <dd>Permite seleccionar el asesor que solicito el préstamo(s) a partir de una lista de usuarios registrados del sistema.</dd>
+
+        <dt>Desde... antes de</dt>
+        <dd>Permite especificar un rango de fechas definiendo un intervalo de tiempo en el cual se puede localizar cheque(s) con un 
+        estado o estatus determinado.</dd>
+
+    </dl>
+
+    <p>
+    Lista de resultados
+    <br /><br />
+    Presenta una tabla cuyas columnas / filas especifican el no. de serie del cheque, el nombre del asesor solicitante, y la sucursal 
+    y programa a que pertenecen los beneficiarios. Contiene hipervínculos que permiten ver los detalles de los préstamo(s) asociados al 
+    cheque.
+
+    <h2><a id="7.7">7.7 Revertir pagos aplicados</a></h2>
+    <p>
+    Esta función permite revertir pagos aplicados por error. Esta acción elimina el pago, y restablece a su condición original
+    anterior al pago erróneo, todos los elementos del préstamo incluyendo plan de pagos, historial, balances, etc. Sin embargo, 
+    el sistema deja una huella de cada reversión de pagos, incluyendo autor, fecha y código del préstamo. Existen además 
+    algunas restricciones que debe tener presentes:
+    <ul>
+        <li>Pagos aplicados el dia anterior o más viejos, no pueden ser revertidos
+	<li>Solo puede revertir un pago el mismo usuario que lo aplica
+	<li>Si se revierte el pago de un préstamo involucrado en un grupo, todos los pagos aplicados al grupo en el mismo día
+	también serán revertidos.
+    </ul>
+    <p>
+    Para revertir un pago debe ir a la página principal de entrada y hacer clic al icono:
+    <h5>INICIO: Ver pagos aplicados</h5>
+    <p>
+    Se presenta una ventana flotante que contiene un formulario de búsqueda, asegúrese de llenar los filtros convenientemente. 
+    Con el envío del formulario se obtiene una lista de resultados con todos los pagos aplicados que cumplen los criterios
+    del filtro. Las lista incluirá una opción para revertir pagos si el usuario tiene los derechos necesarios.
+    
+    </body>
+</html>

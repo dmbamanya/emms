@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    <h1><a id="1">1. Introducción</a></h1>
+    <p>
+    e-MicroCredit Management System e-MMS (Microcredit Management System) es la respuesta de Esperanza 
+    International Inc., a la necesidad de las organizaciones de microfinanzas de integrar toda la gestión 
+    de la información en un sistema único, escalable, multiplataforma, abierto, y con visibilidad global.
+    <br /><br />
+    El e-MMS integra la gestión de personal, cartera de clientes, préstamos y evaluación de impacto; todo 
+    de manera intuitiva y amigable. Basado en el paradigma World Wide Web o servicio WWW de Internet, y 
+    desarrollado con tecnología Open Source, muestra beneficios importantes como:
+    <ul>
+        <li>Puede correr en un servidor de intranet y/o INTERNET.
+        <li>Amplia disponibilidad de proveedores de INTERNET hosting con soporte para el sistema.
+        <li>Sistemas operativos y software de servidores libre de pago de licencias por uso.
+        <li>Interfaz de usuario basada en el WWW (Firefox o MS Internet Explorer).
+        <li>Centralización de toda la data, con facilidades para backup de datos general, diario y automatizado.
+    </ul>
+    
+    <p>
+    A continuación presentamos una lista de los elementos claves que maneja el e-MMS
+    para modelar una IMF típica. También se incluye una breve descripción y la relación
+    entre cada elemento.
+    
+    <h4>Sucursal</h4>
+    <p>
+    Algunas IMF pequeñas operan desde una sola oficina, pero otras cuentan con
+    múltiples oficinas o agencias, repartidas por las diferentes áreas geográficas donde
+    se concentran los clientes. El e-MMS permite crear tantas sucursales como
+    sean necesarias. A medida que se van abriendo nuevas sucursales en la operativa real,
+    se pueden ir creando también en el sistema.
+
+    <h4>Usuarios</h4>
+    <p>
+    Para poder ganar acceso al e-MMS se necesita una cuenta de usuario, cada persona
+    que deba interactuar con el sistema debe tener su propia cuenta. Cada cuenta tiene
+    su clave de usuario y una contraseña. Cada usuario debe ser registrado en alguna
+    de las sucursales definidas en el sistema. A los usuarios se les puede otorgar hasta
+    8 niveles de acceso diferentes. Los niveles de acceso controlan las
+    operaciones que cada usuario puede ejecutar.
+
+    <h4>Programas</h4>
+    <p>
+    Frecuentemente las IMF operan con diferentes programas de créditos, por ejemplo
+    un programa para viviendas, otro para desarrollo de negocios, etc. El e-MMS permite
+    crear tantos programas como sean necesarios. A medida que se van abriendo nuevos
+    programas en la operativa real, se pueden ir creando también en el sistema. Cada
+    programa se puede registrar en cualquiera de las sucursales definidas, lo mismo en una,
+    que en varias, o en todas. Nota: Para que una sucursal pueda operar, debe tener
+    al menos un programa registrado.
+
+    <h4>Fondos</h4>
+    <p>
+    Es muy frecuente que desde e punto de vista contable las IMF operen con diferentes
+    fondos. El e-MMS permite crear tantos fondos como sean necesarios. A medida que se van
+    abriendo nuevos fondos contables, se pueden ir creando también en el sistema.
+    Nota: Para que un programa pueda operar, debe tener al menos un fondo registrado.
+    Aunque el sistema permite registrar un fondo en cualquiera de los programas definidos,
+    recomendamos que cada programa tenga su propio fondo. Esto se debe a que hasta el momento
+    el e-MMS incluye reportes consolidados a nivel de sucursal, usuario y programa, pero no a
+    nivel de fondo, así hasta tanto no se disponga de esta facilidad, el consolidado a nivel
+    de programa puede sustituir al de fondos.
+
+    <h4>Clientes</h4>
+    <p>
+    El sistema permite registrar una ficha con los datos personales de cada uno de sus clientes.
+    Para poder procesar una solicitud de crédito a un cliente, este debe estar registrado
+    en la cartera de clientes de algún asesor de créditos. El asesor de créditos es un
+    usuario del sistema con derechos especiales que lo acreditan como asesor de créditos.
+    Tanto el cliente como el préstamo quedarán automaticamente asociados a la misma sucursal
+    a que pertenece el asesor de crédito. Además de esto, el cliente debe estar registrado en
+    alguno de los programas disponibles dentro de su sucursal. Al momento de realizar el
+    desembolso para el crédito, este se aplica a alguno de los fondos registrados
+    en el programa a que pertenece el cliente.
+
+    <h4>Grupos</h4>
+    <p>
+    Además de clientes individuales, el e-MMS permite trabajar con grupos de clientes
+    según el modelo "village banking" de Grameen. Esto es, se crean grupos de 5 clientes
+    aproximadamente, y luego los llamados bancos o centros que están formados por hasta
+    5 grupos. El modelo de bancos permite procesar en bloque las solicitudes de préstamos,
+    pagos, etc. de hasta 25 clientes. Sin embargo, la responsabilidad sobre cada fracción del
+    préstamo es individual, y se incluyen funciones específicas para monitorear cada
+    préstamo y la responsabilidad correspondiente de manera individual. Igual que con los
+    clientes individuales, cada banco debe pertenecer a la cartera de clientes
+    de algún asesor de créditos y estar registrado en alguno de los programas de la sucursal
+    a la que pertenece. Los bancos, y todos los grupos y clientes contenidos
+    en el banco, heredan la misma sucursal a la que pertenece el asesor de créditos.
+
+    <h4>Productos de crédito</h4>
+    <p>
+    En el e-MMS se puede definir un número ilimitado de productos de créditos. Para cada
+    producto de crédito se debe especificar si este aplica para clientes individuales
+    o de bancos. Como parte del proceso de formalización de una solicitud de crédito, se
+    debe especificar alguno de los productos de crédito. Para cada producto por separado,
+    la mayoría de los parámetros se pueden marcar como flexibles. Los parámetros marcados
+    como flexibles pueden ser ajustados manualmente al momento de la formalización de cada
+    préstamo en particular. Hasta el momento, todos los productos de crédito del e-MMS
+    calculan las cuotas y/o intereses sobre saldo decreciente (declining balance). El
+    sistema incluye una función para el diseño de productos que muestra en cada momento
+    la tasa efectiva anual del producto a medida que se introducen o editan los diferentes
+    parámetros.
+
+    <h4>Ciclo de formalización de un crédito</h4>
+    <p>
+    En el e-MMS el proceso de formalización de un crédito es un ciclo que consta de fases.
+    Se espera que cada fase sea ejecutada por usuarios con diferentes niveles de acceso y/o
+    funciones dentro de la IMF, aunque un mismo usuario al que se hayan otorgado todos los
+    niveles de acceso requeridos pudiera ejecutarlo todo. Las fases principales son:
+    <br /><br />
+    Pre-Apertura -> Apertura -> Revisión -> Aprobación -> Desembolso -> Entrega 
+    <br /><br />
+    En cualquiera de las fases se puede rechazar la solicitud, lo cual dejaría a la solicitud en
+    una fase especial de "rechazo", desde donde podría eventualmente volver a entrar al
+    ciclo en la fase "Apertura". El ciclo incluye la fase especial "retractado" que
+    se puede invocar desde cualquier otra fase del ciclo excepto desde la fase "entregado".
+    Generalmente la fase "retractado" se invoca si el cliente se arrepiente de la solicitud
+    antes de recibir el efectivo, esta es una fase terminal. Una vez que el ciclo pasa a
+    la fase de entregado, empiezan a correr los intereses. La unica manera de salir de la
+    fase entregado es mediante el pago de todos los balances pendientes o el envio del préstamo
+    a la cartera de incobrables (write off). El sistema deja huellas de la fecha y autor de la
+    ejecución de cada fase, así como cualquier comentario que el autor entienda oportuno
+    apuntar como parte de la ejecución de la fase.
+
+    <h4>Negocios</h4>
+    <p>
+    Es posible configurar el sistema para que exija asociar cada crédito a un negocio
+    particular como parte de la formalización de la solicitud. Lo cual dejaría asociado al
+    préstamo con un negocio manejado por el cliente beneficiario del crédito. Cada uno de
+    los negocios debe pertenecer a algún Tipo de Negocio previamente registrado.
+    El e-MMS permite registrar un número ilimitado de Tipos de Negocios clasificados en 4
+    diferentes categorías. Esta facilidad permite explorar a que actividades se dedican
+    los clientes, cuales de estas actividades tienen un mejor desempeño crediticio, etc.
+
+    </body>
+</html>
+

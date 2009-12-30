@@ -1,0 +1,286 @@
+<html>
+    <head>
+        <title>e-MMS v2: Manual de Usuario</title>
+        <link rel="STYLESHEET" href="man.css" type="text/css">
+        <link rel="STYLESHEET" href="cap.css" type="text/css">
+    </head>
+    <body>
+  
+    <h1>MANUAL DEL USUARIO</h1>
+    
+    <h1>3. Administración</h1>
+    
+    <h2><a id="3.1">3.1 Usuarios y accesos</a></h2>
+    <p>
+    Para poder ganar acceso al e-MMS se necesita una cuenta de usuario, cada persona
+    que deba interactuar con el sistema debe tener su propia cuenta. Cada cuenta tiene
+    su clave de usuario y una contraseña. Cada usuario debe ser registrado en alguna
+    de las sucursales definidas en el sistema. A los usuarios se les puede otorgar hasta
+    8 niveles de acceso diferentes:
+    <ul>
+        <li>Usuario
+        <li>Asesor
+	<li>Supervisor
+	<li>Asistente Finanzas
+	<li>Gerente Finanzas
+	<li>Gerente Programas
+	<li>Soporte TI, Administrador
+    </ul>
+    
+    <h4>Agregar un usuario nuevo</h4>
+    <p>
+    Para agregar un usuario nuevo debe ir a:
+    <h5>MENU: Administración IMF > Usuarios > Agregar nuevo</h5>
+    <p>
+    Asegúrese de llenar convenientemente todos los campos del formulario, el sistema no le dejará
+    continuar hasta que los mismos pasen las reglas de validación establecidas. Excepto el 
+    "nombre de usuario" o username, el resto de los datos incluyendo los niveles de acceso
+    del usuario, podrá ser modificado después en cualquier momento.
+
+    <h4>Buscar y ver datos de usuarios</h4>
+    <p>
+    Para buscar y ver datos de los usuarios debe ir a:
+    <h5>MENU: Administración IMF > Usuarios > Buscar y ver</h5>
+    <p>
+    Esta función presenta un formulario de búsqueda, llene los campos del formulario convenientemente.
+    <br /><br />
+    La búsqueda producirá una lista de resultados con algunos datos preliminares de los 
+    usuarios encontrados. La lista incluye además un par de hipervínculos mostrados en color 
+    resaltado para ver o editar los datos del usuario. Para ver los datos del usuario, hacer clic 
+    en el hipervínculo correspondiente de la lista de resultados.
+    
+    <h4>Accesos</h4>
+    <p>
+    El sistema permite configurar para cada función, a que niveles les estará permitido
+    el acceso. La combinación entre los niveles requeridos para accesar una función, y los
+    niveles otorgados a cada usuario, determina si este podrá o no, ejecutar una acción.
+    <br /><br />
+    Para manejar la configuración de los accesos debe ir a:
+    <h5>MENU: Mantenimiento > Control de accesos</h5>
+    
+    <h2><a id="3.2">3.2 Sucursales</a></h2>
+    <p>
+    El e-MMS permite crear tantas sucursales como sean necesarias, hasta la versión
+    actual las sucursales se organizan en una estructura plana. La mayoría de los reportes
+    y formularios de búsqueda incluyen la opción de consolidar o filtrar los resultados
+    por sucursal.
+    <br /><br />
+    Cada sucursal puede tener registrado un número ilimitado de
+    oficiales de crédito. Los clientes registrados en la cartera de un oficial de
+    crédito quedan automaticamente asociados a la misma sucursal del oficial.
+    <br /><br />
+    Cada sucursal puede tener registrado un número ilimitado de programas de
+    crédito diferentes, un mismo programa puede estar registrado en múltiples
+    sucursales. Después que registrar un programa en una sucursal
+    no podrá deshacer esta acción. Cada cliente activo dentro de una sucursal esta
+    afiliado a uno y solo uno de los programas registrados en la sucursal. Los préstamos
+    otorgados a un cliente se deben cargar a alguno de los fondos registrados en
+    los programas de la sucursal, el sistema incluye mecanismos para hacer
+    cumplir estos requisitos, de manera que el usuario no corra el riesgo de
+    obviarlos por olvido o desconocimiento de la lógica del sistema.
+    <br /><br />
+    Para obtener un listado de las sucursales registradas en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Sucursales > Buscar & ver</h5>
+    <p>
+    Para editar los datos de una sucursal existente, incluyendo el registro de programas,
+    debe ir a:
+    <h5>MENU: Administración IMF > Sucursales > Editar existente</h5>
+    <p>
+    Para registrar una nueva sucursal debe ir a:
+    <h5>MENU: Administración IMF > Sucursales > Agregar nueva</h5>
+
+    <h2><a id="3.3">3.3 Programas</a></h2>
+    <p>
+    Frecuentemente las IMF operan con diferentes programas de créditos, por ejemplo un
+    programa para viviendas, otro para desarrollo de negocios, etc. El e-MMS permite crear
+    tantos programas como sean necesarios. Cada programa se
+    puede registrar en cualquiera de las sucursales definidas, lo mismo en una, que en
+    varias, o en todas. La mayoría de los reportes
+    y formularios de búsqueda incluyen la opción de consolidar o filtrar los resultados
+    por programa.
+    <br /><br />
+    Nota: Para que una sucursal pueda operar, debe tener al menos un
+    programa registrado.
+    <br /><br />
+    Cada cliente activo dentro de una sucursal esta
+    afiliado a uno y solo uno de los programas registrados en la sucursal. Los préstamos
+    otorgados a un cliente se deben cargar a alguno de los fondos registrados en
+    los programas de la sucursal. Cada programa puede tener registrado un número
+    ilimitado de fondos diferentes, un mismo fondo puede estar registrado en múltiples
+    programas pero recomendamos que se abstenga de usar esta facilidad pues el sistema
+    no incluye reportes consolidados por fondos. Si ud crea un fondo único para cada
+    programa, entonces los reportes consolidados en base a programas servirán como
+    reportes en base al fondo correspondiente. Después que registrar un
+    fondo en un programa no podrá deshacer esta acción.  El sistema incluye mecanismos para
+    hacer cumplir estos requisitos, de manera que el usuario no corra el riesgo de
+    obviarlos por olvido o desconocimiento de la lógica del sistema.
+    <br /><br />
+    Para obtener un listado de los programas registrados en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Programas > Buscar & ver</h5>
+    <p>
+    Para editar los datos de un programa existente, incluyendo el registro de fondos,
+    debe ir a:
+    <h5>MENU: Administración IMF > Programas > Editar existente</h5>
+    <p>
+    Para registrar un nuevo programa debe ir a:
+    <h5>MENU: Administración IMF > Programas > Agregar nuevo</h5>
+
+    <h2><a id="3.4">3.4 Fondos</a></h2>
+    <p>
+    Es muy frecuente que desde e punto de vista contable las IMF operen con diferentes fondos.
+    El e-MMS permite crear tantos fondos como sean necesarios. Aunque el sistema permite
+    registrar un mismo fondo en cualquiera de los programas definidos, recomendamos que
+    cada programa tenga su propio fondo. Esto se debe a que hasta el momento el e-MMS
+    incluye reportes consolidados a nivel de sucursal, usuario y programa, pero no a nivel
+    de fondo, así hasta tanto no se disponga de esta facilidad, el consolidado a nivel de
+    programa puede sustituir al de fondos.
+    <br /><br />
+    Nota: Para que un programa pueda operar, debe tener al menos un
+    fondo registrado.
+    <br /><br />
+    Después que registrar un fondo en un programa no podrá deshacer esta acción.  El
+    sistema incluye mecanismos para hacer cumplir estos requisitos, de manera que el
+    usuario no corra el riesgo de obviarlos por olvido o desconocimiento de la lógica
+    del sistema.
+    <br /><br />
+    Para obtener un listado de los fondos registrados en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Fondos > Buscar & ver</h5>
+    <p>
+    Para editar los datos de un fondo existente, incluyendo desactivar el fondo,
+    debe ir a:
+    <h5>MENU: Administración IMF > Fondos > Editar existente</h5>
+    <p>
+    Para registrar un nuevo fondo debe ir a:
+    <h5>MENU: Administración IMF > Fondos > Agregar nuevo</h5>
+
+    <h2><a id="3.5">3.5 Productos de crédito</a></h2>
+    <p>
+    En el e-MMS se puede definir un número ilimitado de productos de créditos. Para
+    cada producto de crédito se debe especificar si este aplica para clientes individuales
+    o de bancos. Como parte del proceso de formalización de una solicitud de crédito,
+    se debe especificar alguno de los productos de crédito. Para cada producto por
+    separado, la mayoría de los parámetros se pueden marcar como flexibles. Los
+    parámetros marcados como flexibles pueden ser ajustados manualmente al momento
+    de la formalización de cada préstamo en particular. Hasta el momento, todos
+    los productos de crédito del e-MMS calculan las cuotas y/o intereses sobre saldo
+    decreciente (declining balance). El sistema incluye una función para el diseño
+    de productos que muestra en cada momento la tasa efectiva anual del producto
+    a medida que se introducen o editan los diferentes parámetros.
+    
+    <h4>Parámetros disponibles para el diseño de productos de crédito</h4>
+
+    <ul>
+        <li>Tipo - Para grupos o individuales
+        <li>Moneda
+	<li>Calendario - 360 o 365 días
+	<li>Frecuencia de pagos - Semanal, bisemanal, mensual, trimestral, semestral y anual
+	<li>Margen de garantías <sup>(Flexible)</sup> - Expresado en porciento del monto del préstamo. El valor
+            total de las garantías de un préstamo debe ser igual o mayor a la suma del
+            monto del préstamo y el monto equivalente al margen de garantías.
+	<li>Plazo <sup>(Flexible)</sup> - Expresado en días, indica el plazo en que
+            el préstamo debe ser recuperado en su totalidad.
+	<li>Comisión <sup>(Flexible)</sup>  - Expresado en porciento del principal,
+            se calcula por adelantado pero se cobra como un
+            componente de las cuotas regulares. Se le aplica el cobro intereses igual
+            que al principal.
+        <li>Seguros <sup>(Flexible)</sup>  - Expresado en porciento del principal,
+            se calcula por adelantado pero se cobra como un
+            componente de las cuotas regulares. Se le aplica el cobro intereses igual
+            que al principal.
+        <li>Interés anual <sup>(Flexible)</sup> - Sobre saldo decreciente.
+        <li>Mora <sup>(Flexible)</sup> - Penalidad, expresado en porciento diario
+            sobre el monto vencido no pagado. En caso de varios
+            cuotas vencidas en diferentes fechas, la mora o penalidad se calcula
+            por separado para cada cuota. No se capitaliza.
+        <li>Gracia de la mora <sup>(Flexible)</sup> - Expresado en días, indica el
+            atraso en que puede incurrir el cliente para el pago de la cuota sin
+            ser penalizado. Aunque un préstamo esté protegido por
+            el período de gracia, aparecerá en los reportes de atraso. La penalidad
+            aplicada a préstamos atrasados fuera del período de gracia, cuenta desde
+            el primer dia de atraso.
+        <li>Ahorro programado  <sup>(Flexible)</sup> - Expresado en porciento del
+            principal del préstamo, se espera que este monto sea abonado en cuotas iguales
+            junto con la cuota normal del préstamo, pero no se aplican intereses
+            ni penalidades por atraso. El sistema no incluye todavía un módulo
+            para manejo de ahorros, de manera que los pagos de este componente de la
+            cuota no se registra realmente, solo se incluye en la hoja de colección de pago
+            como un recordatorio al oficial de crédito, del monto esperado a colectar
+            para hacer los depositos en las cuentas de ahorro correspondientes.
+        <li>Tasa anual efectiva - Valor de solo lectura, refleja la tasa anual efectiva
+            considerando además comisiones y seguros.
+    </ul>
+    <p>
+    <sup>(Flexible)</sup> Para cada préstamo, los parámetros marcados
+    como flexibles pueden ser modificados selectivamente, a menos que en la definición
+    del producto de crédito a que corresponde el préstamo, haya sido bloqueado el caracter
+    flexible del parámetro. El bloqueo del caracter flexible de un parámetro se puede
+    decidir independientemente para cada producto. Esta facilidad permite diseñar
+    productos cuyas condiciones sean negociables.
+    <br /><br />
+    Para obtener un listado de los productos registrados en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Productos préstamos > Buscar y ver</h5>
+    <p>
+    Para editar los datos de un producto existente debe ir a:
+    <h5>MENU: Administración IMF > Productos préstamos > Editar existente</h5>
+    <p>
+    Para registrar un nuevo producto debe ir a:
+    <h5>MENU: Administración IMF > Productos préstamos > Agregar nuevo</h5>
+
+    <h2><a id="3.6">3.6 Negocios de clientes</a></h2>
+    <p>
+    Es posible configurar el sistema para que exija asociar cada crédito a un negocio
+    particular como parte de la formalización de la solicitud. Lo cual dejaría asociado
+    al préstamo con un negocio manejado por el cliente beneficiario del crédito.
+    Cada uno de los negocios debe pertenecer a algún Tipo de Negocio previamente
+    registrado. En el sistema los Tipos de Negocios se
+    clasifican en 4 diferentes categorías o actividades. Esta facilidad permite explorar a que
+    actividades se dedican los clientes, cuales de estas actividades tienen un mejor
+    desempeño crediticio, etc.
+    <br /><br />
+    <h4>Actividades</h4>
+    <p>
+    Las 4 actividades en que se clasifican los Tipos de negocios son:
+    <ul>
+        <li>Servicios
+        <li>Comercio
+        <li>Industrial
+        <li>Agropecuario
+    </ul>
+    <h4>Tipos de negocio</h4>
+    <p>
+    El sistema permite registrar un número ilimitado de Tipos de Negocios, sin embargo
+    recomendamos una política cuidadosa en este sentido, para facilitar cualquier estudio
+    o analisis posterior. Después que registrar un Tipo de negocio no podrá deshacer
+    esta acción.
+    <br /><br />
+    Para obtener un listado de los Tipos de negocios registrados en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Negocios > Tipos > Buscar & ver</h5>
+    <p>
+    Para editar los datos de un Tipo de negocio existente debe ir a:
+    <h5>MENU: Administración IMF > Negocios > Tipos > Editar existente</h5>
+    <p>
+    Para registrar un nuevo Tipo de negocio debe ir a:
+    <h5>MENU: Administración IMF > Negocios > Tipos > Agregar nuevo</h5>
+
+    <h4>Negocios</h4>
+    <p>
+    El sistema permite registrar un número ilimitado de negocios por cada
+    cliente. Después que registrar un Negocio a nombre de un cliente no podrá deshacer
+    esta acción.
+    <br /><br />
+    Para obtener un listado de los Negocios registrados en el sistema debe ir a:
+    <h5>MENU: Administración IMF > Negocios > Buscar & ver</h5>
+    <p>
+    Llene convenientemente los filtros de búsqueda y haga clic en aceptar. Desde la
+    lista de resultados tendrá la opción de entrar a ver la ficha de datos
+    del Negocio o entrar al formulario de edición.
+    <br /><br />
+    Para registrar un nuevo Negocio tiene dos alternativas. 1) Desde la ficha
+    de dato del cliente haga clic al ícono de Agregar negocio. 2) Ir a:
+    <h5>MENU: Administración IMF > Negocios > Tipos > Agregar nuevo</h5>
+    <p>
+    Para agregar un Negocio según la alternativa 2, debe saber de antemano el código
+    del cliente a quien pertenece el Negocio.
+
+    </body>
+</html>
