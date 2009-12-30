@@ -9,7 +9,6 @@
 $_SERVER['HTTPS'] ? session_set_cookie_params(0,'/','',true,true) :  session_set_cookie_params(0,'/','',false,true);
 
 error_reporting(E_ERROR);
-include_once 'includes/trace.debugger.php';
 require_once 'class/webpage.php';
 require_once 'class/sql.php';
 require_once 'PEAR.php';
