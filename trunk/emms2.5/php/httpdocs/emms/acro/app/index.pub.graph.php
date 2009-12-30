@@ -1,6 +1,5 @@
 <?php
 error_reporting(E_ERROR);
-include_once 'includes/trace.debugger.php';
 require_once 'class/webpage.php';
 require_once 'class/sql.php';
 require_once 'PEAR.php';

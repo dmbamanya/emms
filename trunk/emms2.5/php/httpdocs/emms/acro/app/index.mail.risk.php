@@ -1,11 +1,9 @@
 <?php
-//error_reporting(E_ERROR);
 error_reporting(E_ALL);
 require_once 'class/webpage.php';
 require_once 'class/sql.php';
 require_once 'PEAR.php';
 require_once './includes/ST.LIB.login.inc';
-//include_once 'includes/trace.debugger.php';
 require_once ("Mail.php");
 require_once ("Mail/mime.php"); 
 
