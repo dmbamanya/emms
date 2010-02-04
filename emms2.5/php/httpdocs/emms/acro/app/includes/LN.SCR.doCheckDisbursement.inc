@@ -30,7 +30,10 @@ $form->addElement('select',   'fund',         WEBPAGE::$gt['tblFunds.id'],      
 $form->addElement('select',   'sponsor_id',   WEBPAGE::$gt['tblSponsors.sponsor'], (array(''=>'') + array_intersect_key($sponsor->getSponsorsByBalance($master->data['amount']),$sponsor->getSponsorsByZone($master->getBorrowerZone()))), 'class=large');
 $form->addElement('textarea', 'memo',         WEBPAGE::$gt['memo'], 'rows=5');
 
-$form->addRule('check_number', sprintf(WEBPAGE::$gt['rangelength'],1,32),'required');
+$form->addRule('check_number',   sprintf(WEBPAGE::$gt['rangelength'],4,32),'required');
+$form->registerRule('checkcode', 'callback', 'checkcode');
+$form->addRule('check_number', 	 sprintf(WEBPAGE::$gt['rangelength'],4,32), 'checkcode', true);
+
 $form->addRule('fund',         WEBPAGE::$gt['selectOption'],'required');
 $form->addRule('fund',         WEBPAGE::$gt['selectOption'],'alphanumeric');
 $form->addRule('memo',         sprintf(WEBPAGE::$gt['maxlength'],255),'maxlength', 255);
@@ -86,5 +89,11 @@ if ($form->validate())
   require_once './includes/LN.SCR.viewLoanMasterPrintable.inc';
 }
 
+function checkcode($code)
+{
+  $c = explode(' ', $code);
+  if (count($c) > 1) return false;
+  return true;
+}
 ?>
 

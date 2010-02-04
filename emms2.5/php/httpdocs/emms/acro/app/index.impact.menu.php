@@ -17,16 +17,21 @@ require_once "Spreadsheet/Excel/Writer.php";
 WEBPAGE::START();
 
 WEBPAGE::LOAD_SESSION();
-WEBPAGE::$lang = isset($_GET['lang']) ? $_GET['lang'] : 'eng';
+WEBPAGE::$lang = 'en';
 WEBPAGE::load_gt();
 
 // check run mode
-switch (WEBPAGE::$runMode) {
+switch (WEBPAGE::$runMode)
+{
   case WEBPAGE::_RUN_MODE_OUTDATED:
     exit;
-  }
+}
 
-switch ($_GET['option']) {
+$opt = is_numeric($_GET['option']) ? $_GET['option'] : 0;
+$r_i = is_numeric($_GET['i'])      ? $_GET['i']      : 0;
+$r_j = is_numeric($_GET['j'])      ? $_GET['j']      : 0;
+
+switch ($opt) {
   case '1':
     $data = WEBPAGE::$dbh->getAll(sprintf("select id,category,question,answer_txt from tblSurveyItems where id > 9"));
     $head = array('id'=>'Question Code', 'category' => 'Category', 'question'=>'Questions','answer_txt'=>'Answers');
@@ -58,12 +63,12 @@ switch ($_GET['option']) {
     $opt = "business.xls";
     break;
   case '7':
-    $data = WEBPAGE::$dbh->getAll(sprintf("select l.id code,ELT(FIELD(l.status,'N','R','O','S','A','D','G','C','LI','LO','RT','RO'),'New','Rejected','Open','Revised','Approved','Disbursed','Delivered','Cancelled','Legal process','Legal process solved','Retraction','Re-opened') status,l.client_id client,l.business_id business,l.installment,l.fees_at,l.fees_af,l.rates_r,l.rates_d,l.rates_e,l.margin_d,l.kp,l.kat,l.kaf,l.pmt,l.savings_p,l.savings_v,z.short_name branch,p.program program,u.username,l.delivered_date,l.first_payment_date,l.xp_cancel_date,l.xp_num_pmt from tblLoans l, tblUsers u, tblPrograms p, tblZones z where u.id = l.advisor_id and p.id = l.program_id and z.id = l.zone_id"));
+    $data = WEBPAGE::$dbh->getAll(sprintf("select l.id code,ELT(FIELD(l.status,'N','R','O','S','A','D','G','C','LI','LO','RT','RO'),'New','Rejected','Open','Revised','Approved','Disbursed','Delivered','Cancelled','Legal process','Legal process solved','Retraction','Re-opened') status,l.client_id client,l.business_id business,l.installment,l.fees_at,l.fees_af,l.rates_r,l.rates_d,l.rates_e,l.margin_d,l.kp,l.kat,l.kaf,l.pmt,l.savings_p,l.savings_v,z.short_name branch,p.program program,u.username,l.delivered_date,l.first_payment_date,l.xp_cancel_date,l.xp_num_pmt from tblLoans l, tblUsers u, tblPrograms p, tblZones z where u.id = l.advisor_id and p.id = l.program_id and z.id = l.zone_id limit %s,%s",$r_i,$r_j));
     $head = array('code' => 'Code', 'status' => 'Status', 'client' => 'Client', 'business' => 'Business', 'installment' => 'Installment', 'fees_at' => 'Fees', 'fees_af' => 'Insurance','rates_r' => 'Interest','rates_d' => 'Penalties','rates_e' => 'Eff. Rate','margin_d' => 'PenaltiesGrace','kp' => 'Amount disbursed','kat' => 'Fees $','kaf' => 'Insurance $','pmt' => 'Cuotas','savings_p' => 'Compulsory savings','savings_v' => 'Voluntary savings','branch' => 'Branch','program' => 'Program','username' => 'Loan officer','delivered_date' => 'Disburse date','first_payment_date' => 'Expected 1st pmt date','xp_cancel_date' => 'Expected cancel date','xp_num_pmt' => 'Expected num. pmts' );
     $opt = "loans.xls";
     break;
   default:
-?>
+    ?>
     <ul>
       <li><a href="index.impact.menu.php?option=1">Questions</a>
       <li><a href="index.impact.menu.php?option=2">Answers</a>
@@ -71,9 +76,19 @@ switch ($_GET['option']) {
       <li><a href="index.impact.menu.php?option=4">Old Clients</a>
       <li><a href="index.impact.menu.php?option=5">Client desertion</a>
       <li><a href="index.impact.menu.php?option=6">Business</a>
-      <li><a href="index.impact.menu.php?option=7">Loans</a>
+      <li><a>Loans</a>
+        <ul>
+        <?
+        $c = WEBPAGE::$dbh->getAll('select count(id) n from tblLoans');
+        $j = 10000;
+        for($i=0;$i<=$c[0]['n'];$i=$i+$j)
+        {
+          printf("<li><a href='index.impact.menu.php?option=7&i=%s&j=%s'>From %s to %s</a>",$i,$j,$i+1,min($i+$j,$c[0]['n']));
+        }
+        ?>
+        </ul>
     </ul>
-<?
+    <?
     exit;
   }
 
@@ -95,5 +110,3 @@ foreach ( $data as $key => $val) {
 
 $xls->close();
 ?>
-
-
