@@ -91,7 +91,11 @@ foreach($credit_data as $key=>$row)
   $data[$key]['xp_num_pmt']        = sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_pmt_plan'],'LN.SCR.pmtPlan','id',$row['id'],'LN.SCR.pmtPlan','no','yes','no','780','400',$row['xp_num_pmt']);
   $data[$key]['payment_frequency'] = WEBPAGE::$gt[sprintf('tblLoanTypes.payment_frequency.%s',$row['payment_frequency'])];
 }
-$tpl->setVariable('chart', WEBPAGE::printchart($data,$head));
+if (count($credit_data) > 0)
+{
+  $tpl->setVariable('chart', WEBPAGE::printchart($data,$head));
+  $tpl->setVariable('chart_label', WEBPAGE::$gt['credits']);
+}
 
 include './includes/ST.SCR.buttonMan.inc';
 

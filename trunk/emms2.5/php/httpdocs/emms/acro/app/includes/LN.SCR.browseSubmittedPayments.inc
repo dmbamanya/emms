@@ -10,40 +10,39 @@ require_once 'class/loan_type.php';
 require_once 'class/loan.php';
 require_once 'class/stdo.php';
 
-// echo $_SERVER['HTTP_REFERER'];
-// exit;
-
 $data = array();
 parse_str($_SERVER['HTTP_REFERER'],$data);
 
-if (array_shift($data) == 'LN.SCR.deletePayment') { 
-  $_POST['zone_id'] 		= $data['zone_id']; 
-  $_POST['advisor_id'] 		= $data['advisor_id'] ? $data['advisor_id'] : '%%'; 
-  $_POST['date'] 			= $data['date']; 
-  $_POST['borrower_type'] 	= $data['borrower_type'] ? $data['borrower_type'] : '%%'; 
-  $_POST['submit'] 			= true; 
+if (array_shift($data) == 'LN.SCR.deletePayment')
+{ 
+  $_POST['zone_id']       = $data['zone_id'];
+  $_POST['advisor_id']    = $data['advisor_id']    ? $data['advisor_id']    : '%%';
+  $_POST['date']          = $data['date'];
+  $_POST['borrower_type'] = $data['borrower_type'] ? $data['borrower_type'] : '%%';
+  $_POST['submit']        = true;
   $tpl->setVariable('message', 	WEBPAGE::printmessage('scs',WEBPAGE::$gt['scs']));
-  }
+}
 
 $form = new HTML_QuickForm('searchForm','POST');
 
-$form->addElement('static', 	'submit', 	'', WEBPAGE::$btn->imgsubmit('searchForm',WEBPAGE::$gt['search']));
-$form->addElement('static', 	'reset', 	'', WEBPAGE::$btn->imgreset('searchForm',WEBPAGE::$gt['reset']));
-$form->addElement('static', 	'cancel', 	'', WEBPAGE::$btn->imglink($PHP_SELF,WEBPAGE::$gt['cancel']));
-$form->addElement('hidden',		'scr_name',		$_REQUEST['scr_name']);
+$form->addElement('static', 'submit', 	'',  WEBPAGE::$btn->imgsubmit('searchForm',WEBPAGE::$gt['search']));
+$form->addElement('static', 'reset', 	'',  WEBPAGE::$btn->imgreset('searchForm',WEBPAGE::$gt['reset']));
+$form->addElement('static', 'cancel', 	'',  WEBPAGE::$btn->imglink($PHP_SELF,WEBPAGE::$gt['cancel']));
+$form->addElement('hidden', 'scr_name',      $_REQUEST['scr_name']);
 
-$form->addElement('text',		'date',			WEBPAGE::$gt['date'], 'class=large');
+$form->addElement('text',   'date',          WEBPAGE::$gt['date'], 'class=large');
 
-$form->addElement('select',		'zone_id',		WEBPAGE::$gt['tblUsers.zone_id'],			($zones 			= array('%%'=>'') + USER::zones()), 				'class=large');
-$form->addElement('select',		'advisor_id',	WEBPAGE::$gt['tblClients.advisor_id'],		($advisors 			= array('%%'=>'') + CLIENT::advisors()), 			'class=large');
-$form->addElement('select',		'borrower_type',WEBPAGE::$gt['tblLoanTypes.borrower_type'],	($borrower_types 	= array('%%'=>'') + LOAN_TYPE::borrower_types()), 	'class=large');
+$form->addElement('select', 'zone_id',       WEBPAGE::$gt['tblUsers.zone_id'],           ($zones          = array('%%'=>'') + USER::zones()),               'class=large');
+$form->addElement('select', 'advisor_id',    WEBPAGE::$gt['tblClients.advisor_id'],      ($advisors       = array('%%'=>'') + CLIENT::advisors()),          'class=large');
+$form->addElement('select', 'borrower_type', WEBPAGE::$gt['tblLoanTypes.borrower_type'], ($borrower_types = array('%%'=>'') + LOAN_TYPE::borrower_types()), 'class=large');
 
-$form->addRule('date',			'yyyy-mm-dd',			'required');
-$form->addRule('date',			'yyyy-mm-dd',			'regex','(^([0-9]{4}-[0-9]{2}-[0-9]{2})$)');
-$form->addRule('zone_id',		WEBPAGE::$gt['selectOption'],'required');
-$form->addRule('zone_id',		WEBPAGE::$gt['selectOption'],'numeric');
+$form->addRule('date',    'yyyy-mm-dd', 'required');
+$form->addRule('date',    'yyyy-mm-dd', 'regex','(^([0-9]{4}-[0-9]{2}-[0-9]{2})$)');
+$form->addRule('zone_id', WEBPAGE::$gt['selectOption'],'required');
+$form->addRule('zone_id', WEBPAGE::$gt['selectOption'],'numeric');
 
-if ($form->validate()) { 
+if ($form->validate())
+{ 
   $values = $form->_submitValues;
   $form->freeze();
   $form->removeElement('submit');
