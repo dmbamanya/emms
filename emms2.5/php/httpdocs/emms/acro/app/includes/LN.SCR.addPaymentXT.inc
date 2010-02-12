@@ -12,44 +12,49 @@ require_once 'class/loan.php';
 
 $loan = new LOAN($_REQUEST['id']);
 $loan->load_borrower($loan->data['client_id']);
-if (!count(WEBPAGE::$dbh->getAll(sprintf("select loan_id from tblLoansCurrentData where loan_id = %s", $loan->data['id'])))) {
+if (!count(WEBPAGE::$dbh->getAll(sprintf("select loan_id from tblLoansCurrentData where loan_id = %s", $loan->data['id']))))
+{
   echo WEBPAGE::$gt['applyPayment.err']; exit;
-  }
-if ($loan->data['xp_pmt_date'] < $loan->data['cn_date']) {
+}
+if ($loan->data['xp_pmt_date'] < $loan->data['cn_date'])
+{
   echo WEBPAGE::$gt['applyPayment.err']; exit;
-  }
+}
 
-//# cuotas ya pagadas
+/*
+ * # cuotas ya pagadas
+ */
 $c = current(WEBPAGE::$dbh->getAssoc(sprintf("select loan_id,count(id) from tblPayments where loan_id = %s group by loan_id",$loan->data['id'])));
 
 $totals = array('inx'=>WEBPAGE::$gt['total'],'date'=>'-','fees'=>0,'insurances'=>0,'principal'=>0,'interest'=>0,'delay'=>0,'penalties'=>0,'pmt'=>0,'balance_kp'=>'-');
 
-$balance						= $loan->data['balance_kp'] + $loan->data['balance_kaf'] + $loan->data['balance_kat'];
-$date 							= new Date($loan->data['r_from_date']);
+$balance = $loan->data['balance_kp'] + $loan->data['balance_kaf'] + $loan->data['balance_kat'];
+$date = new Date($loan->data['r_from_date']);
 $n = 0;
-while ($date->format('%Y-%m-%d') != $loan->data['cn_date']) {
+while ($date->format('%Y-%m-%d') != $loan->data['cn_date'])
+{
   $date->addSeconds(24*60*60);
   $n++;
-  }
+}
 
-$pmt[$c]['inx']					= $c + 1;
-$pmt[$c]['date']				= $loan->data['cn_date'];
-$pmt[$c]['fees']				= 0;
-$pmt[$c]['insurances']			= 0;
-$pmt[$c]['principal']			= 0;
-$pmt[$c]['interest']			= round(($balance*(0.01*$loan->data['rates_r']/$loan->data['calendar_type'])*$n),2);
-$pmt[$c]['delay']				= 0;
-$pmt[$c]['penalties']			= 0;
-$pmt[$c]['pmt']					= $pmt[$c]['interest'];
-$pmt[$c]['balance_kp']			= $loan->data['balance_kp'];
+$pmt[$c]['inx']        = $c + 1;
+$pmt[$c]['date']       = $loan->data['cn_date'];
+$pmt[$c]['fees']       = 0;
+$pmt[$c]['insurances'] = 0;
+$pmt[$c]['principal']  = 0;
+$pmt[$c]['interest']   = round(($balance*(0.01*$loan->data['rates_r']/$loan->data['calendar_type'])*$n),2);
+$pmt[$c]['delay']      = 0;
+$pmt[$c]['penalties']  = 0;
+$pmt[$c]['pmt']        = $pmt[$c]['interest'];
+$pmt[$c]['balance_kp'] = $loan->data['balance_kp'];
 
-$totals['fees']					= 0;
-$totals['insurances']			= 0;
-$totals['principal']			= 0;
-$totals['interest']				= $pmt[$c]['interest'];
-$totals['delay']				= 0;
-$totals['penalties']			= 0;
-$totals['pmt']					= $pmt[$c]['interest'];
+$totals['fees']        = 0;
+$totals['insurances']  = 0;
+$totals['principal']   = 0;
+$totals['interest']    = $pmt[$c]['interest'];
+$totals['delay']       = 0;
+$totals['penalties']   = 0;
+$totals['pmt']         = $pmt[$c]['interest'];
 
 $pmt[$c+1] = $totals;
 
@@ -58,46 +63,48 @@ $form = new HTML_QuickForm('applyForm','POST');
 
 $defaults = array('pmt_min'=>$totals['pmt'], 'pmt_max'=>$totals['pmt']+$balance);
 
-$form->addElement('hidden',		'scr_name',		$_REQUEST['scr_name']);
-$form->addElement('hidden',		'ref',			$_REQUEST['ref']);
-$form->addElement('hidden',		'id',			$_REQUEST['id']);
-$form->addElement('static',		'pmt_min',		WEBPAGE::$gt['pmtMin']);
-$form->addElement('static',		'pmt_max',		WEBPAGE::$gt['pmtMax']);
-$form->addElement('text',		'amount',		WEBPAGE::$gt['amount'],$_REQUEST['amount']);
-$form->addElement('text',		'notes',		WEBPAGE::$gt['memo'], 'class=large');
-$form->addElement('static', 	'submit', 		'', $btn->imgsubmit('applyForm',WEBPAGE::$gt['submit']));
+$form->addElement('hidden', 'scr_name',   $_REQUEST['scr_name']);
+$form->addElement('hidden', 'ref',        $_REQUEST['ref']);
+$form->addElement('hidden', 'id',         $_REQUEST['id']);
+$form->addElement('static', 'pmt_min',    WEBPAGE::$gt['pmtMin']);
+$form->addElement('static', 'pmt_max',    WEBPAGE::$gt['pmtMax']);
+$form->addElement('text',   'amount',     WEBPAGE::$gt['amount'],$_REQUEST['amount']);
+$form->addElement('text',   'notes',      WEBPAGE::$gt['memo'], 'class=large');
+$form->addElement('static', 'submit', '', $btn->imgsubmit('applyForm',WEBPAGE::$gt['submit']));
 
-$form->addRule('amount',	WEBPAGE::$gt['required'], 	'required');
-$form->addRule('amount',	sprintf(WEBPAGE::$gt['numericRange'],$defaults['pmt_min'],$defaults['pmt_max']), 'numeric');
-$form->addRule('amount',	sprintf(WEBPAGE::$gt['numericRange'],$defaults['pmt_min'],$defaults['pmt_max']), 'callback', 'checkamount');
-function checkamount() {
+$form->addRule('amount', WEBPAGE::$gt['required'], 'required');
+$form->addRule('amount', sprintf(WEBPAGE::$gt['numericRange'],$defaults['pmt_min'],$defaults['pmt_max']), 'numeric');
+$form->addRule('amount', sprintf(WEBPAGE::$gt['numericRange'],$defaults['pmt_min'],$defaults['pmt_max']), 'callback', 'checkamount');
+
+function checkamount()
+{
   global $defaults;
-  if ($_REQUEST['amount'] < $defaults['pmt_min']) 	{ return false; }
-  if ($_REQUEST['amount'] > $defaults['pmt_max']) 	{ return false; }
-  if ($_REQUEST['amount'] <= 0) 					{ return false; }
+  if ($_REQUEST['amount'] < $defaults['pmt_min']) { return false; }
+  if ($_REQUEST['amount'] > $defaults['pmt_max']) { return false; }
+  if ($_REQUEST['amount'] <= 0)                   { return false; }
   return true;
-  }
+}
 
 
-if ($form->validate()) {
-
+if ($form->validate())
+{
   $receipt_data = WEBPAGE::$dbh->getAll(sprintf("select max(p.id) as last_pID from tblPayments as p, tblLoansMasterDetails as lmd, tblLoans as l where lmd.master_id = %s and p.loan_id = lmd.loan_id", $loan->data['master_id']));
 
-  $data['pmt'] 			= $_REQUEST['amount'];
-  $data['penalties'] 	= 0;
-  $data['delay'] 		= 0;
-  $data['interest'] 	= $pmt[$c]['interest'];
-  $data['insurances']	= round($loan->data['P_KAF']*($_REQUEST['amount'] - $data['interest']),2);
-  $data['fees']			= round($loan->data['P_KAT']*($_REQUEST['amount'] - $data['interest']),2);
-  $data['principal']	= $_REQUEST['amount'] - $data['interest'] - $data['insurances'] - $data['fees'];
-  $data['balance_kp']	= $loan->data['balance_kp'] 	- $data['principal'];
-  $data['balance_kaf']	= $loan->data['balance_kaf'] 	- $data['insurances'];
-  $data['balance_kat']	= $loan->data['balance_kat'] 	- $data['fees'];
+  $data['pmt']         = $_REQUEST['amount'];
+  $data['penalties']   = 0;
+  $data['delay']       = 0;
+  $data['interest']    = $pmt[$c]['interest'];
+  $data['insurances']  = round($loan->data['P_KAF']*($_REQUEST['amount'] - $data['interest']),2);
+  $data['fees']        = round($loan->data['P_KAT']*($_REQUEST['amount'] - $data['interest']),2);
+  $data['principal']   = $_REQUEST['amount'] - $data['interest'] - $data['insurances'] - $data['fees'];
+  $data['balance_kp']  = $loan->data['balance_kp']  - $data['principal'];
+  $data['balance_kaf'] = $loan->data['balance_kaf'] - $data['insurances'];
+  $data['balance_kat'] = $loan->data['balance_kat'] - $data['fees'];
 
-  $loan->data['balance_kp']			= $data['balance_kp'];
-  $loan->data['balance_kaf']		= $data['balance_kaf'];
-  $loan->data['balance_kat']		= $data['balance_kat'];
-  $loan->data['r_from_date']		= $loan->data['cn_date'];
+  $loan->data['balance_kp'] = $data['balance_kp'];
+  $loan->data['balance_kaf'] = $data['balance_kaf'];
+  $loan->data['balance_kat'] = $data['balance_kat'];
+  $loan->data['r_from_date'] = $loan->data['cn_date'];
 
   $ndata = $loan->getNextPaymentData();
 
@@ -108,39 +115,53 @@ if ($form->validate()) {
   $loan->data['balance_kp'] ? '' : $loan->cancelled();
 
 // add receipt stuff
-  if(( $n = count($pmtIDs)) > 0) {
-  	$balance = WEBPAGE::$dbh->getAll(sprintf("select lmd.master_id, sum(lcd.balance_kp) balance_kp, sum(lcd.balance_kat) balance_kat, sum(balance_kaf) balance_kaf from tblLoansCurrentData lcd, tblLoansMasterDetails lmd where lmd.master_id = %s and lcd.loan_id = lmd.loan_id group by lmd.master_id",$loan->data['master_id']));
-    if (count($balance) != 1) {
+  if(( $n = count($pmtIDs)) > 0)
+  {
+    $balance = WEBPAGE::$dbh->getAll(sprintf("select lmd.master_id, sum(lcd.balance_kp) balance_kp, sum(lcd.balance_kat) balance_kat, sum(balance_kaf) balance_kaf from tblLoansCurrentData lcd, tblLoansMasterDetails lmd where lmd.master_id = %s and lcd.loan_id = lmd.loan_id group by lmd.master_id",$loan->data['master_id']));
+    if (count($balance) != 1)
+    {
       $balance_kp = 0; $balance_kaf = 0; $balance_kat = 0;
-      } else {
+    } else {
       $balance_kp = $balance[0]['balance_kp']; $balance_kaf = $balance[0]['balance_kaf']; $balance_kat = $balance[0]['balance_kat'];
-      }
+    }
     $receipt_id = SQL::insert('tblReceipts',array('loanmaster_id'=>$loan->data['master_id'],'balance_kp'=>$balance_kp,'balance_kaf'=>$balance_kaf,'balance_kat'=>$balance_kat,'notes'=>$_REQUEST['notes'],'flag_a'=>$_REQUEST['pmt_receipt_flag_a'] ? 1 : 0,'flag_b'=>$_REQUEST['pmt_receipt_flag_b'] ? 1 : 0,'user_id'=>WEBPAGE::$userID,'date'=>date('Y-m-d')));
     $lnkData = array();
-    foreach($pmtIDs as $key=>$val) {
+    foreach($pmtIDs as $key=>$val)
+    {
       $lnkData[] = sprintf("(%s,%s)",$receipt_id,$val);
-      }
+    }
     SQL::insert_mult('tblLinkReceiptsPayments','receipt_id,payment_id',implode(',',$lnkData));
     WEBPAGE::redirect(sprintf("index.popup.php?scr_name=LN.SCR.viewReceipt&id=%s",$receipt_id));
-    }
+  }
 
 //  WEBPAGE::redirect(sprintf("index.popup.php?scr_name=LN.SCR.paymentReceipt&master_id=%s&last_pID=%s",  $loan->data['master_id'],max(0,$receipt_data[0]['last_pID'])));
 
-  } else {
+} else {
 
-  $tpl->setVariable('form_name',			WEBPAGE::$gt['LN.SCR.addPaymentXT']);
-  $tpl->setVariable('loan_code_label',		WEBPAGE::$gt['tblLoans.loan_code']);
-  $tpl->setVariable('loan_code',			$loan->data['loan_code']);
-  $tpl->setVariable('client_label',			WEBPAGE::$gt['tblClients.id']);
-  $tpl->setVariable('borrower_name',		$loan->data['borrower_name']);
-  $tpl->setVariable('borrower_code',		$loan->data['borrower_code']);
+  $tpl->setVariable('form_name',       WEBPAGE::$gt['LN.SCR.addPaymentXT']);
+  $tpl->setVariable('loan_code_label', WEBPAGE::$gt['tblLoans.loan_code']);
+  $tpl->setVariable('loan_code',       $loan->data['loan_code']);
+  $tpl->setVariable('client_label',    WEBPAGE::$gt['tblClients.id']);
+  $tpl->setVariable('borrower_name',   $loan->data['borrower_name']);
+  $tpl->setVariable('borrower_code',   $loan->data['borrower_code']);
 
+  $head = array
+          (
+            'inx'        => WEBPAGE::$gt['tblPayments.id'],
+            'date'       => WEBPAGE::$gt['tblPayments.date'],
+            'fees'       => WEBPAGE::$gt['tblPayments.fees'],
+            'insurances' => WEBPAGE::$gt['tblPayments.insurances'],
+            'principal'  => WEBPAGE::$gt['tblPayments.principal'],
+            'interest'   => WEBPAGE::$gt['tblPayments.interest'],
+            'delay'      => WEBPAGE::$gt['tblPayments.delay'],
+            'penalties'  => WEBPAGE::$gt['tblPayments.penalties'],
+            'pmt'        => WEBPAGE::$gt['tblPayments.pmt'],
+            'balance_kp' => WEBPAGE::$gt['tblPayments.balance_kp']
+          );
 
-  $head = array(WEBPAGE::$gt['tblPayments.id'],WEBPAGE::$gt['tblPayments.date'],WEBPAGE::$gt['tblPayments.fees'],WEBPAGE::$gt['tblPayments.insurances'],WEBPAGE::$gt['tblPayments.principal'],WEBPAGE::$gt['tblPayments.interest'],WEBPAGE::$gt['tblPayments.delay'],WEBPAGE::$gt['tblPayments.penalties'],WEBPAGE::$gt['tblPayments.pmt'],WEBPAGE::$gt['tblPayments.balance_kp']);
-  $tpl->setVariable('due_chart', 		WEBPAGE::printchart($pmt,$head));
-
-  $tpl->setVariable('total_pmt', 		$totals['pmt']);
-  $tpl->setVariable('total_pmt_label',	WEBPAGE::$gt['total']);
+  $tpl->setVariable('due_chart',       WEBPAGE::printchart($pmt,$head));
+  $tpl->setVariable('total_pmt',       $totals['pmt']);
+  $tpl->setVariable('total_pmt_label', WEBPAGE::$gt['total']);
 
   $form->setDefaults($defaults);
   $renderer = new HTML_QuickForm_Renderer_ITStatic($tpl);
@@ -148,6 +169,6 @@ if ($form->validate()) {
   $renderer->setErrorTemplate(WEBPAGE::_FIELD_ERROR);
   $form->accept($renderer);
 
-  }
+}
 
 ?>
