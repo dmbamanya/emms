@@ -35,7 +35,7 @@ if ((!count($pmt))&&($loan->data['status']!='G')) {
   $loan->data['r_from_date']	= $loan->data['r_from_date'] ? $loan->data['r_from_date'] : date('Y-m-d');
   }
  
-$totals = array('inx'=>WEBPAGE::$gt['total'],'status'=>' ','transaction_id'=>' ','date'=>' ','fees'=>0,'insurances'=>0,'principal'=>0,'interest'=>0,'delay'=>0,'penalties'=>0,'pmt'=>' ','balance_kp'=>' ','user_id'=>' ');
+$totals = array('inx'=>WEBPAGE::$gt['total'],'status'=>' ','transaction_id'=>' ','date'=>' ','fees'=>0,'insurances'=>0,'principal'=>0,'interest'=>0,'delay'=>0,'penalties'=>0,'pmt'=>' ','balance_kp'=>' ','username'=>' ');
   
 $c = 0;
 foreach($pmt as $key => $val) {
@@ -77,7 +77,7 @@ while($balance_kp > 0) {
   $pmt[$c]['penalties']				= $data[$c]['penalties'];
   $pmt[$c]['pmt']					= $data[$c]['pmt'];
   $pmt[$c]['balance_kp']			= $data[$c]['balance_kp'];
-  $pmt[$c]['user_id']				= '-';
+  $pmt[$c]['username']				= '-';
     
   $totals['fees']					+= $data[$c]['fees'];
   $totals['insurances']				+= $data[$c]['insurances'];
@@ -107,7 +107,22 @@ $tpl->setVariable('loan_code_label',		WEBPAGE::$gt['tblLoans.loan_code']);
 $tpl->setVariable('modality',				$ltype->data['description']);
 $tpl->setVariable('modality_label',			WEBPAGE::$gt['tblLoanTypes.description']);
 
-$head = array(WEBPAGE::$gt['tblPayments.id'], WEBPAGE::$gt['status'], WEBPAGE::$gt['tblPayments.transaction_id'],WEBPAGE::$gt['tblPayments.date'],WEBPAGE::$gt['tblPayments.fees'],WEBPAGE::$gt['tblPayments.insurances'],WEBPAGE::$gt['tblPayments.principal'],WEBPAGE::$gt['tblPayments.interest'],WEBPAGE::$gt['tblPayments.delay'],WEBPAGE::$gt['tblPayments.penalties'],WEBPAGE::$gt['tblPayments.pmt'],WEBPAGE::$gt['tblPayments.balance_kp'],WEBPAGE::$gt['tblUsers.id']);
+$head = array
+        (
+           'inx' => WEBPAGE::$gt['tblPayments.id'],
+           'status' => WEBPAGE::$gt['status'],
+           'transaction_id' => WEBPAGE::$gt['tblPayments.transaction_id'],
+           'date' => WEBPAGE::$gt['tblPayments.date'],
+           'fees' => WEBPAGE::$gt['tblPayments.fees'],
+           'insurances' => WEBPAGE::$gt['tblPayments.insurances'],
+           'principal' => WEBPAGE::$gt['tblPayments.principal'],
+           'interest' => WEBPAGE::$gt['tblPayments.interest'],
+           'delay' => WEBPAGE::$gt['tblPayments.delay'],
+           'penalties' => WEBPAGE::$gt['tblPayments.penalties'],
+           'pmt' => WEBPAGE::$gt['tblPayments.pmt'],
+           'balance_kp' => WEBPAGE::$gt['tblPayments.balance_kp'],
+           'username' => WEBPAGE::$gt['tblUsers.id']
+        );
 
 $tpl->setVariable('chart', WEBPAGE::printchart($pmt,$head));
 
