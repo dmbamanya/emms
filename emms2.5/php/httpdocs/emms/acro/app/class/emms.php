@@ -344,10 +344,13 @@ abstract class EMMS
     {
       foreach($row as $col => $val)
       {
-        $tpl->setCurrentBlock("row") ;
-        $tpl->setVariable('align', 'right');
-        $tpl->setVariable('item', $pack[$col] ? self::$gt[sprintf($pack[$col],$val)] : $val);
-        $tpl->parseCurrentBlock("row") ;
+        if ($head[$col])
+        {
+          $tpl->setCurrentBlock("row") ;
+          $tpl->setVariable('align', 'right');
+          $tpl->setVariable('item', $pack[$col] ? self::$gt[sprintf($pack[$col],$val)] : $val);
+          $tpl->parseCurrentBlock("row") ;
+        }
       }
       $tpl->setCurrentBlock("results") ;
       $tpl->parseCurrentBlock("results") ;

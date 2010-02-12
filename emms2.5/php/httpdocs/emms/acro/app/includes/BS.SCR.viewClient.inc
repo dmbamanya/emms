@@ -81,7 +81,7 @@ $head = array
 
 foreach($credit_data as $key=>$row)
 {
-  $data[$key]['loan_code']         = $row['loan_code'];
+  $data[$key]['loan_code']         = sprintf(WEBPAGE::_HOTLINK,'LN.SCR.viewILoan','id',$row['id'],$row['loan_code']);
   $data[$key]['status']            = WEBPAGE::$gt[sprintf('tblLoans.status.%s',$row['status'])];
   $data[$key]['delivered_date']    = $row['delivered_date'];
   $data[$key]['cancel_date']       = $row['cancel_date'];

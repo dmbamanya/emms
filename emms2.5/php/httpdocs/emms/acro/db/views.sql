@@ -86,3 +86,23 @@ CREATE VIEW view_loan_status_dates AS
   left join tblLoanStatusHistory rt on rt.loan_id = l.id and rt.status = 'RT'
   left join tblLoanStatusHistory ro on ro.loan_id = l.id and ro.status = 'RO'
   left join tblLoanStatusHistory r on r.loan_id = l.id and r.status = 'R';
+
+drop view if exists view_receipt_flags;
+create view view_receipt_flags as
+  select
+    p.loan_id,p.id payment_id, p.date, lrp.receipt_id,r.flag_a,r.flag_b
+  from
+    tblPayments p, tblLinkReceiptsPayments lrp, tblReceipts r
+  where
+    lrp.payment_id = p.id and r.id = lrp.receipt_id;
+
+drop view if exists view_loan_funds;
+create view view_loan_funds as
+  select
+    l.id,f.id fund_id,f.fund
+  from
+    tblLoans l, tblFunds f, tblLoansMasterDetails lmd, tblFundsLoansMasterPct flmp
+  where
+    lmd.loan_id = l.id and
+    flmp.master_id = lmd.master_id and
+    f.id = flmp.fund_id;

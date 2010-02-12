@@ -35,7 +35,6 @@
 {chart}
 <table>
 <tr><td>{lnk_cancellation_letter}</td></tr>
-<tr><td>{lnk_promissory_note}</td></tr>
 <tr><td>{lnk_original_payment_plan}</td></tr>
 </table>
 <br /><br /><br /><br />

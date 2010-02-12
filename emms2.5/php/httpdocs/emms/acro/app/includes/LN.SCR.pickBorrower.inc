@@ -68,6 +68,11 @@ if ($form->validate())
       $extra['view']['pack']   = sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_society_profile'],'BS.SCR.viewSocietyXpress','id','%s','BS.SCR.viewSocietyXpress','no','no','no','400','500',WEBPAGE::$gt['view']);
       $extra['view']['align']  = 'center';
 
+      $fields[]                = 'id as edit';
+      $extra['edit']['header'] = 'edit';
+      $extra['edit']['pack']   = sprintf("<a href='%s?scr_name=BS.SCR.viewSociety&id=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['edit']);
+      $extra['edit']['align']  = 'center';
+
       $fields[]                       = 'id as requestLoan';
       $extra['requestLoan']['header'] = 'requestLoan';
       $extra['requestLoan']['pack']   = sprintf("<a href='%s?scr_name=LN.SCR.requestLoan&bt=B&bid=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['requestLoan']);
@@ -83,6 +88,11 @@ if ($form->validate())
       $extra['view']['pack']   = sprintf("<a href='%s?scr_name=BS.SCR.viewSociety&ref=BS.SCR.browseSocieties&id=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['view']);
       $extra['view']['align']  = 'center';
 
+      $fields[]                = 'id as edit';
+      $extra['edit']['header'] = 'edit';
+      $extra['edit']['pack']   = sprintf("<a href='%s?scr_name=BS.SCR.viewSociety&id=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['edit']);
+      $extra['edit']['align']  = 'center';
+
       $fields[]                       = 'id as requestLoan';
       $extra['requestLoan']['header'] = 'requestLoan';
       $extra['requestLoan']['pack']   = sprintf("<a href='%s?scr_name=LN.SCR.requestLoan&bt=G&bid=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['requestLoan']);
@@ -97,6 +107,11 @@ if ($form->validate())
       $extra['view']['header'] = 'view';
       $extra['view']['pack']   = sprintf("<a href='%s?scr_name=BS.SCR.viewClient&id=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['view']);
       $extra['view']['align']  = 'center';
+
+      $fields[]                = 'id as edit';
+      $extra['edit']['header'] = 'edit';
+      $extra['edit']['pack']   = sprintf("<a href='%s?scr_name=BS.SCR.viewClient&id=%s'>%s</a>", $PHP_SELF,'%s',WEBPAGE::$gt['edit']);
+      $extra['edit']['align']  = 'center';
 
       $fields[]                       = 'id as requestLoan';
       $extra['requestLoan']['header'] = 'requestLoan';
