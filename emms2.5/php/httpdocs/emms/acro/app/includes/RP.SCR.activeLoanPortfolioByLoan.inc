@@ -63,6 +63,7 @@ $data = WEBPAGE::$dbh->getAll(sprintf("
 
 $head = array
         (
+          'loan_id'       => WEBPAGE::$gt['tblLoans.id'],
           'loan_code'     => WEBPAGE::$gt['tblLoans.loan_code'],
           'business_type' => WEBPAGE::$gt['tblBusinessTypes.type'],
           'code'          => WEBPAGE::$gt['tblClients.code'],
