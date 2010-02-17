@@ -326,9 +326,6 @@ abstract class EMMS
   static function printchart($data,$head = array(),$pack = array())
   {
     $timestamp = microtime(true);
-    array_unshift($data,$head);
-    self::makecachefile($data,self::$queryCache.'.'.$timestamp);
-    array_shift($data);
 
     $tpl = new HTML_Template_ITX('./templates');
     $tpl->loadTemplateFile('ST.chart.tpl');
@@ -350,11 +347,18 @@ abstract class EMMS
           $tpl->setVariable('align', 'right');
           $tpl->setVariable('item', $pack[$col] ? self::$gt[sprintf($pack[$col],$val)] : $val);
           $tpl->parseCurrentBlock("row") ;
+        } else {
+          unset($data[$key][$col]);
         }
       }
       $tpl->setCurrentBlock("results") ;
       $tpl->parseCurrentBlock("results") ;
     }
+
+    array_unshift($data,$head);
+    self::makecachefile($data,self::$queryCache.'.'.$timestamp);
+    //array_shift($data);
+    
     $tpl->setCurrentBlock("chart") ;
     $tpl->setVariable('xls_download',self::$gt['RP.SCR.ChartCacheToXLS']);
     $tpl->setVariable('timestamp',$timestamp);
