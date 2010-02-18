@@ -98,7 +98,17 @@ $tpl->setVariable('savings_p_label',         WEBPAGE::$gt['tblLoanTypes.savings_
 $tpl->setVariable('back',                    sprintf('<a href="index.popup.php?scr_name=LN.SCR.finCalculator&kp=%s&rdate=%s&id=%s">%s</a>',$_GET['kp'],$_GET['rdate'],$_GET['id'],WEBPAGE::$gt['back']));
 $tpl->setVariable('print',                   sprintf('<a href="javascript:print()">%s</a>',WEBPAGE::$gt['printSheet']));
 
-$head = array(WEBPAGE::$gt['tblPayments.id'],WEBPAGE::$gt['tblPayments.date'],WEBPAGE::$gt['tblPayments.fees'],WEBPAGE::$gt['tblPayments.insurances'],WEBPAGE::$gt['tblPayments.principal'],WEBPAGE::$gt['tblPayments.interest'],WEBPAGE::$gt['tblPayments.pmt'],WEBPAGE::$gt['tblPayments.balance_kp']);
+$head = array
+        (
+          'inx'        => WEBPAGE::$gt['tblPayments.id'],
+          'date'       => WEBPAGE::$gt['tblPayments.date'],
+          'fees'       => WEBPAGE::$gt['tblPayments.fees'],
+          'insurances' => WEBPAGE::$gt['tblPayments.insurances'],
+          'principal'  => WEBPAGE::$gt['tblPayments.principal'],
+          'interest'   => WEBPAGE::$gt['tblPayments.interest'],
+          'pmt'        => WEBPAGE::$gt['tblPayments.pmt'],
+          'balance_kp' => WEBPAGE::$gt['tblPayments.balance_kp']
+        );
 
 $tpl->setVariable('chart', WEBPAGE::printchart($pmt,$head));
 
