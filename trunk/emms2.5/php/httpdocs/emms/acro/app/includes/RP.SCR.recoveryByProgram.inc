@@ -126,7 +126,7 @@ foreach($ldata as $key => $value)
 
 $head = array
         (
-          'zone'           => WEBPAGE::$gt['tblPrograms.program'],
+          'program'        => WEBPAGE::$gt['tblPrograms.program'],
           'pmt'            => sprintf('PMT-T*'),
           'principal'      => sprintf('KP-T*'),
           'principal_d'    => sprintf('KPD-T*'),

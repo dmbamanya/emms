@@ -42,7 +42,7 @@ $loan->load_xp_pmt_plan();
   $plan_data[$c]['first_pmt'] = $loan->data['pmt'];
   $plan_data[$c]['pmt_last'] = $loan->data['xp_pmt_plan'][$number_of_pmt - 1]['pmt'];
   
-  $plan_total['client'] = '-';
+  $plan_total['clients'] = '-';
   $plan_total['sname'] = '-';
   $plan_total['kp'] += $loan->data['kp'];
   $plan_total['fees'] += $loan->data['xp_pmt_plan_totals']['fees'];
