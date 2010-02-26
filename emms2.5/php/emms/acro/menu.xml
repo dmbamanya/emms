@@ -303,6 +303,7 @@
   <custom>
     <fn code="255" name="PB.SCR.performance"/>
     <fn code="1"   name="RP.SCR.compactCS"/>
+    <fn code="1"   name="RP.SCR.activeLoans"/>
     <fn code="1"   name="RP.SCR.receipt"/>
     <fn code="1"   name="KV.SCR.updateKivaIDs"/>
   </custom>

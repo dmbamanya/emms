@@ -10,7 +10,9 @@ $data = WEBPAGE::$dbh->getAll(sprintf("select
     lcd.xp_pmt,
     lcd.cn_delay,
     lcd.cn_penalties,
-    lm.program_id, prg.program,
+    lm.program_id, 
+    prg.program,
+    lf.fund,
     lm.zone_id, z.short_name,
     concat(c.first,' ',c.last) cliente,
     c.code govID,
@@ -29,7 +31,8 @@ from
     tblClients c,
     tblPrograms prg,
     tblZones z,
-    tblUsers u
+    tblUsers u,
+    view_loan_funds lf
     )
 left join
     tblSocieties s on s.id = c.society_id
@@ -44,6 +47,7 @@ where
     and l.id = lcd.loan_id
     and lt.id = l.loan_type_id
     and c.id = l.client_id
+    and lf.id = l.id
     and prg.id = lm.program_id
     and z.id = lm.zone_id
     and u.id = l.advisor_id
@@ -52,7 +56,7 @@ group by
 order by
     lcd.loan_id"));
 
-$head = array('id'=>'ID','client'=>'Cliente','num_pmt'=>'No cuota','xp_num_pmt'=>'Total de cuotas','payment_frequency'=>'Frec. Pagos','xp_pmt_date'=>'Fecha pago','xp_cancel_date'=>'Fecha vencimiento','xp_pmt'=>'Monto cuota','cn_penalties'=>'Punitorios','pmt_receipt_flag_a'=>WEBPAGE::$conf['app']['pmt_receipt_flag_a'] ? WEBPAGE::$conf['app']['pmt_receipt_flag_a'] : '-','pmt_receipt_flag_b'=>WEBPAGE::$conf['app']['pmt_receipt_flag_b'] ? WEBPAGE::$conf['app']['pmt_receipt_flag_b'] : '-','username'=>'Asesor','program'=>'Programa','branch'=>'Sucursal','print'=>'Imprimir');
+$head = array('id'=>'ID','client'=>'Cliente','num_pmt'=>'No cuota','xp_num_pmt'=>'Total de cuotas','payment_frequency'=>'Frec. Pagos','xp_pmt_date'=>'Fecha pago','xp_cancel_date'=>'Fecha vencimiento','xp_pmt'=>'Monto cuota','cn_penalties'=>'Punitorios','pmt_receipt_flag_a'=>WEBPAGE::$conf['app']['pmt_receipt_flag_a'] ? WEBPAGE::$conf['app']['pmt_receipt_flag_a'] : '-','pmt_receipt_flag_b'=>WEBPAGE::$conf['app']['pmt_receipt_flag_b'] ? WEBPAGE::$conf['app']['pmt_receipt_flag_b'] : '-','username'=>'Asesor','program'=>'Programa','fund'=>'Fondo','branch'=>'Sucursal','print'=>'Imprimir');
 
 foreach($data as $key => $val) {
   $master[$val['master_id']]['id']                 = $val['master_id'];
@@ -69,6 +73,7 @@ foreach($data as $key => $val) {
   $master[$val['master_id']]['pmt_receipt_flag_b'] = WEBPAGE::$conf['app']['pmt_receipt_flag_b'] ? ( $val['pmt_receipt_flag_b'] ? $val['pmt_receipt_flag_b'] : 0 ) : '-';
   $master[$val['master_id']]['username']           = $val['username'];
   $master[$val['master_id']]['program']            = $val['program'];
+  $master[$val['master_id']]['fund']               = $val['fund'];
   $master[$val['master_id']]['branch']             = $val['short_name'];
 
   $master[$val['master_id']]['print']             = sprintf('<a href="index.custom.php?scr_name=RP.SCR.receipt&advisor=%s&client=%s&xp_pmt_date=%s&num_pmt=%s&xp_num_pmt=%s&xp_pmt=%s">Imprimir</a>',$master[$val['master_id']]['username'],$master[$val['master_id']]['client'],$master[$val['master_id']]['xp_pmt_date'],$master[$val['master_id']]['num_pmt'],$master[$val['master_id']]['xp_num_pmt'],$master[$val['master_id']]['xp_pmt']);

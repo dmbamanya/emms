@@ -49,36 +49,99 @@ if ($form->validate())
   $form->removeElement('reset');
   $form->removeElement('cancel');
 
-  if ($values['borrower_type'] 	== '%%') { $operator_borrower_type 	= 'LIKE'; $form->removeElement('borrower_type'); $borrower_type = '';} else { $operator_borrower_type 	= '='; $borrower_type = $values['borrower_type'];}
-  if ($values['advisor_id'] 	== '%%') { $operator_advisor_id 	= 'LIKE'; $form->removeElement('advisor_id'); $advisor_id = '';   } else { $operator_advisor_id 	= '='; $advisor_id = $values['advisor_id'];}
+  if ($values['borrower_type'] 	== '%%') { $operator_borrower_type = 'LIKE'; $form->removeElement('borrower_type'); $borrower_type = '';} else { $operator_borrower_type = '='; $borrower_type = $values['borrower_type'];}
+  if ($values['advisor_id'] 	== '%%') { $operator_advisor_id    = 'LIKE'; $form->removeElement('advisor_id'); $advisor_id = '';   }    else { $operator_advisor_id 	 = '='; $advisor_id = $values['advisor_id'];}
 
-  $mrow = WEBPAGE::$dbh->getAll(sprintf("SELECT p.id,l.loan_code, concat(c.first, ' ', c.last) as client, CONCAT((LPAD(c.zone_id,3,'0')),'.',s.category,'.',(LPAD(s.id,5,'0'))) AS groupcode,p.pmt, p.principal, p.insurances, p.fees, p.interest, p.penalties, p.balance_kp, IF(p.special,'%s','%s') as special, p.transaction_id, u.username FROM (tblLoans as l, tblClients as c, tblPayments as p, tblLoanTypes as lt, tblUsers as u) LEFT JOIN tblSocieties as s ON c.society_id = s.id WHERE u.id = p.user_id and p.date = '%s' and l.id = p.loan_id and l.zone_id = %s and c.id = l.client_id and l.advisor_id %s '%s' and lt.borrower_type %s '%s' and lt.id = l.loan_type_id order by groupcode,client,p.id",WEBPAGE::$gt['yes'],WEBPAGE::$gt['no'],$values['date'], $values['zone_id'],$operator_advisor_id,$values['advisor_id'],$operator_borrower_type, $values['borrower_type']));
-  $head = array('loan_code'=>WEBPAGE::$gt['tblLoans.loan_code'],'client'=>WEBPAGE::$gt['tblClients.id'],'groupcode'=>WEBPAGE::$gt['groupcode'],'pmt'=>WEBPAGE::$gt['tblPayments.pmt'],'principal'=>WEBPAGE::$gt['tblPayments.principal'],'insurances'=>WEBPAGE::$gt['tblPayments.insurances'],'fees'=>WEBPAGE::$gt['tblPayments.fees'],'interest'=>WEBPAGE::$gt['tblPayments.interest'],'penalties'=>WEBPAGE::$gt['tblPayments.penalties'],'balance_kp'=>WEBPAGE::$gt['tblPayments.balance_kp'],'special'=>WEBPAGE::$gt['tblPayments.special'],'transaction_id'=>WEBPAGE::$gt['tblPayments.transaction_id'],'user_id'=>WEBPAGE::$gt['tblUsers.id']);
+  $mrow = WEBPAGE::$dbh->getAll(sprintf("
+            select
+              p.id,
+              l.loan_code,
+              concat(c.first, ' ', c.last) client,
+              concat((lpad(c.zone_id,3,'0')),'.',s.category,'.',(lpad(s.id,5,'0'))) groupcode,
+              p.pmt,
+              p.principal,
+              p.insurances,
+              p.fees,
+              p.interest,
+              p.penalties,
+              p.balance_kp,
+              if(p.special,'%s','%s') as special,
+              p.transaction_id,
+              u.username
+            from
+              (
+                tblLoans as l,
+                tblClients as c,
+                tblPayments as p,
+                tblLoanTypes as lt,
+                tblUsers as u
+              )
+            left join
+              tblSocieties as s on c.society_id = s.id
+            where
+              u.id = p.user_id         and
+              p.date = '%s'            and
+              l.id = p.loan_id         and
+              l.zone_id = %s           and
+              c.id = l.client_id       and
+              l.advisor_id %s '%s'     and
+              lt.borrower_type %s '%s' and
+              lt.id = l.loan_type_id
+            order by
+              groupcode,
+              client,
+              p.id",
+          WEBPAGE::$gt['yes'],
+          WEBPAGE::$gt['no'],
+          $values['date'],
+          $values['zone_id'],
+          $operator_advisor_id,
+          $values['advisor_id'],
+          $operator_borrower_type,
+          $values['borrower_type']));
+
+  $head = array
+          (
+            'loan_code'      => WEBPAGE::$gt['tblLoans.loan_code'],
+            'client'         => WEBPAGE::$gt['tblClients.id'],
+            'groupcode'      => WEBPAGE::$gt['groupcode'],
+            'pmt'            => WEBPAGE::$gt['tblPayments.pmt'],
+            'principal'      => WEBPAGE::$gt['tblPayments.principal'],
+            'insurances'     => WEBPAGE::$gt['tblPayments.insurances'],
+            'fees'           => WEBPAGE::$gt['tblPayments.fees'],
+            'interest'       => WEBPAGE::$gt['tblPayments.interest'],
+            'penalties'      => WEBPAGE::$gt['tblPayments.penalties'],
+            'balance_kp'     => WEBPAGE::$gt['tblPayments.balance_kp'],
+            'special'        => WEBPAGE::$gt['tblPayments.special'],
+            'transaction_id' => WEBPAGE::$gt['tblPayments.transaction_id'],
+            'username'       => WEBPAGE::$gt['tblUsers.id']
+          );
 
   $total = array();
-  foreach ($mrow as $key=>$val) {
-    $mrow[$key]['client'] 			= str_replace(' ','&nbsp;',$val['client']);
-    $mrow[$key]['transaction_id'] 	= $val['transaction_id'] ? $val['transaction_id'] : sprintf("<a href='index.popup.php?scr_name=LN.SCR.deletePayment&id=%s&zone_id=%s&advisor_id=%s&date=%s&borrower_type=%s'>%s</a>",$val['id'],$values['zone_id'],$advisor_id,$values['date'],$borrower_type,WEBPAGE::$gt['rollback']);
-    $total['loan_code']		 = WEBPAGE::$gt['total'];
-    $total['client']		 = '-';
-    $total['groupcode']      = '-';
-    $total['pmt'] 			+= $val['pmt'];
-    $total['principal'] 	+= $val['principal'];
-    $total['insurances'] 	+= $val['insurances'];
-    $total['fees'] 			+= $val['fees'];
-    $total['interest'] 		+= $val['interest'];
-    $total['penalties'] 	+= $val['penalties'];
-    $total['balance_kp']	 = '-';
-    $total['special']		 = '-';
-    $total['transaction_id'] = '-';
-    $total['user_id']		 = '-';
+  foreach ($mrow as $key=>$val)
+  {
+    $mrow[$key]['client']         = str_replace(' ','&nbsp;',$val['client']);
+    $mrow[$key]['transaction_id'] = $val['transaction_id'] ? $val['transaction_id'] : sprintf("<a href='index.popup.php?scr_name=LN.SCR.deletePayment&id=%s&zone_id=%s&advisor_id=%s&date=%s&borrower_type=%s'>%s</a>",$val['id'],$values['zone_id'],$advisor_id,$values['date'],$borrower_type,WEBPAGE::$gt['rollback']);
+    $total['loan_code']           = WEBPAGE::$gt['total'];
+    $total['client']              = '-';
+    $total['groupcode']           = '-';
+    $total['pmt']                += $val['pmt'];
+    $total['principal']          += $val['principal'];
+    $total['insurances']         += $val['insurances'];
+    $total['fees']               += $val['fees'];
+    $total['interest']           += $val['interest'];
+    $total['penalties']          += $val['penalties'];
+    $total['balance_kp']          = '-';
+    $total['special']             = '-';
+    $total['transaction_id']      = '-';
+    $total['username']            = '-';
     unset($mrow[$key]['id']);    
-    }
+  }
   $mrow[] = $total;
 
   $tpl->setVariable('chart', count($total) ? WEBPAGE::printchart($mrow,$head) : WEBPAGE::$gt['noData']);
 
-  } 
+} 
 
 $form->setDefaults(array('date'=>date('Y-m-d')));
 $renderer = new HTML_QuickForm_Renderer_ITStatic($tpl);

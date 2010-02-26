@@ -21,9 +21,18 @@ $data = WEBPAGE::$dbh->getAll(sprintf("
           u.username advisor,
           p.program program,
           vlf.fund,
+          vlg.group_name lgroup,
           z.zone branch
         from
-          tblLoanWriteOff lwo, tblLoans l, tblClients c, tblUsers u, tblPrograms p, tblZones z, tblLoanTypes lt, view_loan_funds vlf
+          tblLoanWriteOff lwo, 
+          tblLoans l,
+          tblClients c,
+          tblUsers u,
+          tblPrograms p,
+          tblZones z,
+          tblLoanTypes lt,
+          view_loan_funds vlf,
+          view_loan_group vlg
         where
           lwo.date >= '%s' and
           lwo.date <= '%s' and
@@ -35,7 +44,8 @@ $data = WEBPAGE::$dbh->getAll(sprintf("
           u.id = l.advisor_id and
           p.id = l.program_id and
           z.id = l.zone_id and
-          vlf.id = lwo.loan_id
+          vlf.id = lwo.loan_id and
+          vlg.id = lwo.loan_id
         order by
           l.client_id", $date_from, $date_to));
 
@@ -52,6 +62,7 @@ foreach($data as $key=>$val)
    
   $ldata[$key]['client']    = str_replace(' ','&nbsp;',$data[$key]['client']);
   $ldata[$key]['ccode']     = str_replace(' ','&nbsp;',$data[$key]['ccode']);
+  $ldata[$key]['lgroup']    = str_replace(' ','&nbsp;',$data[$key]['lgroup']);
   $ldata[$key]['loan']      = $val['loan'];
   $ldata[$key]['date']      = $val['date'];
   $ldata[$key]['amount']    = $val['amount'];
@@ -63,6 +74,7 @@ foreach($data as $key=>$val)
 
   $total['client']          = WEBPAGE::$gt['total'];
   $total['ccode']           = '';
+  $total['lgroup']          = '';
   $total['loan']            = '';
   $total['date']            = '';
   $total['amount']         += $val['amount'];
@@ -79,6 +91,7 @@ $head = array
         (
           'client'    => WEBPAGE::$gt['tblClients.id'],
           'ccode'     => WEBPAGE::$gt['tblClients.code'],
+          'lgroup'    => WEBPAGE::$gt['tblClients.society_id'],
           'loan'      => WEBPAGE::$gt['tblLoans.loan_code'],
           'date'      => WEBPAGE::$gt['date'],
           'amount'    => WEBPAGE::$gt['writeOff_amount'],
