@@ -17,7 +17,7 @@
           l.loan_code                  'loan_code',
           u.username                   'officer',
           c.code                       'client_code',
-          concat (c.last,', ',c.first) 'client_name',
+          concat(c.last,', ',c.first) 'client_name',
           lsd.active                   'delivered_date',
           l.kp                         'kp',
           lf.fund                      'fund',

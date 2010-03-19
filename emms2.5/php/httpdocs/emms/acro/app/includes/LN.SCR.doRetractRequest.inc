@@ -2,11 +2,21 @@
 /*
  * being defensive against hacking... only loan master with all loans in status 'O', 'RO', 'S', 'D', or 'R' can be retracted
  */
-$status = WEBPAGE::$dbh->getAll(sprintf("select l.status from tblLoans l, tblLoansMasterDetails lmd where lmd.master_id = %s and lmd.loan_id = l.id",$_REQUEST['id']));
+$status = WEBPAGE::$dbh->getAll(sprintf("
+            select
+              l.status
+            from
+              tblLoans l,
+              tblLoansMasterDetails lmd
+            where
+              lmd.master_id = %s and
+              lmd.loan_id   = l.id", $_REQUEST['id']));
+
 foreach($status as $key => $val)
 {
   $st[$val['status']] = $val['status'];
 }
+
 $sts = current($st);
 if ((count($st) > 1)||(($sts != 'O')&&($sts != 'RO')&&($sts != 'S')&&($sts != 'D')&&($sts != 'R')))
 {
@@ -37,11 +47,16 @@ if ($form->validate())
   /*
    * Insert loan status log
    */
-  WEBPAGE::$dbh->query(sprintf("insert into tblLoanStatusHistory (loan_id,p_status,status,date,user_id,memo) select l.id,l.status,'%s','%s','%s','%s' from tblLoans l, tblLoansMasterDetails lmd where lmd.master_id = %s and lmd.loan_id = l.id",'RT',date('Y-m-d'),WEBPAGE::$userID,$values['memo'],$values['id']));
+  WEBPAGE::$dbh->query(sprintf("
+    insert into tblLoanStatusHistory (loan_id,p_status,status,date,user_id,memo) select l.id,l.status,'%s','%s','%s','%s' from tblLoans l, tblLoansMasterDetails lmd where lmd.master_id = %s and lmd.loan_id = l.id",'RT',date('Y-m-d'),WEBPAGE::$userID,$values['memo'],$values['id']));
   /*
    * update loans status
    */
   WEBPAGE::$dbh->query(sprintf("update tblLoans as l set l.status = '%s' where l.id in (select lmd.loan_id from tblLoansMasterDetails as lmd where lmd.master_id = %s)",'RT',$values['id']));
+  /*
+   * update loan master status
+   */
+  WEBPAGE::$dbh->query(sprintf("update tblLoansMaster lm set lm.check_status = '%s' where lm.id = %s)",'RT',$values['id']));
   /*
    * refresh parent window with a javascript call
    */

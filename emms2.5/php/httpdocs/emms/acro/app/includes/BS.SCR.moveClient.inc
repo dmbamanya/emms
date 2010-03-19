@@ -18,10 +18,36 @@ $checkloan = WEBPAGE::$dbh->getAll(sprintf("select lm.id, lcd.loan_id from tblLo
 */
 // este approach solo verifica si el asociado en particular
 // tiene prestamos activos o en proceso
-$checkloan = WEBPAGE::$dbh->getAll(sprintf("select lcd.loan_id from tblLoansCurrentData as lcd, tblClients as c, tblLoans as l where lcd.loan_id = l.id and c.id = %s and l.client_id = c.id",$_REQUEST['id']));
-!count($checkloan) 	? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewClient&id=%s&ico=err&msg=moveClient.err.loan',$_REQUEST['id']));
-$checkloan = WEBPAGE::$dbh->getAll(sprintf("select lm.id from tblLoansMaster as lm, tblLoansMasterDetails as lmd, tblClients as c, tblLoans as l where lm.check_status != 'R' and lm.id = lmd.master_id and lmd.loan_id = l.id and c.id = %s and l.client_id = c.id",$_REQUEST['id']));
-!count($checkloan) 	? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewClient&id=%s&ico=err&msg=moveClient.err.loan',$_REQUEST['id']));
+$checkloan = WEBPAGE::$dbh->getAll(sprintf("
+               select
+                 lcd.loan_id
+               from
+                 tblLoansCurrentData lcd,
+                 tblClients c,
+                 tblLoans l
+               where
+                 lcd.loan_id = l.id and
+                 c.id        = %s and
+                 l.client_id = c.id", $_REQUEST['id']));
+
+!count($checkloan) ? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewClient&id=%s&ico=err&msg=moveClient.err.loan',$_REQUEST['id']));
+
+$checkloan = WEBPAGE::$dbh->getAll(sprintf("
+               select
+                 lm.id
+               from
+                 tblLoansMaster lm,
+                 tblLoansMasterDetails lmd,
+                 tblClients c,
+                 tblLoans l
+               where
+                 lm.check_status not in ('R','RT') and
+                 lm.id            = lmd.master_id and
+                 lmd.loan_id      = l.id and
+                 c.id             = %s and
+                 l.client_id      = c.id", $_REQUEST['id']));
+
+!count($checkloan) ? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewClient&id=%s&ico=err&msg=moveClient.err.loan', $_REQUEST['id']));
 
 
 $client = new CLIENT($_REQUEST['id']);

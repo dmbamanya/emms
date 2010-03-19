@@ -7,7 +7,7 @@ $data = WEBPAGE::$dbh->getAll(sprintf("
 		 		sum(lod.pmt) as pmt, sum(lod.penalties) as penalties, sum(lod.interest) as interest, sum(lod.fees) as fees, sum(lod.insurances) as insurances,  sum(lod.principal) as principal
 		 		from tblLoansOnDelinquency as lod, tblZones as z, tblLoans as l where l.id = lod.loan_id and z.id = l.zone_id and lod.date = '%s' group by l.zone_id", $date));
 $total = current(WEBPAGE::$dbh->getAll(sprintf("
-		 select '%s' as total,
+		 select '%s' as zone,
 		 		count(lod.id) as loans, sum(lod.hits) as hits, sum(lod.delay) as delay,
 		 		sum(lod.pmt) as pmt, sum(lod.penalties) as penalties, sum(lod.interest) as interest, sum(lod.fees) as fees, sum(lod.insurances) as insurances,  sum(lod.principal) as principal
 		 		from tblLoansOnDelinquency as lod where lod.date = '%s'", WEBPAGE::$gt['total'],$date)));
