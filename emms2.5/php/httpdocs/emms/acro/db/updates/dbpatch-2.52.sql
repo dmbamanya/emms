@@ -10,7 +10,7 @@ where
     select
       distinct lmd.master_id
     from
-      tblloans l,
+      tblLoans l,
       tblLoansMasterDetails lmd
     where
       lmd.loan_id = l.id and
