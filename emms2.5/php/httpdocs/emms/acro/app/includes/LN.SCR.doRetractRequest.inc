@@ -56,7 +56,7 @@ if ($form->validate())
   /*
    * update loan master status
    */
-  WEBPAGE::$dbh->query(sprintf("update tblLoansMaster lm set lm.check_status = '%s' where lm.id = %s)",'RT',$values['id']));
+  WEBPAGE::$dbh->query(sprintf("update tblLoansMaster lm set lm.check_status = '%s' where lm.id = '%s'",'RT',$values['id']));
   /*
    * refresh parent window with a javascript call
    */
