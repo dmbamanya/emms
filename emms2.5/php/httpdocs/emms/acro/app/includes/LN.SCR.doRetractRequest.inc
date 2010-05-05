@@ -18,7 +18,7 @@ foreach($status as $key => $val)
 }
 
 $sts = current($st);
-if ((count($st) > 1)||(($sts != 'O')&&($sts != 'RO')&&($sts != 'S')&&($sts != 'D')&&($sts != 'R')))
+if ((count($st) > 1)||(($sts != 'O')&&($sts != 'RO')&&($sts != 'S')&&($sts != 'D')&&($sts != 'R')&&($sts != 'A')))
 {
   WEBPAGE::redirect("index.popup.php?scr_name=exit");
   exit;
