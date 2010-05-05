@@ -199,6 +199,7 @@
     <fn code="1"   name="BS.SCR.dateSelector"/>
     <fn code="254" name="LN.SCR.browseLoanMasterDuplicates"/>
     <fn code="254" name="LN.SCR.viewLoanMasterPrintable"/>
+    <fn code="144" name="LN.SCR.editCheckNumber"/>
     <fn code="7"   name="LN.SCR.changeDate"/>
     <fn code="136" name="LN.SCR.deletePayment"/>
     <fn code="254" name="LN.SCR.groupContract"/>

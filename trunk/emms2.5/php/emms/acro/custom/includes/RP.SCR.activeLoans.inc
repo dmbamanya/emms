@@ -26,7 +26,7 @@
           lod.principal                'delinquent_kp',
           lod.hits                     'delinquent_hits',
           lod.delay                    'delay_total',
-          ceil(((2*lod.delay)/(lod.hits+1))+((lod.hits-1)/(lod.hits*(lod.hits+1)))*elt(field(lt.payment_frequency,'W','BW','M','Q','SA','A'),'7','14','30','90','180','360')) 'delay'
+          ceiling(coalesce((2*coalesce(lod.delay,0)+(elt(find_in_set(lt.payment_frequency,'W,BW,M,Q,SA,A'),'7','14','30','91','182','365'))*coalesce(lod.hits,0)*(coalesce(lod.hits,0)-1))/(2*coalesce(lod.hits,0)),0)) 'delay'
         from
           (
             view_loan_status_dates lsd,

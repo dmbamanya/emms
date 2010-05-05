@@ -30,6 +30,11 @@ $tpl->setVariable('check_status',        WEBPAGE::$gt[sprintf('tblLoansMaster.ch
 $tpl->setVariable('master_id',           $master->data['id']);
 $tpl->setVariable('xp_dates',            WEBPAGE::$gt['xp_dates']);
 
+if ($master->data['check_status'] == 'D')
+{
+    $tpl->setVariable('edit', sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['LN.SCR.editCheckNumber'],'LN.SCR.editCheckNumber','id',$master->data['id'],'LN.SCR.editCheckNumber','no','yes','no','480','210',WEBPAGE::$gt['edit']));
+}
+
 if ($master->data['cancelled'])
 { 
   $tpl->setVariable('lnk_cancellation_letter', sprintf('<a href="index.popup.php?scr_name=LN.SCR.viewCancelLetter&id=%s" target="_blank"><img alt="%s" src="button.php?txt=%s"></a>',$_REQUEST['id'],WEBPAGE::$gt['cancellation_letter'],WEBPAGE::$gt['cancellation_letter']));

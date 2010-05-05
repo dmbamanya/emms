@@ -163,11 +163,20 @@ $tpl->setVariable('rpt_label',          WEBPAGE::$gt['recovery']);
 $tpl->setVariable('rpt_subtitle_label', WEBPAGE::$gt['RP.SCR.recoveryByProgram']);
 $tpl->setVariable('date_range_label', 	WEBPAGE::$gt['dateRange']);
 $tpl->setVariable('date_range',         sprintf('%s : %s',$date_from,$date_to));
-$tpl->setVariable('chart',              count($ldata) ? WEBPAGE::printchart($ldata,$head) : WEBPAGE::$gt['noData']);
+
+$tpl->setVariable('chart', count($ldata) ? WEBPAGE::printchart($ldata,$head) : WEBPAGE::$gt['noData']);
 
 $tpl->setVariable('recoveryInPeriod', 	WEBPAGE::$gt['recoveryInPeriod']);
-$tpl->setVariable('legend',             sprintf('<b>%s:</b> <b>PMT</b> - %s, <b>KP</b> - %s, <b>KPD</b> - %s, <b>INS</b> - %s, <b>FEES</b> - %s, <b>RT</b> - %s, <b>PN</b> - %s, <b>T</b> - %s, <b>I</b> - %s, <b>B</b> - %s',WEBPAGE::$gt['legend'],WEBPAGE::$gt['PMT'],WEBPAGE::$gt['KP'],WEBPAGE::$gt['KPD'],WEBPAGE::$gt['INS'],WEBPAGE::$gt['FEES'],WEBPAGE::$gt['RT'],WEBPAGE::$gt['PN'],WEBPAGE::$gt['R-T'],WEBPAGE::$gt['R-I'],WEBPAGE::$gt['R-B']));
 
+$tpl->setVariable('legend', WEBPAGE::$gt['legend']);
+$tpl->setVariable('PMT',    WEBPAGE::$gt['PMT']);
+$tpl->setVariable('KP',     WEBPAGE::$gt['KP']);
+$tpl->setVariable('KPD',    WEBPAGE::$gt['KPD']);
+$tpl->setVariable('INS',    WEBPAGE::$gt['INS']);
+$tpl->setVariable('FEES',   WEBPAGE::$gt['FEES']);
+$tpl->setVariable('RT',     WEBPAGE::$gt['RT']);
+$tpl->setVariable('PN',     WEBPAGE::$gt['PN']);
+$tpl->setVariable('T',      WEBPAGE::$gt['R-T']);
+$tpl->setVariable('I',      WEBPAGE::$gt['R-I']);
+$tpl->setVariable('B',      WEBPAGE::$gt['R-B']);
 ?>
-
-

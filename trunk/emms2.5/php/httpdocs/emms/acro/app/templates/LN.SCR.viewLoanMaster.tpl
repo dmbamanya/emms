@@ -4,7 +4,7 @@
   <tr><td class=label>{borrower_type_label}	</td><td>{borrower_type}</td></tr>
   <tr><td class=label>{loan_type_label}		</td><td>{loan_type}</td></tr>
   <tr><td class=label>{amount_label}		</td><td>{amount}</td></tr>
-  <tr><td class=label>{check_number_label}	</td><td>{check_number}</td></tr>
+  <tr><td class=label>{check_number_label}	</td><td>{check_number} {edit}</td></tr>
   <tr><td class=label>{check_status_label}	</td><td>{check_status}</td></tr>
   <tr>
       <td class=label>{xp_dates}</td>

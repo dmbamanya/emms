@@ -61,7 +61,7 @@ if (count($ldata))
 
 $head = array
         (
-          'zone'    => WEBPAGE::$gt['tblPrograms.program'],
+          'program' => WEBPAGE::$gt['tblPrograms.program'],
           'loans'   => sprintf('%s *',WEBPAGE::$gt['loans']),
           'nloans'  => sprintf('%s *',WEBPAGE::$gt['1sttimeloans']),
           'kp'      => sprintf('%s *',WEBPAGE::$gt['tblLoans.kp']),

@@ -29,6 +29,11 @@ class LOAN_MASTER extends WEBPAGE
   WEBPAGE::$dbh->query(sprintf("update tblLoansMaster as lm set lm.amount = (select sum(l.kp) from tblLoans as l, tblLoansMasterDetails as lmd where lmd.master_id = %s and lmd.loan_id = l.id) where lm.id = %s",$id,$id));
   }
 
+  function updateCheckNumber()
+  {
+  WEBPAGE::$dbh->query(sprintf("update tblLoansMaster as lm set lm.check_number = '%s' where lm.id = %s",$this->data['check_number'],$this->data['id']));
+  }
+
   function getTemplateData($id)
   {
   /*
