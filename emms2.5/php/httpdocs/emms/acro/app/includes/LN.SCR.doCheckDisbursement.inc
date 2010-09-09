@@ -27,7 +27,15 @@ $form->addElement('hidden',   'scr_name',     $_REQUEST['scr_name']);
 $form->addElement('hidden',   'id',           $_REQUEST['id']);
 $form->addElement('text',     'check_number', WEBPAGE::$gt['tblLoansMaster.check_number'], 'class=large');
 $form->addElement('select',   'fund',         WEBPAGE::$gt['tblFunds.id'],         (array('-'=>'') + $program->getFunds()), 'class=large');
-$form->addElement('select',   'sponsor_id',   WEBPAGE::$gt['tblSponsors.sponsor'], (array(''=>'') + array_intersect_key($sponsor->getSponsorsByBalance($master->data['amount']),$sponsor->getSponsorsByZone($master->getBorrowerZone()))), 'class=large');
+
+$sponsorsByBalance = $sponsor->getSponsorsByBalance($master->data['amount'], 1);
+$sponsorsByZone    = $sponsor->getSponsorsByZone($master->getBorrowerZone());
+$sponsors          = array_intersect_key($sponsorsByBalance,$sponsorsByZone);
+arsort($sponsors);
+foreach($sponsors as $key => $val) $sponsors[$key] = $sponsorsByZone[$key];
+$sponsors = WEBPAGE::$conf['mod_sponsorship']['disbursement_filter'] ? array_slice($sponsors, 0, 1) : $sponsors;
+$form->addElement('select',   'sponsor_id',   WEBPAGE::$gt['tblSponsors.sponsor'], (array(''=>'') + $sponsors), 'class=large');
+
 $form->addElement('textarea', 'memo',         WEBPAGE::$gt['memo'], 'rows=5');
 
 $form->addRule('check_number',   sprintf(WEBPAGE::$gt['rangelength'],4,32),'required');

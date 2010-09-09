@@ -179,7 +179,7 @@ class SPONSOR extends WEBPAGE
                                                 s.id");
   }
 
-  function getSponsorsByBalance($balance = 0)
+  function getSponsorsByBalance($balance = 0, $av_rate = 0)
   {
   $data = array();
   $sponsors = WEBPAGE::$dbh->getAssoc("select id,sponsor from tblSponsors");
@@ -187,7 +187,7 @@ class SPONSOR extends WEBPAGE
   $disbursments = $this->getDisbursmentTotals();
   $payments = $this->getPaymentTotals();
   foreach($sponsors as $key=>$val) {
-    if (($funds = $donations[$key] + $payments[$key] - $disbursments[$key]) >= $balance) { $data[$key] = sprintf("%s",$val); }
+    if (($funds = $donations[$key] + $payments[$key] - $disbursments[$key]) >= $balance) { $data[$key] = $av_rate ? ($donations[$key] + $payments[$key] - $disbursments[$key]) / $donations[$key] : sprintf("%s",$val); }
     }
   return $data;
   }
