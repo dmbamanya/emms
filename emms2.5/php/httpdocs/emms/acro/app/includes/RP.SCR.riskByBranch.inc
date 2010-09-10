@@ -5,19 +5,19 @@ $data = WEBPAGE::$dbh->getAll(sprintf("
 		 select 
                    z.zone zone,
                    sum(rp.balance) balance,
-                   sum(rp.balance) - %s*sum(rp.riskA-rp.riskB) - %s*sum(rp.riskB-rp.riskC) - %s*sum(rp.riskC-rp.riskD) - %s*sum(rp.riskD) netbal,
+                   round(sum(rp.balance) - %s*sum(rp.riskA-rp.riskB) - %s*sum(rp.riskB-rp.riskC) - %s*sum(rp.riskC-rp.riskD) - %s*sum(rp.riskD), 2) netbal,
                    sum(rp.riskA-rp.riskB) riskA,
                    concat(round(100*(sum(rp.riskA-rp.riskB)/sum(rp.balance)),2),'%%') riskAPct,
-                   %s*sum(rp.riskA-rp.riskB) resA,
+                   round(%s*sum(rp.riskA-rp.riskB), 2) resA,
                    sum(rp.riskB-rp.riskC) riskB,
                    concat(round(100*(sum(rp.riskB-rp.riskC)/sum(rp.balance)),2),'%%') riskBPct,
-                   %s*sum(rp.riskB-rp.riskC) resB,
+                   round(%s*sum(rp.riskB-rp.riskC), 2) resB,
                    sum(rp.riskC-rp.riskD) riskC,
                    concat(round(100*(sum(rp.riskC-rp.riskD)/sum(rp.balance)),2),'%%') riskCPct,
-                   %s*sum(rp.riskC-rp.riskD) resC,
+                   round(%s*sum(rp.riskC-rp.riskD), 2) resC,
                    sum(rp.riskD) riskD,
                    concat(round(100*(sum(rp.riskD)/sum(rp.balance)),2),'%%') riskDPct,
-                   %s*sum(rp.riskD) resD
+                   round(%s*sum(rp.riskD), 2) resD
                  from
                    tblRiskPortfolio rp, tblZones z
                  where
@@ -38,19 +38,19 @@ $total = current(WEBPAGE::$dbh->getAll(sprintf("
 		 select 
                    '%s' zone,
                    sum(rp.balance) balance,
-                   sum(rp.balance) - %s*sum(rp.riskA-rp.riskB) - %s*sum(rp.riskB-rp.riskC) - %s*sum(rp.riskC-rp.riskD) - %s*sum(rp.riskD) netbal,
+                   round(sum(rp.balance) - %s*sum(rp.riskA-rp.riskB) - %s*sum(rp.riskB-rp.riskC) - %s*sum(rp.riskC-rp.riskD) - %s*sum(rp.riskD), 2) netbal,
                    sum(rp.riskA-rp.riskB) riskA,
                    concat(round(100*(sum(rp.riskA-rp.riskB)/sum(rp.balance)),2),'%%') riskAPct,
-                   %s*sum(rp.riskA-rp.riskB) resA,
+                   round(%s*sum(rp.riskA-rp.riskB), 2) resA,
                    sum(rp.riskB-rp.riskC) riskB,
                    concat(round(100*(sum(rp.riskB-rp.riskC)/sum(rp.balance)),2),'%%') riskBPct,
-                   %s*sum(rp.riskB-rp.riskC) resB,
+                   round(%s*sum(rp.riskB-rp.riskC), 2) resB,
                    sum(rp.riskC-rp.riskD) riskC,
                    concat(round(100*(sum(rp.riskC-rp.riskD)/sum(rp.balance)),2),'%%') riskCPct,
-                   %s*sum(rp.riskC-rp.riskD) resC,
+                   round(%s*sum(rp.riskC-rp.riskD), 2) resC,
                    sum(rp.riskD) riskD,
                    concat(round(100*(sum(rp.riskD)/sum(rp.balance)),2),'%%') riskDPct,
-                   %s*sum(rp.riskD) resD
+                   round(%s*sum(rp.riskD), 2) resD
                  from
                    tblRiskPortfolio rp, tblZones z
                  where
