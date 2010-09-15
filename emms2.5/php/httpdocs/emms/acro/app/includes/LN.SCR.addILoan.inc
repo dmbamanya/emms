@@ -33,7 +33,7 @@ switch ($loan->data['status'])
   case 'R' : break;
   case 'RO': break;
   default: 	
-    $loan->frostdata = array_merge($loan->frostdata,array('kp','pg_value','re_value','fgd_value','fgt_value')); 
+    $loan->frostdata = array_merge($loan->frostdata,array('kp','pg_value','re_value','fgd_value','fgt_value','installment','rates_r','rates_d','fees_at','fees_af','margin_d','margin_c','collateral_min_value','savings_p')); 
 }
 
 $clientID   = $loan->data['client_id']    ? $loan->data['client_id']    : $_REQUEST['client_id'];
