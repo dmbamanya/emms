@@ -175,6 +175,7 @@
     <fn code="1"   name="BS.SCR.viewSocietyXpress"/>
     <fn code="1"   name="BS.SCR.viewClientXpress"/>
     <fn code="254" name="LN.SCR.viewLoanTypeXpress"/>
+    <fn code="1"   name="LN.SCR.viewILoanXpress"/>
     <fn code="2"   name="BS.SCR.addBusiness"/>
     <fn code="2"   name="BS.SCR.editBusiness"/>
     <fn code="2"   name="BS.SCR.pickSociety"/>
