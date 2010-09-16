@@ -53,7 +53,7 @@ foreach($head as $key=>$val)
 foreach($mrow AS $key=>$val)
 {
   $loan->load_borrower($val['client_id']);
-  $data[$key]['loan_code'] 	= $val['loan_code'];
+  $data[$key]['loan_code'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_loan_profile'],'LN.SCR.viewILoanXpress','id',$val['loan_id'],'LN.SCR.viewILoanXpress','no','yes','no','580','350',$val['loan_code']);
   $data[$key]['kp'] 		= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_pmt_plan'],'LN.SCR.pmtPlan','id',$val['loan_id'],'LN.SCR.pmtPlan','no','yes','no','780','400',$val['kp']);
   $data[$key]['borrower'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_credit_history'],'BS.SCR.viewClientXpress','id',$val['client_id'],'BS.SCR.viewClientXpress','no','yes','no','800','500',$loan->data['borrower_name']);
   $data[$key]['status'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_status_history'],'LN.RPT.loanStatusHistory','id',$val['loan_id'],'LN.RPT.loanStatusHistory','no','no','no','700','320',WEBPAGE::$gt[sprintf('tblLoans.status.%s',$val['status'])]);

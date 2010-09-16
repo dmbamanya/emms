@@ -33,6 +33,7 @@ if (count($status_controls))
   }
 }
 
+$tpl->setVariable('xpress_title',    WEBPAGE::$gt['LN.SCR.viewILoan']);
 $tpl->setVariable('loan_code',       $loan_code);
 $tpl->setVariable('loan_code_label', WEBPAGE::$gt['tblLoans.loan_code']);
 $tpl->setVariable('status',          WEBPAGE::$gt[sprintf("tblLoans.status.%s",$status)]);
