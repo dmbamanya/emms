@@ -96,6 +96,7 @@
       <node code="1" name="RP.SCR.risk"/>
       <node code="1" name="RP.SCR.loanWriteOff"/>
       <node code="1" name="RP.SCR.client"/>
+      <node code="1" name="RP.SCR.clientAD"/>
       <node code="1" name="RP.SCR.clientIOM"/>
       <node code="1" name="RP.SCR.operationalLoss"/>
     </node>
@@ -218,6 +219,8 @@
     <fn code="1"   name="RP.SCR.activeLoanPortfolioByLoan"/>
     <fn code="1"   name="RP.SCR.businessTypes"/>
     <fn code="1"   name="RP.SCR.cancelledLoanPortfolioByLoan"/>
+    <fn code="1"   name="RP.SCR.clientADActivations"/>
+    <fn code="1"   name="RP.SCR.clientADDeactivations"/>
     <fn code="1"   name="RP.SCR.clientByAdvisor"/>
     <fn code="1"   name="RP.SCR.clientByBranch"/>
     <fn code="1"   name="RP.SCR.clientByProgram"/>
