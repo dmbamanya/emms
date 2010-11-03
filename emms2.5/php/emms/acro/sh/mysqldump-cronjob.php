@@ -17,6 +17,7 @@ $cmd[] = sprintf("mysqldump -u %s --password=%s --opt %s %s | gzip > %s/backup/p
 $cmd[] = sprintf("lynx -dump %sindex.cron.php",$conf['app']['url']);
 $cmd[] = sprintf("mysqldump -u %s --password=%s --opt %s %s | gzip > %s/backup/postbk.gz",$conf['db']['usr'],$conf['db']['pwd'],$conf['db']['name'],$tbl,$path);
 $cmd[] = sprintf("lynx -dump %sindex.mail.risk.php",$conf['app']['url']);
+$cmd[] = sprintf("lynx -dump %sindex.mail.stats.officer.php",$conf['app']['url']);
 
 foreach($cmd as $key => $val)
 {

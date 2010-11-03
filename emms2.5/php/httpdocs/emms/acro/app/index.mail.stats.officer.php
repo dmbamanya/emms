@@ -413,7 +413,6 @@ $attachment = $_html .'</body></html>';
 $recipients = explode(';',WEBPAGE::$conf['app']['par30rpt_emailto']);
 // Additional headers
 $headers["From"] = 'e-MMS Reports <emms_reports@esperanza.org>';
-// $headers["To"]    = 'carlosgomezsilva@gmail.com';
 $headers["Subject"] = $subject;
 $crlf = "\n";
 $mime = new Mail_mime($crlf);
@@ -422,10 +421,10 @@ $mime->setHTMLBody($attachment);
 //do not ever try to call these lines in reverse order
 $body = $mime->get();
 $hdr = $mime->headers($headers,true);
-$params["host"] = 'zimbra.esperanza.org';
-$params["port"] = 25;
-$params["username"] = 'emms_reports';
-$params["password"] = 'em3006';
+$params["host"] = WEBPAGE::$conf['mail']['host'];
+$params["port"] = WEBPAGE::$conf['mail']['port'];
+$params["username"] = WEBPAGE::$conf['mail']['username'];
+$params["password"] = WEBPAGE::$conf['mail']['password'];
 $params["auth"] = true;
 $mail =& Mail::factory('mail',$params);
 $res = $mail->send($recipients, $hdr, $body);
