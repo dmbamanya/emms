@@ -74,6 +74,7 @@
       <node code="254" name="transactions">
         <node code="254" name="RP.SCR.transactionsCredits" qjump="1" popup="1" width="700" height="320"/>
         <node code="254" name="RP.SCR.transactionsDebits" qjump="1" popup="1" width="700" height="320"/>
+        <node code="254" name="RP.SCR.transactionsLegals" qjump="1" popup="1" width="700" height="320"/>
         <node code="254" name="LN.SCR.browseChecks" qjump="1"/>
         <node code="254" name="LN.SCR.transactionsStatement" qjump="1">
           <fn code="254" name="LN.SCR.viewTransactionsStatement"/>
@@ -240,6 +241,7 @@
     <fn code="1"   name="RP.SCR.loanWriteOffByAdvisor"/>
     <fn code="1"   name="RP.SCR.loanWriteOffByBranch"/>
     <fn code="1"   name="RP.SCR.loanWriteOffByProgram"/>
+    <fn code="1"   name="RP.SCR.writeOffPayments"/>
     <fn code="1"   name="RP.SCR.writeOffPortfolio"/>
     <fn code="1"   name="RP.SCR.writeOffHistory"/>
     <fn code="1"   name="RP.SCR.operationalLossByAdvisor"/>
