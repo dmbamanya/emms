@@ -11,6 +11,8 @@ WEBPAGE::START();
 WEBPAGE::$lang = isset($_GET['lang']) ? $_GET['lang'] : WEBPAGE::$conf['app']['default_language'];
 WEBPAGE::load_gt();
 
+if ($_SERVER['REMOTE_ADDR'] != WEBPAGE::$conf['server']['ip']) { exit; }
+
 $cdata = WEBPAGE::$dbh->getAll(sprintf("SELECT z.id, rp.date AS now_date, z.zone, trp.id AS trp_zone_id, (
 round( 100 * ( sum( rp.riskB ) / sum( rp.balance ) ) , 2 )
 ) AS risk_B, trp.fmrRiskB AS fmr_riskB, trp.date AS fmrdate, lfrp.id as lfrp_zone_id,lfrp.lfRiskB, lfrp.date AS lfdate

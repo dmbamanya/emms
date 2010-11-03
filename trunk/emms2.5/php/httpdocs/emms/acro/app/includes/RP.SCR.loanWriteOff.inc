@@ -10,7 +10,8 @@ $mode = array
           'RP.SCR.loanWriteOffByProgram' => WEBPAGE::$gt['RP.SCR.loanWriteOffByProgram'],
           'RP.SCR.loanWriteOffByAdvisor' => WEBPAGE::$gt['RP.SCR.loanWriteOffByAdvisor'],
           'RP.SCR.writeOffHistory'       => WEBPAGE::$gt['RP.SCR.writeOffHistory'],
-          'RP.SCR.writeOffPortfolio'     => WEBPAGE::$gt['RP.SCR.writeOffPortfolio']
+          'RP.SCR.writeOffPortfolio'     => WEBPAGE::$gt['RP.SCR.writeOffPortfolio'],
+          'RP.SCR.writeOffPayments'      => WEBPAGE::$gt['RP.SCR.writeOffPayments']
         );
 $btn  = new TTFButton(WEBPAGE::$theme);
 /*

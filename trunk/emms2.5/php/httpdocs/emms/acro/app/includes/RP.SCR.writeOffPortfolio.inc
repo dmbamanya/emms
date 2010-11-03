@@ -63,7 +63,7 @@ foreach($data as $key=>$val)
   $ldata[$key]['client']    = str_replace(' ','&nbsp;',$data[$key]['client']);
   $ldata[$key]['ccode']     = str_replace(' ','&nbsp;',$data[$key]['ccode']);
   $ldata[$key]['lgroup']    = str_replace(' ','&nbsp;',$data[$key]['lgroup']);
-  $ldata[$key]['loan']      = $val['loan'];
+  $ldata[$key]['loan'] = sprintf('<a href=\'javascript:openWin("index.popup.php?scr_name=LG.SCR.legalProfile&id=%s","%s","menubar=no,scrollbars=yes,resizable=yes,width=700,height=320")\' onClick="">%s</a>',$val['loan_id'],$val['loan'],$val['loan']);
   $ldata[$key]['date']      = $val['date'];
   $ldata[$key]['amount']    = $val['amount'];
   $ldata[$key]['principal'] = $val['principal'];
