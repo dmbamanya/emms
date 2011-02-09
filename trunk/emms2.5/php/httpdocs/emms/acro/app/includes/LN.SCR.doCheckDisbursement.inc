@@ -33,7 +33,7 @@ $sponsorsByZone    = $sponsor->getSponsorsByZone($master->getBorrowerZone());
 $sponsors          = array_intersect_key($sponsorsByBalance,$sponsorsByZone);
 arsort($sponsors);
 foreach($sponsors as $key => $val) $sponsors[$key] = $sponsorsByZone[$key];
-$sponsors = WEBPAGE::$conf['mod_sponsorship']['disbursement_filter'] ? array_slice($sponsors, 0, 1) : $sponsors;
+$sponsors = WEBPAGE::$conf['mod_sponsorship']['disbursement_filter'] ? array_slice($sponsors, 0, 1, true) : $sponsors;
 $form->addElement('select',   'sponsor_id',   WEBPAGE::$gt['tblSponsors.sponsor'], (array(''=>'') + $sponsors), 'class=large');
 
 $form->addElement('textarea', 'memo',         WEBPAGE::$gt['memo'], 'rows=5');
