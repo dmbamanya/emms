@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS `tblBusiness`;
-CREATE TABLE  `tblBusiness` (
+CREATE TABLE `tblBusiness` (
   `id` int(11) NOT NULL auto_increment,
   `type_id` int(11) default NULL,
   `name` varchar(255) NOT NULL default '',
@@ -15,7 +15,7 @@ CREATE TABLE  `tblBusiness` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblBusinessIOM`;
-CREATE TABLE  `tblBusinessIOM` (
+CREATE TABLE `tblBusinessIOM` (
   `id` int(11) NOT NULL auto_increment,
   `business_id` int(11) NOT NULL default '0',
   `status` char(1) NOT NULL default 'N',
@@ -26,7 +26,7 @@ CREATE TABLE  `tblBusinessIOM` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblBusinessTypes`;
-CREATE TABLE  `tblBusinessTypes` (
+CREATE TABLE `tblBusinessTypes` (
   `id` int(11) NOT NULL auto_increment,
   `activity` enum('S','I','C','F') default NULL,
   `type` tinytext,
@@ -36,12 +36,12 @@ CREATE TABLE  `tblBusinessTypes` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblCalendar`;
-CREATE TABLE  `tblCalendar` (
+CREATE TABLE `tblCalendar` (
   `date` date NOT NULL default '0000-00-00'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='RP';
 
 DROP TABLE IF EXISTS `tblClientIOM`;
-CREATE TABLE  `tblClientIOM` (
+CREATE TABLE `tblClientIOM` (
   `id` int(11) NOT NULL auto_increment,
   `internal` enum('0','1') NOT NULL default '0',
   `type` enum('I','O') default NULL,
@@ -58,7 +58,7 @@ CREATE TABLE  `tblClientIOM` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblClientPortfolio`;
-CREATE TABLE  `tblClientPortfolio` (
+CREATE TABLE `tblClientPortfolio` (
   `date` date NOT NULL default '0000-00-00',
   `zone_id` int(11) NOT NULL default '0',
   `program_id` int(11) NOT NULL default '0',
@@ -77,7 +77,7 @@ CREATE TABLE  `tblClientPortfolio` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 DROP TABLE IF EXISTS `tblClients`;
-CREATE TABLE  `tblClients` (
+CREATE TABLE `tblClients` (
   `id` int(11) NOT NULL auto_increment,
   `creator_id` int(11) default NULL,
   `creator_date` date default NULL,
@@ -110,7 +110,7 @@ CREATE TABLE  `tblClients` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblContracts`;
-CREATE TABLE  `tblContracts` (
+CREATE TABLE `tblContracts` (
   `id` int(11) NOT NULL auto_increment,
   `tpl` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -118,17 +118,29 @@ CREATE TABLE  `tblContracts` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tblCurrenciesExchangeRates`;
+CREATE TABLE `tblCurrenciesExchangeRates` (
+  `id` int(11) NOT NULL auto_increment,
+  `date` date default NULL,
+  `currency_id` int(11) default NULL,
+  `rate` decimal(10,2) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `CurrencyID` (`currency_id`),
+  KEY `Date` (`date`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `tblCurrencys`;
-CREATE TABLE  `tblCurrencys` (
+CREATE TABLE `tblCurrencys` (
   `id` int(11) NOT NULL auto_increment,
   `currency` tinytext,
   `symbol` tinytext,
+  `code` tinytext,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblDataLog`;
-CREATE TABLE  `tblDataLog` (
+CREATE TABLE `tblDataLog` (
   `id` int(11) NOT NULL auto_increment,
   `date` date NOT NULL default '0000-00-00',
   `time` time NOT NULL default '00:00:00',
@@ -140,7 +152,7 @@ CREATE TABLE  `tblDataLog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblFunds`;
-CREATE TABLE  `tblFunds` (
+CREATE TABLE `tblFunds` (
   `id` int(11) NOT NULL auto_increment,
   `code` varchar(32) default NULL,
   `fund` varchar(32) default NULL,
@@ -155,7 +167,7 @@ CREATE TABLE  `tblFunds` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Accounting';
 
 DROP TABLE IF EXISTS `tblFundsLoansMasterPct`;
-CREATE TABLE  `tblFundsLoansMasterPct` (
+CREATE TABLE `tblFundsLoansMasterPct` (
   `id` int(11) NOT NULL auto_increment,
   `master_id` int(11) NOT NULL default '0',
   `fund_id` int(11) NOT NULL default '0',
@@ -165,7 +177,7 @@ CREATE TABLE  `tblFundsLoansMasterPct` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblFundsLoansMasterPctTrash`;
-CREATE TABLE  `tblFundsLoansMasterPctTrash` (
+CREATE TABLE `tblFundsLoansMasterPctTrash` (
   `id` int(11) NOT NULL,
   `master_id` int(11) NOT NULL default '0',
   `fund_id` int(11) NOT NULL default '0',
@@ -175,7 +187,7 @@ CREATE TABLE  `tblFundsLoansMasterPctTrash` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblGetText`;
-CREATE TABLE  `tblGetText` (
+CREATE TABLE `tblGetText` (
   `id` varchar(255) NOT NULL,
   `eng` text NOT NULL,
   `esp` text NOT NULL,
@@ -184,34 +196,34 @@ CREATE TABLE  `tblGetText` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblLinkProgramsFunds`;
-CREATE TABLE  `tblLinkProgramsFunds` (
+CREATE TABLE `tblLinkProgramsFunds` (
   `program_id` int(11) NOT NULL default '0',
   `fund_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`program_id`,`fund_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblLinkReceiptsPayments`;
-CREATE TABLE  `tblLinkReceiptsPayments` (
+CREATE TABLE `tblLinkReceiptsPayments` (
   `receipt_id` int(10) unsigned NOT NULL,
   `payment_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`payment_id`,`receipt_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblLinkSocieties`;
-CREATE TABLE  `tblLinkSocieties` (
+CREATE TABLE `tblLinkSocieties` (
   `parent_id` int(11) NOT NULL default '0',
   `child_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`parent_id`,`child_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblLinkSponsorsZones`;
-CREATE TABLE  `tblLinkSponsorsZones` (
+CREATE TABLE `tblLinkSponsorsZones` (
   `sponsor_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblLoans`;
-CREATE TABLE  `tblLoans` (
+CREATE TABLE `tblLoans` (
   `id` int(11) NOT NULL auto_increment,
   `loan_code` tinytext NOT NULL,
   `status` enum('N','R','O','S','A','D','G','C','LI','LO','RT','RO') default NULL,
@@ -258,7 +270,7 @@ CREATE TABLE  `tblLoans` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansCurrentData`;
-CREATE TABLE  `tblLoansCurrentData` (
+CREATE TABLE `tblLoansCurrentData` (
   `loan_id` int(11) NOT NULL default '0',
   `balance_kp` decimal(10,2) NOT NULL default '0.00',
   `balance_kaf` decimal(10,2) NOT NULL default '0.00',
@@ -273,7 +285,7 @@ CREATE TABLE  `tblLoansCurrentData` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansCurrentDataBackup`;
-CREATE TABLE  `tblLoansCurrentDataBackup` (
+CREATE TABLE `tblLoansCurrentDataBackup` (
   `loan_id` int(11) NOT NULL default '0',
   `balance_kp` decimal(10,2) NOT NULL default '0.00',
   `balance_kaf` decimal(10,2) NOT NULL default '0.00',
@@ -288,7 +300,7 @@ CREATE TABLE  `tblLoansCurrentDataBackup` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansMaster`;
-CREATE TABLE  `tblLoansMaster` (
+CREATE TABLE `tblLoansMaster` (
   `id` int(11) NOT NULL auto_increment,
   `borrower_id` int(11) NOT NULL default '0',
   `borrower_type` enum('B','G','I') collate latin1_general_ci NOT NULL default 'B',
@@ -311,7 +323,7 @@ CREATE TABLE  `tblLoansMaster` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansMasterDetails`;
-CREATE TABLE  `tblLoansMasterDetails` (
+CREATE TABLE `tblLoansMasterDetails` (
   `master_id` int(11) NOT NULL default '0',
   `loan_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`master_id`,`loan_id`),
@@ -320,7 +332,7 @@ CREATE TABLE  `tblLoansMasterDetails` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansMasterDetailsTrash`;
-CREATE TABLE  `tblLoansMasterDetailsTrash` (
+CREATE TABLE `tblLoansMasterDetailsTrash` (
   `master_id` int(11) NOT NULL default '0',
   `loan_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`master_id`,`loan_id`),
@@ -328,8 +340,23 @@ CREATE TABLE  `tblLoansMasterDetailsTrash` (
   KEY `master_id` (`master_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
+DROP TABLE IF EXISTS `tblLoansMasterSponsors`;
+CREATE TABLE `tblLoansMasterSponsors` (
+  `id` int(11) NOT NULL auto_increment,
+  `master_id` int(11) default NULL,
+  `sponsor_id` int(11) default NULL,
+  `donation` decimal(10,2) unsigned zerofill default NULL,
+  `tip` decimal(10,2) unsigned zerofill default NULL,
+  `datetime` datetime default NULL,
+  `token` varchar(45) default NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `Token` (`token`),
+  KEY `MasterID` (`master_id`),
+  KEY `SponsorID` (`sponsor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `tblLoansMasterTrash`;
-CREATE TABLE  `tblLoansMasterTrash` (
+CREATE TABLE `tblLoansMasterTrash` (
   `id` int(11) NOT NULL,
   `borrower_id` int(11) NOT NULL default '0',
   `borrower_type` enum('B','G','I') collate latin1_general_ci NOT NULL default 'B',
@@ -352,7 +379,7 @@ CREATE TABLE  `tblLoansMasterTrash` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansOnDelinquency`;
-CREATE TABLE  `tblLoansOnDelinquency` (
+CREATE TABLE `tblLoansOnDelinquency` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL default '0',
   `date` date NOT NULL default '0000-00-00',
@@ -369,7 +396,7 @@ CREATE TABLE  `tblLoansOnDelinquency` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='CRON';
 
 DROP TABLE IF EXISTS `tblLoansParked`;
-CREATE TABLE  `tblLoansParked` (
+CREATE TABLE `tblLoansParked` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL,
   `category` enum('disaster','tdisability','pdisability','death','other') NOT NULL,
@@ -382,10 +409,10 @@ CREATE TABLE  `tblLoansParked` (
   `penalties` decimal(10,2) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `loan_id` (`loan_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansParkedPayments`;
-CREATE TABLE  `tblLoansParkedPayments` (
+CREATE TABLE `tblLoansParkedPayments` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL,
   `principal` decimal(10,2) NOT NULL,
@@ -397,10 +424,10 @@ CREATE TABLE  `tblLoansParkedPayments` (
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoanStatusHistory`;
-CREATE TABLE  `tblLoanStatusHistory` (
+CREATE TABLE `tblLoanStatusHistory` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL default '0',
   `p_status` varchar(16) NOT NULL default '',
@@ -410,6 +437,7 @@ CREATE TABLE  `tblLoanStatusHistory` (
   `user_id` int(11) NOT NULL default '0',
   `memo` text NOT NULL,
   PRIMARY KEY  (`id`),
+  UNIQUE KEY `nodups` (`loan_id`,`p_status`,`status`,`date`),
   KEY `loan_id` (`loan_id`),
   KEY `date` (`date`),
   KEY `status` (`status`),
@@ -417,7 +445,7 @@ CREATE TABLE  `tblLoanStatusHistory` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoanStatusHistoryTrash`;
-CREATE TABLE  `tblLoanStatusHistoryTrash` (
+CREATE TABLE `tblLoanStatusHistoryTrash` (
   `id` int(11) NOT NULL,
   `loan_id` int(11) NOT NULL default '0',
   `p_status` varchar(16) NOT NULL default '',
@@ -434,7 +462,7 @@ CREATE TABLE  `tblLoanStatusHistoryTrash` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoansTrash`;
-CREATE TABLE  `tblLoansTrash` (
+CREATE TABLE `tblLoansTrash` (
   `id` int(11) NOT NULL,
   `loan_code` tinytext NOT NULL,
   `status` enum('N','R','O','S','A','D','G','C','LI','LO','RT','RO') default NULL,
@@ -481,7 +509,7 @@ CREATE TABLE  `tblLoansTrash` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoanTypes`;
-CREATE TABLE  `tblLoanTypes` (
+CREATE TABLE `tblLoanTypes` (
   `id` int(11) NOT NULL auto_increment,
   `borrower_type` enum('B','G','I','U','O') NOT NULL default 'B',
   `description` tinytext,
@@ -516,7 +544,7 @@ CREATE TABLE  `tblLoanTypes` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoanWriteOff`;
-CREATE TABLE  `tblLoanWriteOff` (
+CREATE TABLE `tblLoanWriteOff` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL default '0',
   `amount` decimal(10,2) NOT NULL default '0.00',
@@ -527,11 +555,13 @@ CREATE TABLE  `tblLoanWriteOff` (
   `penalties` decimal(10,2) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `loan_id` (`loan_id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblLoanWriteOffCharges`;
-CREATE TABLE  `tblLoanWriteOffCharges` (
+CREATE TABLE `tblLoanWriteOffCharges` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
@@ -542,17 +572,17 @@ CREATE TABLE  `tblLoanWriteOffCharges` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblLoanWriteOffPayments`;
-CREATE TABLE  `tblLoanWriteOffPayments` (
+CREATE TABLE `tblLoanWriteOffPayments` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblPasswords`;
-CREATE TABLE  `tblPasswords` (
+CREATE TABLE `tblPasswords` (
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `password` varchar(255) collate latin1_general_ci NOT NULL,
@@ -561,7 +591,7 @@ CREATE TABLE  `tblPasswords` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblPayments`;
-CREATE TABLE  `tblPayments` (
+CREATE TABLE `tblPayments` (
   `id` int(11) NOT NULL auto_increment,
   `loan_id` int(11) default NULL,
   `date` date default NULL,
@@ -584,7 +614,7 @@ CREATE TABLE  `tblPayments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblPaymentsRollback`;
-CREATE TABLE  `tblPaymentsRollback` (
+CREATE TABLE `tblPaymentsRollback` (
   `id` int(11) NOT NULL default '0',
   `loan_id` int(11) default NULL,
   `date` date default NULL,
@@ -606,7 +636,7 @@ CREATE TABLE  `tblPaymentsRollback` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='LOANS';
 
 DROP TABLE IF EXISTS `tblPrograms`;
-CREATE TABLE  `tblPrograms` (
+CREATE TABLE `tblPrograms` (
   `id` int(11) NOT NULL auto_increment,
   `program` varchar(32) default NULL,
   `confidential` enum('1','0') NOT NULL default '0',
@@ -620,7 +650,7 @@ CREATE TABLE  `tblPrograms` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblQjumps`;
-CREATE TABLE  `tblQjumps` (
+CREATE TABLE `tblQjumps` (
   `user_id` int(11) NOT NULL default '0',
   `qjump` varchar(255) collate latin1_general_ci NOT NULL default '',
   PRIMARY KEY  (`user_id`,`qjump`),
@@ -628,7 +658,7 @@ CREATE TABLE  `tblQjumps` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='BASE';
 
 DROP TABLE IF EXISTS `tblReceipts`;
-CREATE TABLE  `tblReceipts` (
+CREATE TABLE `tblReceipts` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `loanmaster_id` int(10) unsigned NOT NULL,
   `balance_kp` decimal(10,2) NOT NULL,
@@ -643,7 +673,7 @@ CREATE TABLE  `tblReceipts` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblRiskPortfolio`;
-CREATE TABLE  `tblRiskPortfolio` (
+CREATE TABLE `tblRiskPortfolio` (
   `date` date NOT NULL default '0000-00-00',
   `zone_id` int(11) NOT NULL default '0',
   `program_id` int(11) NOT NULL default '0',
@@ -657,7 +687,7 @@ CREATE TABLE  `tblRiskPortfolio` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 DROP TABLE IF EXISTS `tblSocieties`;
-CREATE TABLE  `tblSocieties` (
+CREATE TABLE `tblSocieties` (
   `id` int(11) NOT NULL auto_increment,
   `creator_id` int(11) default NULL,
   `creator_date` date default NULL,
@@ -677,9 +707,9 @@ CREATE TABLE  `tblSocieties` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSponsors`;
-CREATE TABLE  `tblSponsors` (
+CREATE TABLE `tblSponsors` (
   `id` int(11) NOT NULL auto_increment,
-  `username` varchar(16) default NULL,
+  `username` varchar(128) default NULL,
   `password` varchar(35) default NULL,
   `creator_id` int(11) default NULL,
   `creator_date` date default NULL,
@@ -692,29 +722,34 @@ CREATE TABLE  `tblSponsors` (
   `email` varchar(128) default NULL,
   `memo` text,
   `active` enum('1','0') NOT NULL default '1',
+  `actcode` varchar(128) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSponsorsDonations`;
-CREATE TABLE  `tblSponsorsDonations` (
+CREATE TABLE `tblSponsorsDonations` (
   `id` int(11) NOT NULL auto_increment,
   `sponsor_id` int(11) default NULL,
   `new_clients` enum('0','1') NOT NULL default '0',
   `src_amount` decimal(20,2) default NULL,
+  `src_tip` decimal(10,2) default NULL,
   `src_currency_id` int(11) default NULL,
   `conv_amount` decimal(20,2) default NULL,
+  `conv_tip` decimal(10,2) default NULL,
   `conv_currency_id` int(11) default NULL,
   `creator_id` int(11) default NULL,
   `creator_date` date default NULL,
   `editor_id` int(11) default NULL,
   `editor_date` date default NULL,
+  `token` varchar(45) default NULL,
+  `memo` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSponsorsLog`;
-CREATE TABLE  `tblSponsorsLog` (
+CREATE TABLE `tblSponsorsLog` (
   `id` int(11) NOT NULL auto_increment,
   `sponsor_id` int(11) default NULL,
   `ip_address` varchar(15) default NULL,
@@ -725,7 +760,7 @@ CREATE TABLE  `tblSponsorsLog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSurveyAnswers`;
-CREATE TABLE  `tblSurveyAnswers` (
+CREATE TABLE `tblSurveyAnswers` (
   `id` int(11) NOT NULL auto_increment,
   `client_id` int(11) default NULL,
   `advisor_id` int(11) default NULL,
@@ -738,7 +773,7 @@ CREATE TABLE  `tblSurveyAnswers` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSurveyItems`;
-CREATE TABLE  `tblSurveyItems` (
+CREATE TABLE `tblSurveyItems` (
   `id` int(11) NOT NULL auto_increment,
   `question` varchar(255) default NULL,
   `answer_txt` text,
@@ -752,7 +787,7 @@ CREATE TABLE  `tblSurveyItems` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblSurveys`;
-CREATE TABLE  `tblSurveys` (
+CREATE TABLE `tblSurveys` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) default NULL,
   `description` varchar(255) default NULL,
@@ -765,7 +800,7 @@ CREATE TABLE  `tblSurveys` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblTCredits`;
-CREATE TABLE  `tblTCredits` (
+CREATE TABLE `tblTCredits` (
   `id` int(11) NOT NULL auto_increment,
   `code` varchar(18) character set latin1 default NULL,
   `date` date NOT NULL default '0000-00-00',
@@ -783,7 +818,7 @@ CREATE TABLE  `tblTCredits` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='ACCOUNTING';
 
 DROP TABLE IF EXISTS `tblTDebits`;
-CREATE TABLE  `tblTDebits` (
+CREATE TABLE `tblTDebits` (
   `id` int(11) NOT NULL auto_increment,
   `code` varchar(32) NOT NULL,
   `date` date NOT NULL,
@@ -792,10 +827,10 @@ CREATE TABLE  `tblTDebits` (
   `amount` decimal(13,2) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `code` (`code`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tblUserIOM`;
-CREATE TABLE  `tblUserIOM` (
+CREATE TABLE `tblUserIOM` (
   `id` int(11) NOT NULL auto_increment,
   `type` enum('I','O') default NULL,
   `user_id` int(11) default NULL,
@@ -808,7 +843,7 @@ CREATE TABLE  `tblUserIOM` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblUsers`;
-CREATE TABLE  `tblUsers` (
+CREATE TABLE `tblUsers` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(16) default NULL,
   `password` varchar(35) default NULL,
@@ -839,7 +874,7 @@ CREATE TABLE  `tblUsers` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblZones`;
-CREATE TABLE  `tblZones` (
+CREATE TABLE `tblZones` (
   `id` int(11) NOT NULL auto_increment,
   `parent_id` int(11) NOT NULL default '0',
   `zone` varchar(32) default NULL,

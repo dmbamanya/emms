@@ -219,6 +219,11 @@ class LOAN_MASTER extends WEBPAGE
       WEBPAGE::$dbh->query(sprintf("update tblLoansMasterSponsors set sponsor_id = %s where token = '%s' and master_id = %s", $sponsor_id, $token, $this->data['id']));
   }
 
+  function isSponsor($sponsor_id)
+  {
+      return current(current(WEBPAGE::$dbh->getAll(sprintf("select count(id) hits from tblLoansMasterSponsors where master_id = %s and sponsor_id = %s", $this->data['id'], $sponsor_id))));
+  }
+
   function getBorrowerZone()
   {
     return  current(WEBPAGE::$dbh->getAssoc(sprintf("select id,id from tblZones where parent_id = %s and program_id = %s", $this->data['zone_id'],$this->data['program_id'])));

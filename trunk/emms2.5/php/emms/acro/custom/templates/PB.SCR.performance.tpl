@@ -38,7 +38,7 @@ td.fdchart { padding: 5px; font-size: 11px;  background: #c1d889;border-color: #
   <tr><td class=tlabel>{label_administrative_staff}	</td><td class=tchart align=center colspan=2>{administrative_staff}	</td></tr>
 </table>
 
-<p style="width:90%">* The Equis Foundation operates in Dominican Pesos (DOP); thus, the figures in DOP above are exact.
+<p style="width:90%">* Esperanza International operates in Dominican Pesos (DOP); thus, the figures in DOP above are exact. 
 For your convenience, USD estimates have also been included. To reflect fluctuations in exchange rate as best as possible,
 the USD figures above have been approximated using an average rate.
 </body>

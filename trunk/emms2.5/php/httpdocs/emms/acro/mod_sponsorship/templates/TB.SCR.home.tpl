@@ -12,11 +12,6 @@
   <tr>
     <td align=center valign=bottom><a href='index.php?scr_name=SP.SCR.financialSummary'><img alt='' src='themes/blue/icons/48x48/financial_report.png'><br>{financialSummary}</a></td>
     <td align=center valign=bottom><a href='index.php?scr_name=SP.SCR.clientSummary'><img alt='' src='themes/blue/icons/48x48/clients_report.png'><br>{clientSummary}</a></td>
-    <td align=center valign=bottom><a href='index.php?scr_name=SP.SCR.businessSupport'><img alt='' src='themes/blue/icons/48x48/business_types.png'><br>{businessSupport}</a></td>
-    <td align=center valign=bottom><a href='index.php?scr_name=SP.SCR.loanDefaults'><img alt='' src='themes/blue/icons/48x48/loan_types.png'><br>{loanDefaults}</a></td>
-  </tr>
-  <tr>
-    <td align=center valign=bottom><a href='index.php?scr_name=SP.SCR.accessLog'><img alt='' src='themes/blue/icons/48x48/access_log.png'><br>{accessLog}</a></td>
     <td align=center valign=bottom><a href='index.php?logout=1'><img alt='' src='themes/blue/icons/48x48/logout.png'><br>{logout}</a></td>
   </tr>
 </table>

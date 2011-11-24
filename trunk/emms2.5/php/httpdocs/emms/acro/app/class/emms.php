@@ -35,7 +35,7 @@ abstract class EMMS
   const _TREEMENU_CSS_NODE              = "treeNode";
 
   const _IMG_USER			= "img/users/%s.jpg";
-  const _IMG_CLIENT			= "img/clients/%s.jpg";
+  const _IMG_CLIENT			= "img/clients/%s/%s.jpg";
 
   const _PAGER_MODE    			= 'Jumping';//'Sliding';//Jumping
   const _PAGER_PERPAGE    		= 10;
@@ -58,6 +58,7 @@ abstract class EMMS
 
   const _HOTLINK			= "<a class=record href='index.php?scr_name=%s&%s=%s'>%s</a>";
   const _HOTLINK_POPUP			= "<a title='%s' class=record href=\"javascript:openWin('index.popup.php?scr_name=%s&%s=%s','%s','menubar=%s,scrollbars=%s,resizable=%s,width=%s,height=%s')\">%s&nbsp;^</a>";
+  const _IMGLINK_POPUP			= "<a title='%s' class=record href=\"javascript:openWin('%s','%s','menubar=%s,scrollbars=%s,resizable=%s,width=%s,height=%s')\"><img width='%spx' src='%s'></a>";
 //  const _HOTICON			= "<a href='index.php?scr_name=%s&%s=%s'><img alt='%s' src='./themes/%s/icons/%s.png'></a>";
 
   const _RUN_MODE_OUTDATED              = 'outdated';
