@@ -27,9 +27,9 @@ $form->addElement('text',		'email',		  WEBPAGE::$gt['tblUsers.email'],      'cla
 $form->addElement('textarea',	'memo',			WEBPAGE::$gt['tblUsers.memo']);
 
 //add rules
-$form->addRule('username',	sprintf(WEBPAGE::$gt['rangelength'],4,12),'required');
-$form->addRule('username',	sprintf(WEBPAGE::$gt['rangelength'],4,12),'rangelength', array(4,12));
-$form->addRule('username',	WEBPAGE::$gt['lettersonly'],'lettersonly');
+$form->addRule('username',	sprintf(WEBPAGE::$gt['rangelength'],4,128),'required');
+$form->addRule('username',	sprintf(WEBPAGE::$gt['rangelength'],4,128),'rangelength', array(4,128));
+$form->addRule('username',	WEBPAGE::$gt['emailorblank'],'emailorblank');
 $form->addRule('sponsor',	  sprintf(WEBPAGE::$gt['rangelength'],1,255),'required');
 $form->addRule('sponsor',	  sprintf(WEBPAGE::$gt['rangelength'],1,255),'rangelength', array(1,255));
 //$form->addRule('sponsor',	  WEBPAGE::$gt['lettersonly'],'regex', '(^[a-zA-Z\. ]*$)');

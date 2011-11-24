@@ -243,9 +243,9 @@ class CLIENT extends WEBPAGE
   
   function setImgPath()
   {
-    if (file_exists(sprintf("./img/clients/%s.jpg",$this->data['code'])))
+    if (file_exists(sprintf(WEBPAGE::_IMG_CLIENT,'I',$this->data['id'])))
     {
-      $this->data['img_path'] = sprintf(WEBPAGE::_IMG_CLIENT,$this->data['code']);
+      $this->data['img_path'] = sprintf(WEBPAGE::_IMG_CLIENT,'I',$this->data['id']);
     }
       else
     {

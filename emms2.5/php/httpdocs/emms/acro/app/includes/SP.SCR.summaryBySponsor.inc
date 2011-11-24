@@ -1,175 +1,148 @@
 <?php
+require_once "Spreadsheet/Excel/Writer.php";
 
-$sponsor_donations = WEBPAGE::$dbh->getAll(sprintf("
-SELECT  sp.id                        AS sponsor_id   ,
-        sp.sponsor                   AS display_name ,
-        concat(sp.first,' ',sp.last) AS contact_name ,
-        sp.email                     AS contact_email,
-        SUM(spd.src_amount)          AS donations    ,
-        spd.src_currency_id          AS currency_id  ,
-        spd.symbol                   AS currency_symbol
-FROM (tblSponsors AS sp)
-        LEFT JOIN
-                (SELECT spd.id              ,
-                        spd.sponsor_id      ,
-                        spd.src_amount      ,
-                        spd.src_currency_id ,
-                        cu.symbol
-                FROM    tblSponsorsDonations spd,
-                        tblCurrencys cu
-                WHERE   cu.id = spd.src_currency_id
-                ) AS spd
-        ON (spd.sponsor_id = sp.id)
-WHERE   1
-GROUP BY sp.id,
-        spd.src_currency_id;
-"));
+$sponsors = WEBPAGE::$dbh->getAll(sprintf("
+  select
+    s.id,
+    s.sponsor,
+    concat(s.first, ' ',s.last) contact,
+    s.email,
+    sum(sd.conv_amount) donations,
+    sum(sd.conv_tip) tips
+  from
+    tblSponsors s,
+    tblSponsorsDonations sd
+  where
+    sd.sponsor_id = s.id
+  group by
+    s.id"));
 
+$pmt = WEBPAGE::$dbh->getAssoc("
+  select
+    lms.sponsor_id,
+    sum(round((if(p.principal,p.principal,0))*(lms.donation/lm.amount),2)) principal,
+    sum(round((if(p.interest,p.interest,0))*(lms.donation/lm.amount),2)) interest,
+    sum(round((if(p.fees,p.fees,0))*(lms.donation/lm.amount),2)) fees,
+    sum(round((if(p.insurances,p.insurances,0))*(lms.donation/lm.amount),2)) insurance,
+    sum(round((if(p.penalties,p.penalties,0))*(lms.donation/lm.amount),2)) penalties
+  from
+    (
+      tblLoansMasterSponsors lms,
+      tblLoansMaster lm,
+      tblLoansMasterDetails lmd,
+      tblLoans l
+    )
+  left join
+    tblPayments p on p.loan_id = lmd.loan_id
+  where
+    lm.id = lms.master_id and
+    lm.check_status = 'R' and
+    lmd.master_id = lms.master_id and
+    l.id = lmd.loan_id
+  group by
+    lms.sponsor_id");
 
-
-// SQL original del e-MMS --con subselect--
 $portfolio = WEBPAGE::$dbh->getAssoc("
-SELECT  lm.sponsor_id,
-        COUNT(lmd.loan_id) loans                             ,
-        SUM(l.kp) kp                                         ,
-        IF(SUM(lcd.balance_kp),SUM(lcd.balance_kp),0) balance,
-        IF(SUM(lwo.amount),SUM(lwo.amount),0) write_off      ,
-        SUM(l.kp) - IF(SUM(lcd.balance_kp),SUM(lcd.balance_kp),0) - IF(SUM(lwo.amount),SUM(lwo.amount),0) repayment
-FROM (tblLoansMaster lm, tblLoansMasterDetails lmd, tblLoans l)
-        LEFT JOIN tblLoansCurrentData lcd
-        ON      lcd.loan_id = lmd.loan_id
-        LEFT JOIN tblLoanWriteOff lwo
-        ON      lwo.loan_id = lmd.loan_id
-WHERE   lm.check_status     = 'R'
-    AND lmd.master_id       = lm.id
-    AND l.id                = lmd.loan_id
-    AND lm.sponsor_id    IN
-        (SELECT tblSponsors.id
-        FROM    tblSponsors
-        WHERE   tblSponsors.active=1
-        )
-   GROUP BY lm.sponsor_id;
-");
+  select
+    lms.sponsor_id,
+    count(distinct lmd.loan_id) borrowers,
+    count(distinct lms.master_id) loans,
+    round(sum(l.kp*(lms.donation/lm.amount)),2) disbursement,
+    round(sum(if(lcd.balance_kp,lcd.balance_kp*(lms.donation/lm.amount),0)),2) balance,
+    round(sum(if(lwo.principal,lwo.principal*(lms.donation/lm.amount),0)),2) write_off
+  from
+    (
+      tblLoansMasterSponsors lms,
+      tblLoansMaster lm,
+      tblLoansMasterDetails lmd,
+      tblLoans l
+    )
+  left join
+    tblLoansCurrentData lcd on lcd.loan_id = lmd.loan_id
+  left join
+    tblLoanWriteOff lwo on lwo.loan_id = lmd.loan_id
+  where
+    lm.id = lms.master_id and
+    lm.check_status = 'R' and
+    lmd.master_id = lms.master_id and
+    l.id = lmd.loan_id
+  group by
+    lms.sponsor_id");
 
+$c = 0;
+foreach($sponsors as $key=>$val)
+{
+    $c++;
 
+    //$mrow[$key]['sponsor_id']   = $c;
+    $mrow[$key]['sponsor']      = $val['sponsor'];
+    $mrow[$key]['contact']      = $val['contact'];
+    $mrow[$key]['email']        = $val['email'];
+    $mrow[$key]['tips']         = $val['tips'] + 0;
+    $mrow[$key]['donations']    = $val['donations'];
+    $mrow[$key]['loans']        = $portfolio[$val['id']]['loans'];
+    $mrow[$key]['clients']      = $portfolio[$val['id']]['borrowers'];
+    $mrow[$key]['disbursement'] = $portfolio[$val['id']]['disbursement'];
+    $mrow[$key]['repayment']    = $pmt[$val['id']]['principal'];
+    $mrow[$key]['write_off']    = $portfolio[$val['id']]['write_off'];
+    $mrow[$key]['balance']      = $portfolio[$val['id']]['balance'];
+    $mrow[$key]['insurance']    = $pmt[$val['id']]['insurance'];
+    $mrow[$key]['profit']       = $pmt[$val['id']]['interest'] + $pmt[$val['id']]['fees'] + $pmt[$val['id']]['penalties'];
 
-// SQL original del e-MMS --con subselect--
-$operational_income = WEBPAGE::$dbh->getAssoc(sprintf("SELECT  lm.sponsor_id,
-        IF(SUM(p.principal),SUM(p.principal),0) principal,
-        IF(SUM(p.interest)+SUM(p.fees)+SUM(insurances)+SUM(penalties),SUM(p.interest)+SUM(p.fees)+SUM(insurances)+SUM(penalties),0) operational_income
-FROM (tblLoansMaster lm, tblLoansMasterDetails lmd)
-        LEFT JOIN tblPayments p
-        ON      p.loan_id = lmd.loan_id
-WHERE   lm.check_status   = 'R'
-    AND lm.sponsor_id    IN
-        (SELECT tblSponsors.id
-        FROM    tblSponsors
-        WHERE   tblSponsors.active=1
-        )
-    AND lmd.master_id = lm.id
-GROUP BY lm.sponsor_id;"));
-
-
-
-// Getting all registered currencies
-
-$tblCurrency = WEBPAGE::$dbh->getAssoc(sprintf("
-select * from tblCurrencys where 1;
-    "));
-
-// Setting up donation* headers dynamically
-$head['sponsor_id'] ='#';
-$head['display_name'] = WEBPAGE::$gt['tblSponsors.sponsor'];
-$head['contact_name'] = WEBPAGE::$gt['tblSponsors.contact'];
-$head['contact_email'] = WEBPAGE::$gt['tblClients.email'];
-
-foreach ($tblCurrency AS $currency_id => $value) {
-    $head[sprintf("donations_sorted_%s",$currency_id)] = sprintf("%s %s",WEBPAGE::$gt['donations'],$value['symbol']);
+    //$total['sponsor_id']   = WEBPAGE::$gt['total'];
+    $total['sponsor']      = '';
+    $total['contact']      = '';
+    $total['email']        = '';
+    $total['tips']         += $mrow[$key]['tips'];
+    $total['donations']    += $mrow[$key]['donations'];
+    $total['loans']        += $mrow[$key]['loans'];
+    $total['clients']      += $mrow[$key]['clients'];
+    $total['disbursement'] += $mrow[$key]['disbursement'];
+    $total['repayment']    += $mrow[$key]['repayment'];
+    $total['write_off']    += $mrow[$key]['write_off'];
+    $total['balance']      += $mrow[$key]['balance'];
+    $total['insurance']    += $mrow[$key]['insurance'];
+    $total['profit']       += $mrow[$key]['profit'];
 }
 
-$head['loans_count'] = WEBPAGE::$gt['loans'];
-$head['operational_income'] = WEBPAGE::$gt['RP.GRP.Performance.operationalIncome'];
-$head['writeoff'] = WEBPAGE::$gt['loanWriteOff'];
+//$mrow[$c++] = $total;
 
-// Pre-populate $total
+$head = array
+(
+  //'sponsor_id'   => '#',
+  'sponsor'      => WEBPAGE::$gt['tblSponsors.sponsor'],
+  'contact'      => WEBPAGE::$gt['tblSponsors.contact'],
+  'email'        => WEBPAGE::$gt['tblClients.email'],
+  'tips'         => WEBPAGE::$gt['donations_paypal_tipname'],
+  'donations'    => WEBPAGE::$gt['donations'],
+  'loans'        => WEBPAGE::$gt['loans'],
+  'clients'      => WEBPAGE::$gt['clients'],
+  'disbursement' => WEBPAGE::$gt['amount_disbursed'],
+  'repayment'    => WEBPAGE::$gt['principalRepayment'],
+  'write_off'    => WEBPAGE::$gt['writeOff_amount'],
+  'balance'      =>  WEBPAGE::$gt['portfolio_balance'],
+  'insurance'    => WEBPAGE::$gt['insurance'],
+  'profit'       => WEBPAGE::$gt['operationalIncome']
+);
 
-$total['sponsor_id']=WEBPAGE::$gt['total'];
-$total['display_name']='-';
-$total['contact_name']='-';
-$total['contact_email']='-';            
+array_unshift($mrow,$head);
 
-foreach ($tblCurrency as $currency_id => $currency) {                
-        $total[sprintf("donations_sorted_%s",$currency_id)] = 0; 
+$xls =& new Spreadsheet_Excel_Writer();
+$xls->send("summary.xls");
+$sheet =& $xls->addWorksheet('Sheet 1');
+
+$row = 0;
+foreach ( $mrow as $key => $val) {
+  $col = 0;
+   foreach ($val as $i => $j) {
+   	  $sheet->write($row,$col,$j);
+   	  $col++;
+   	  }
+ $row++;
 }
 
-$total['loans_count'] = 0;
-$total['operational_income'] = 0;
-$total['writeoff'] = 0;    
+$xls->close();
 
-// Pre-populate $mrow as per donations
-foreach ($sponsor_donations AS $key => $record) {
-    $mrow[$record['sponsor_id']]['sponsor_id'] = $record['sponsor_id'];
-    $mrow[$record['sponsor_id']]['display_name'] = $record['display_name'];
-    $mrow[$record['sponsor_id']]['contact_name'] = $record['contact_name'];
-    $mrow[$record['sponsor_id']]['contact_email'] = $record['contact_email'];
-    
-    if ($record['currency_id']!=null) {
-        $mrow[$record['sponsor_id']][sprintf("donations_%s",$record['currency_id'])] = max(0,$record['donations']);
-    }
-    
-}
-
-//  Sorting donations_* keys in $mrow
-foreach ($mrow as $sponsor_id => $record) {
-    
-    foreach ($tblCurrency AS $currency_id => $entry) {
-        $mrow[$sponsor_id][sprintf("donations_sorted_%s",$currency_id)]=max(0,$mrow[$sponsor_id][sprintf("donations_%s",$currency_id)]);
-        unset($mrow[$sponsor_id][sprintf("donations_%s",$currency_id)]);
-    }
-    
-}
-
- 
-
-// Start populating $mrow with portfolio data
-foreach ($mrow AS $key => $value) {
-            
-            $mrow[$key]['loans_count']=max(0,$portfolio[$key]['loans']);
-            $mrow[$key]['operational_income']=max(0,$operational_income[$key]['operational_income']);
-            $mrow[$key]['writeoff']=max(0,$portfolio[$key]['write_off']);
-        
-             // Calculating totals
-            $total['sponsor_id']=WEBPAGE::$gt['total'];
-            $total['display_name']='-';
-            $total['contact_name']='-';
-            $total['contact_email']='-';
-            
-            
-            // Calculating Donations Totals
-            
-      foreach ($tblCurrency as $currency_id => $currency) {
-                        
-            $total[sprintf("donations_sorted_%s",$currency_id)] += max(0,$mrow[$key][sprintf("donations_sorted_%s",$currency_id)]);
-             
-      }
-                    
-            $total['loans_count']+=max(0,$portfolio[$key]['loans']);
-            $total['operational_income']+=max(0,$operational_income[$key]['operational_income']);
-            $total['writeoff']+=max(0,$portfolio[$key]['write_off']);
-
-}
-
-
-$mrow['total']=$total;
-
-
-
-
-
-  $tpl->setVariable('script_name_label',WEBPAGE::$gt['RP.SCR.performance']);
-  //$tpl->setVariable('sponsor_name_value',$sponsor[0]['sponsor']);
-  $tpl->setVariable('chart', count($mrow)>1 ? WEBPAGE::printchart($mrow,$head) : WEBPAGE::$gt['noData']);
-
-
+//$tpl->setVariable('script_name_label',WEBPAGE::$gt['RP.SCR.performance']);
+//$tpl->setVariable('chart', count($mrow) > 1 ? WEBPAGE::printchart($mrow,$head) : WEBPAGE::$gt['noData']);
 ?>
-

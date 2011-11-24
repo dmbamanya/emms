@@ -1,161 +1,77 @@
 <?php
 require_once '../app/includes/LN.LIB.functions.inc';
-require_once 'Date.php';
+require_once 'class/loan_master.php';
 require_once 'class/loan_type.php';
 require_once 'class/loan.php';
-require_once 'class/roles.php';
-require_once 'class/client.php';
+require_once 'class/zone.php';
 require_once 'class/society.php';
-require_once 'class/business_type.php';
-require_once 'class/business.php';
 
-$loan  = new LOAN($_REQUEST['id']);
-extract(LOAN::getTemplateData($_REQUEST['id']));
+$master = new LOAN_MASTER($_REQUEST['id']);
+if($master->isSponsor(WEBPAGE::$userID)  == 0) exit;
 
-$btn  = new TTFButton(WEBPAGE::$theme);
+$master->loadextrainfo();
+$master->loadBorrowerData();
 
-if (count($status_controls))
+$zone = new ZONE($master->data['zone_id']);
+
+/*
+ * Retrive client/loan info
+ */
+foreach ($master->data['loans'] as $key => $val)
 {
-  $c = 0;
-  $separator = '';
-  $tpl->setVariable('status_bar_label', WEBPAGE::$gt['statusSelector']);
-  $tpl->addBlockfile('status_bar','status_bar','ST.navbar.tpl');
-  foreach ($status_controls as $key => $val)
-  {
-    $tpl->setCurrentBlock("st_navbar");
-    $tpl->setVariable('width',     sprintf("%spx",(30*$c)));
-    $tpl->setVariable('separator', $separator);
-    $tpl->setVariable('link',      $val['link']);
-    $tpl->setVariable('text',      $val['text']);
-    $tpl->parseCurrentBlock("st_navbar");
-    $c = 1;
-    $separator = '|';
-  }
+    $loan = new LOAN($key);
+
+    $cli = current(WEBPAGE::$dbh->getAll(sprintf
+    ("
+        select
+            c.id,
+            c.gender                                                      cli_gender,
+            concat(c.first, ' ',substring(c.last,1,1))                    cli_name,
+            date_format(curdate(),'%%Y') - date_format(c.birthdate,'%%Y') cli_age,
+            c.education                                                   cli_education,
+            c.dependants                                                  cli_dependants,
+            c. creator_date                                               cli_creator_date,
+            bt.description                                                cli_business
+        from
+            tblClients c, tblBusiness b, tblBusinessTypes bt
+        where
+            c.id = %s and
+            b.client_list = c.id and
+            bt.id = b.type_id", $loan->data['client_id']))
+     );
+
+    $payments = current(WEBPAGE::$dbh->getAll(sprintf("select sum(pmt) pmt,sum(penalties) penalties,sum(interest) interest,sum(insurances) insurances,sum(fees) fees,sum(principal) principal, min(balance_kp) balance_kp from tblPayments where loan_id = %s",$loan->data['id'])));
+    $payments['balance_kp']     = $payments['balance_kp'] ? $payments['balance_kp'] : round($master->data['extrainfo'][$key]['kp'],2);
+
+
+    $tpl->setCurrentBlock("bdeloans");
+
+    $tpl->setVariable("cli_photo",        '../app/'.sprintf(WEBPAGE::_IMG_CLIENT,'I',$cli['id'])) ;
+    $tpl->setVariable("cli_name",         strtoupper($cli['cli_name'])) ;
+    $tpl->setVariable("cli_age",          $cli['cli_age']) ;
+    $tpl->setVariable("cli_gender",       WEBPAGE::$gt[sprintf('tblClients.gender.%s',$cli['cli_gender'])]);
+    $tpl->setVariable("cli_dependants",   $cli['cli_dependants']) ;
+    $tpl->setVariable("cli_education",    WEBPAGE::$gt[sprintf('tblClients.education.%s',$cli['cli_education'])]) ;
+    $tpl->setVariable("cli_creator_date", date_format(date_create($cli['cli_creator_date']),'M j, Y'));
+    $tpl->setVariable("loan_amount",      number_format(round($master->data['extrainfo'][$key]['kp'],2), 2, '.', ','));
+    $tpl->setVariable("business",         $cli['cli_business']) ;
+
+    $tpl->setVariable('balance_kp_label', WEBPAGE::$gt['current_balance']);
+    $tpl->setVariable('balance_kp',       number_format($payments['balance_kp'], 2, '.', ','));
+    $tpl->setVariable('pmt_label',        WEBPAGE::$gt['principalRepayment']);
+    $tpl->setVariable('pmt',              number_format($payments['pmt'], 2, '.', ','));
+    $tpl->setVariable('penalties_label',  WEBPAGE::$gt['tblPayments.penalties']);
+    $tpl->setVariable('penalties',        number_format($payments['penalties'], 2, '.', ','));
+
+    $tpl->parseCurrentBlock("bdeloans");
 }
 
-$tpl->setVariable('loan_label',      WEBPAGE::$gt['tblLoans.id']);
-$tpl->setVariable('loan_code',       $loan_code);
-$tpl->setVariable('loan_code_label', WEBPAGE::$gt['tblLoans.loan_code']);
-$tpl->setVariable('status',          WEBPAGE::$gt[sprintf("tblLoans.status.%s",$status)]);
-$tpl->setVariable('status_label',    WEBPAGE::$gt['tblLoans.status']);
-$tpl->setVariable('currency',        $currency);
-$tpl->setVariable('currency_label',  WEBPAGE::$gt['tblFunds.currency_id']);
+$tpl->setVariable('org_name',            WEBPAGE::$conf['app']['client_name']);
+$tpl->setVariable('country',             WEBPAGE::$conf['app']['install_acronym']);
+$tpl->setVariable('branch',              $zone->zonedata['zone']);
 
-$client = new CLIENT($client_id);
-$tpl->setVariable('borrower_label',            WEBPAGE::$gt['tblClients.id']);
-$tpl->setVariable('borrower_name',             $borrower_name);
-$tpl->setVariable('borrower_name_label',       WEBPAGE::$gt['name']);
-$tpl->setVariable('borrower_code',             $borrower_code);
-$tpl->setVariable('borrower_code_label',       WEBPAGE::$gt['tblClients.code']);
-$tpl->setVariable('borrower_birthdate',        $client->data['birthdate']);
-$tpl->setVariable('borrower_birthdate_label',  WEBPAGE::$gt['tblClients.birthdate']);
-$tpl->setVariable('borrower_education',        WEBPAGE::$gt[sprintf('tblClients.education.%s',$client->data['education'])]);
-$tpl->setVariable('borrower_education_label',  WEBPAGE::$gt['tblClients.education']);
-$tpl->setVariable('borrower_cstatus',          WEBPAGE::$gt[sprintf('tblClients.cstatus.%s',$client->data['cstatus'])]);
-$tpl->setVariable('borrower_cstatus_label',    WEBPAGE::$gt['tblClients.cstatus']);
-$tpl->setVariable('borrower_dependants',       $client->data['dependants']);
-$tpl->setVariable('borrower_dependants_label', WEBPAGE::$gt['tblClients.dependants']);
-$tpl->setVariable('borrower_group',            $client->data['society'] ? $client->data['society'] : WEBPAGE::$gt['R-I']);
-$tpl->setVariable('borrower_group_label',      WEBPAGE::$gt['tblClients.society_id']);
-$tpl->setVariable('borrower_zone',             $client->data['zone']);
-$tpl->setVariable('borrower_zone_label',       WEBPAGE::$gt['tblClients.zone_id']);
-$tpl->setVariable('borrower_memo',             $client->data['memo'] ? $client->data['memo'] : WEBPAGE::$gt['noData']);
-$tpl->setVariable('borrower_memo_label',       WEBPAGE::$gt['tblClients.memo']);
-
-if ($business_id)
-{
-  $business = new BUSINESS($business_id);
-  $tpl->setVariable('business_label',             WEBPAGE::$gt['tblBusiness.id']);
-  $tpl->setVariable('business_activity',          WEBPAGE::$gt[sprintf('tblBusinessTypes.activity.%s',$business->data['activity'])]);
-  $tpl->setVariable('business_activity_label',    WEBPAGE::$gt['tblBusinessTypes.activity']);
-  $tpl->setVariable('business_type',              $business->data['type']);
-  $tpl->setVariable('business_type_label',        WEBPAGE::$gt['tblBusinessTypes.type']);
-  $tpl->setVariable('business_name',              $business->data['name']);
-  $tpl->setVariable('business_name_label',        WEBPAGE::$gt['tblBusiness.name']);
-  $tpl->setVariable('business_description',       $business->data['description'] ? $business->data['description'] : WEBPAGE::$gt['noData']);
-  $tpl->setVariable('business_description_label', WEBPAGE::$gt['tblBusiness.description']);
-}
-
-$tpl->setVariable('survey',                     $survey);
-$tpl->setVariable('href_survey',                $href_survey);
-$tpl->setVariable('survey_label',               WEBPAGE::$gt['tblSurveys.id']);
-$tpl->setVariable('modality',                   $modality);
-$tpl->setVariable('modality_label',             WEBPAGE::$gt['tblLoanTypes.description']);
-$tpl->setVariable('kp',                         $kp);
-$tpl->setVariable('kp_label',                   WEBPAGE::$gt['RP.GRP.Performance.kpDisbursment']);
-$tpl->setVariable('collateralType_label',       WEBPAGE::$gt['tblCollateral.id']);
-$tpl->setVariable('currency_symbol',            $currency_symbol);
-$tpl->setVariable('collateral_min_value',       $collateral_min_value);
-$tpl->setVariable('collateral_min_value_label', WEBPAGE::$gt['tblLoanTypes.margin_c']);
-$tpl->setVariable('pg_value',                   $pg_value);
-$tpl->setVariable('pg_value_label',             WEBPAGE::$gt['tblCollateral.pawned_goods']);
-$tpl->setVariable('re_value',                   $re_value);
-$tpl->setVariable('re_value_label',             WEBPAGE::$gt['tblCollateral.real_estate']);
-$tpl->setVariable('fgd_value',                  $fgd_value);
-$tpl->setVariable('fgd_value_label',            WEBPAGE::$gt['tblCollateral.fiduciary_goods']);
-$tpl->setVariable('fgt_value',                  $fgt_value);
-$tpl->setVariable('fgt_value_label',            WEBPAGE::$gt['tblCollateral.fiduciary_garantees']);
-$tpl->setVariable('collateral_value',           $collateral_value);
-$tpl->setVariable('collateral_value_label',     WEBPAGE::$gt['total']);
-$tpl->setVariable('calendar_type',              WEBPAGE::$gt[sprintf('tblLoanTypes.calendar_type.%s',$calendar_type)]);
-$tpl->setVariable('calendar_type_label',        WEBPAGE::$gt['tblLoanTypes.calendar_type']);
-$tpl->setVariable('days',                       WEBPAGE::$gt['days']);
-$tpl->setVariable('margin_label',               WEBPAGE::$gt['margin']);
-$tpl->setVariable('margin_k',                   $margin_k);
-$tpl->setVariable('margin_k_label',             WEBPAGE::$gt['principal']);
-$tpl->setVariable('margin_r',                   $margin_r);
-$tpl->setVariable('margin_r_label',             WEBPAGE::$gt['interest']);
-$tpl->setVariable('margin_d',                   $margin_d);
-$tpl->setVariable('margin_d_label',             WEBPAGE::$gt['tblLoanTypes.margin_d']);
-$tpl->setVariable('savings_p',                  $savings_p);
-$tpl->setVariable('savings_p_label',            WEBPAGE::$gt['tblLoans.savings_p']);
-$tpl->setVariable('savings_v',                  $savings_v);
-$tpl->setVariable('savings_v_label',            WEBPAGE::$gt['tblLoans.savings_v']);
-$tpl->setVariable('installment',                $installment);
-$tpl->setVariable('installment_label',          WEBPAGE::$gt['tblLoanTypes.installment']);
-$tpl->setVariable('payment_frequency',          WEBPAGE::$gt[sprintf('tblLoanTypes.payment_frequency.%s',$payment_frequency)]);
-$tpl->setVariable('payment_frequency_label',    WEBPAGE::$gt['tblLoanTypes.payment_frequency']);
-$tpl->setVariable('rates_label',                WEBPAGE::$gt['rate']);
-$tpl->setVariable('fees_at_label',              WEBPAGE::$gt['tblLoanTypes.fees_at']);
-$tpl->setVariable('fees_at',                    $fees_at);
-$tpl->setVariable('fees_af_label',              WEBPAGE::$gt['tblLoanTypes.fees_af']);
-$tpl->setVariable('fees_af',                    $fees_af);
-$tpl->setVariable('rates_r_label',              WEBPAGE::$gt['tblLoanTypes.rates_r']);
-$tpl->setVariable('rates_r',                    $rates_r);
-$tpl->setVariable('rates_e_label',              WEBPAGE::$gt['rate_e']);
-$tpl->setVariable('rates_e',                    $rates_e);
-$tpl->setVariable('rates_d_label',              WEBPAGE::$gt['tblLoanTypes.rates_d']);
-$tpl->setVariable('rates_d',                    $rates_d);
-$tpl->setVariable('creator',                    sprintf(WEBPAGE::$gt['createdByOn'],$creator,$f_creator_date));
-$tpl->setVariable('editor',                     sprintf(WEBPAGE::$gt['editedByOn'],$editor,$f_editor_date));
-$tpl->setVariable('img',                        file_exists(sprintf('../app/%s',sprintf(WEBPAGE::_IMG_CLIENT,$borrower_code))) ? sprintf(WEBPAGE::_IMG_CLIENT,$borrower_code) : 'img/unknown.png');
-$tpl->setVariable('delivered_date',             $delivered_date);
-$tpl->setVariable('delivered_date_label',       WEBPAGE::$gt['tblLoans.delivered_date']);
-
-$payments = current(WEBPAGE::$dbh->getAll(sprintf("select sum(pmt) pmt,sum(penalties) penalties,sum(interest) interest,sum(insurances) insurances,sum(fees) fees,sum(principal) principal, min(balance_kp) balance_kp from tblPayments where loan_id = %s",$loan->data['id'])));
-
-$payments['balance_kp']     = $payments['balance_kp'] ? $payments['balance_kp'] : $kp;
-$payments['balance_kp_usd'] = round($payments['balance_kp']/33,2);
-
-$tpl->setVariable('pmt_label',            WEBPAGE::$gt['PMT']);
-$tpl->setVariable('pmt_fees',             $payments['fees'] ? $payments['fees'] : '0.00');
-$tpl->setVariable('pmt_fees_label',       WEBPAGE::$gt['tblPayments.fees']);
-$tpl->setVariable('pmt_insurances',       $payments['insurances'] ? $payments['insurances'] : '0.00');
-$tpl->setVariable('pmt_insurances_label', WEBPAGE::$gt['tblPayments.insurances']);
-$tpl->setVariable('pmt_principal',        $payments['principal'] ? $payments['principal'] : '0.00');
-$tpl->setVariable('pmt_principal_label',  WEBPAGE::$gt['tblPayments.principal']);
-$tpl->setVariable('pmt_interest',         $payments['interest'] ? $payments['interest'] : '0.00');
-$tpl->setVariable('pmt_interest_label',   WEBPAGE::$gt['tblPayments.interest']);
-$tpl->setVariable('pmt_penalties',        $payments['penalties'] ? $payments['penalties'] : '0.00');
-$tpl->setVariable('pmt_penalties_label',  WEBPAGE::$gt['tblPayments.penalties']);
-$tpl->setVariable('pmt_total',            $payments['pmt'] ? $payments['pmt'] : '0.00');
-$tpl->setVariable('pmt_total_label',      WEBPAGE::$gt['total']);
-
-$tpl->setVariable('recovery_kp_label',    WEBPAGE::$gt['RP.GRP.Performance.kpRecovery']);
-$tpl->setVariable('recovery_kp',          $payments['principal'] ? $payments['principal'] : '0.00');
-$tpl->setVariable('balance_kp_label',     WEBPAGE::$gt['tblPayments.balance_kp']);
-$tpl->setVariable('balance_kp',           $payments['balance_kp']);
-$tpl->setVariable('balance_kp_usd_label', WEBPAGE::$gt['tblPayments.balance_kp']);
-$tpl->setVariable('balance_kp_usd',       $payments['balance_kp_usd'] ? $payments['balance_kp_usd'] : '0.00');
+$tpl->setVariable('bde_name',            strtoupper($master->data['borrower']->data['name']));
+$tpl->setVariable('amount',              number_format(round($master->data['amount'],2), 2, '.', ','));
+$tpl->setVariable('delivered_date',      $loan->data['delivered_date']);
 
 ?>

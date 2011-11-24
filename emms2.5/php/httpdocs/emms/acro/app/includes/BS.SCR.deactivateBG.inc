@@ -9,7 +9,7 @@ $bg		 	= SOCIETY::getTemplateData($_REQUEST['id']);
 // Check for active loans. If so then abort deactivation...
 $bgmemberstocheckforloans = array_keys($bg['members']);
 foreach ($bgmemberstocheckforloans as $key=>$val) {
-  $checkloan = WEBPAGE::$dbh->getAll(sprintf("select lm.id from tblLoansMaster as lm where lm.borrower_id = %s and lm.check_status != 'R' and lm.borrower_type != 'I'",$val));
+  $checkloan = WEBPAGE::$dbh->getAll(sprintf("select lm.id from tblLoansMaster as lm where lm.borrower_id = %s and lm.check_status not in ('R','RT') and lm.borrower_type != 'I'",$val));
   !count($checkloan) 	? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewSociety&id=%s&ico=err&msg=moveClient.err.loan',$_REQUEST['id']));
   $checkloan = WEBPAGE::$dbh->getAll(sprintf("select lm.id from tblLoansMaster as lm, tblLoansMasterDetails as lmd, tblLoansCurrentData as lcd where lmd.master_id = lm.id and lcd.loan_id = lmd.loan_id and lm.borrower_id = %s and lm.check_status = 'R' and lm.borrower_type != 'I'",$val));
   !count($checkloan) 	? '' : WEBPAGE::redirect(sprintf('index.php?scr_name=BS.SCR.viewSociety&id=%s&ico=err&msg=moveClient.err.loan',$_REQUEST['id']));

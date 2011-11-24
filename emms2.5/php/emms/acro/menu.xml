@@ -312,6 +312,12 @@
 
   <custom>
     <fn code="255" name="PB.SCR.performance"/>
+    <fn code="255" name="PB.SCR.donateHome"/>
+    <fn code="255" name="PB.SCR.donateOne"/>
+    <fn code="255" name="PB.SCR.donateTwo"/>
+    <fn code="255" name="PB.SCR.donateThree"/>
+    <fn code="255" name="PB.SCR.donateMsgNoPubGroups"/>
+    <fn code="255" name="PB.SCR.donateCancel"/>
     <fn code="1"   name="RP.SCR.compactCS"/>
     <fn code="1"   name="RP.SCR.activeLoans"/>
     <fn code="1"   name="RP.SCR.receipt"/>

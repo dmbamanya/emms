@@ -12,6 +12,8 @@ $loan 		= new LOAN(0,$master->data['loan_type_id']);
 $master->loadloans();
 $master->loadBorrowerData();
 
+$masterimgpath = sprintf(WEBPAGE::_IMG_CLIENT,$master->data['borrower_type'],$master->data['borrower_id']);
+
 $tpl->setVariable('page_title',                  WEBPAGE::$gt['LN.SCR.viewLoanMaster']);
 $tpl->setVariable('zone_label',                  WEBPAGE::$gt['tblZones.zone']);
 $tpl->setVariable('zone',                        $master->data['borrower']->data['zone']);
@@ -31,6 +33,9 @@ $tpl->setVariable('xp_delivered_date',           WEBPAGE::verbose_date_format($m
 $tpl->setVariable('xp_delivered_date_label',     WEBPAGE::$gt['tblLoansMaster.xp_delivered_date']);
 $tpl->setVariable('xp_first_payment_date',       WEBPAGE::verbose_date_format($master->data['xp_first_payment_date']));
 $tpl->setVariable('xp_first_payment_date_label', WEBPAGE::$gt['tblLoansMaster.xp_first_payment_date']);
+$tpl->setVariable('master_img',                  sprintf(WEBPAGE::_IMGLINK_POPUP,WEBPAGE::$gt['photo'],$masterimgpath,'Photo','no','yes','no','680','300','40',$masterimgpath));
+$tpl->setVariable('master_img_label',            WEBPAGE::$gt['photo']);
+
 $tpl->setVariable('chart_title',                 WEBPAGE::$gt['details']);
 $tpl->setVariable('date',                        date('Y-m-d'));
 $tpl->setVariable('print',                       sprintf('<br><a href=javascript:makeRequest("%sindex.popup.php?scr_name=LN.SCR.loansMasterPrintCounter&id=%s")>%s</a>',WEBPAGE::$url,$_REQUEST['id'],WEBPAGE::$gt['printSheet']));
@@ -38,8 +43,8 @@ $tpl->setVariable('print',                       sprintf('<br><a href=javascript
 /*
  * print sub-loans chart
  */
-$head 	= array('loan_code'=>WEBPAGE::$gt['tblLoans.loan_code'],'kp'=>WEBPAGE::$gt['tblLoans.kp'],'borrower'=>WEBPAGE::$gt['tblClients.id'],'status'=>WEBPAGE::$gt['status']);
-$align 	= array('loan_code'=>'left','kp'=>'right','borrower'=>'left','status'=>'left');
+$head 	= array('loan_code'=>WEBPAGE::$gt['tblLoans.loan_code'],'kp'=>WEBPAGE::$gt['tblLoans.kp'],'pic'=>WEBPAGE::$gt['photo'],'borrower'=>WEBPAGE::$gt['tblClients.id'],'status'=>WEBPAGE::$gt['status']);
+$align 	= array('loan_code'=>'left','kp'=>'right','pic'=>'center','borrower'=>'left','status'=>'left');
 $mrow 	= WEBPAGE::$dbh->getAll(sprintf('select l.loan_code,l.kp,l.client_id,l.status,lmd.loan_id from tblLoans l, tblLoansMasterDetails lmd where lmd.master_id = %s AND l.id = lmd.loan_id',$_REQUEST['id']));
 
 $tpl->addBlockfile('chart','chart','ST.chart.tpl');
@@ -51,10 +56,12 @@ foreach($head as $key=>$val)
 }
 
 foreach($mrow AS $key=>$val)
-{
+{ 
+  $imgpath = sprintf(WEBPAGE::_IMG_CLIENT,'I',$val['client_id']);
   $loan->load_borrower($val['client_id']);
   $data[$key]['loan_code'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_loan_profile'],'LN.SCR.viewILoanXpress','id',$val['loan_id'],'LN.SCR.viewILoanXpress','no','yes','no','580','350',$val['loan_code']);
   $data[$key]['kp'] 		= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_pmt_plan'],'LN.SCR.pmtPlan','id',$val['loan_id'],'LN.SCR.pmtPlan','no','yes','no','780','400',$val['kp']);
+  $data[$key]['pic']            = sprintf(WEBPAGE::_IMGLINK_POPUP,WEBPAGE::$gt['photo'],$imgpath,'Pic','no','yes','no','220','240','20',$imgpath);
   $data[$key]['borrower'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_credit_history'],'BS.SCR.viewClientXpress','id',$val['client_id'],'BS.SCR.viewClientXpress','no','yes','no','800','500',$loan->data['borrower_name']);
   $data[$key]['status'] 	= sprintf(WEBPAGE::_HOTLINK_POPUP,WEBPAGE::$gt['tips']['view_status_history'],'LN.RPT.loanStatusHistory','id',$val['loan_id'],'LN.RPT.loanStatusHistory','no','no','no','700','320',WEBPAGE::$gt[sprintf('tblLoans.status.%s',$val['status'])]);
 }

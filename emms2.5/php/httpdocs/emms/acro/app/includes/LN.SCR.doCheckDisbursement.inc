@@ -12,11 +12,11 @@ require_once 'HTML/QuickForm.php';
 require_once 'HTML/QuickForm/Renderer/ITStatic.php';
 require_once 'class/loan_master.php';
 require_once 'class/program.php';
-require_once '../mod_sponsorship/class/sponsor.php';
+//require_once '../mod_sponsorship/class/sponsor.php';
 
 $master 	= new LOAN_MASTER($_REQUEST['id']);   
 $program 	= new PROGRAM($master->data['program_id']);
-$sponsor 	= new SPONSOR();
+//$sponsor 	= new SPONSOR();
 $btn  		= new TTFButton(WEBPAGE::$theme);
 $form 		= new HTML_QuickForm('disbursementForm','POST');
 
@@ -28,6 +28,7 @@ $form->addElement('hidden',   'id',           $_REQUEST['id']);
 $form->addElement('text',     'check_number', WEBPAGE::$gt['tblLoansMaster.check_number'], 'class=large');
 $form->addElement('select',   'fund',         WEBPAGE::$gt['tblFunds.id'],         (array('-'=>'') + $program->getFunds()), 'class=large');
 
+/*
 $sponsorsByBalance = $sponsor->getSponsorsByBalance($master->data['amount'], 1);
 $sponsorsByZone    = $sponsor->getSponsorsByZone($master->getBorrowerZone());
 $sponsors          = array_intersect_key($sponsorsByBalance,$sponsorsByZone);
@@ -35,6 +36,7 @@ arsort($sponsors);
 foreach($sponsors as $key => $val) $sponsors[$key] = $sponsorsByZone[$key];
 $sponsors = WEBPAGE::$conf['mod_sponsorship']['disbursement_filter'] ? array_slice($sponsors, 0, 1, true) : $sponsors;
 $form->addElement('select',   'sponsor_id',   WEBPAGE::$gt['tblSponsors.sponsor'], (array(''=>'') + $sponsors), 'class=large');
+*/
 
 $form->addElement('textarea', 'memo',         WEBPAGE::$gt['memo'], 'rows=5');
 
